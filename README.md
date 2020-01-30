@@ -1,10 +1,14 @@
----------------------------------------------------------------------
----------------------------------------------------------------------
+-----
 
-# [[ Marine ecological niche modelling and global climate change :: Overview ]]
+## Marine ecological niche modelling and global climate change
 
 -----
------
+
+author: Jorge Assis <br>
+contact: jmassis@ualg.pt <br>
+code: [github.com/jorgeassis](https://github.com/jorgeassis) <br>
+tweets: [twitter.com/jorgemfassis](https://twitter.com/jorgemfassis) <br>
+journal: [medium.com/theMarineDataScientist](https://medium.com/themarinedatascientist) <br>
 
 The course 'Marine Ecological Modelling and Global Climate Change' was designed as an elective course within the Master programme Marine Biology at the University of Algarve.
 
