@@ -23,6 +23,8 @@ Mandatory:
 
 Interesting:
 
+https://www.dropbox.com/s/71xc3ho5kb8r5se/Using%20herbaria%20to%20study%20global%20environmental%20change.pdf?dl=0
+
 Mandatory:
 
 https://www.dropbox.com/s/smo6ziwjbez08au/Assis%20et%20al.%20-%202017%20-%20Bio-ORACLE%20v2.0%20Extending%20marine%20data%20layers%20for%20bioclimatic%20modelling.pdf?dl=0
