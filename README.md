@@ -59,9 +59,3 @@ S09. Cross-validation in Ecological Modelling<br>
 S10. Comparing predictive performances of modelling algorithms<br>
 S11. Ensembling ecological model responses<br>
 S12. Setting parameters for proper machine learning models
-
------
------
-
----------------------------------------------------------------------
----------------------------------------------------------------------
