@@ -1,22 +1,22 @@
 ## Marine ecological niche modelling and global climate change
-## Literature
+### [Literature]
 
 ### Session 1
 
-Interesting:
+Interesting: <br>
 https://mgimond.github.io/Spatial/index.html
 
 https://www.dropbox.com/s/tx6lew1223zochl/Principles%20of%20Geographic%20Information%20Systems.pdf?dl=0
 
-Mandatory:
+Mandatory: <br>
 
 ### Session 2
 
-Interesting:
+Interesting: <br>
 
 https://www.dropbox.com/s/71xc3ho5kb8r5se/Using%20herbaria%20to%20study%20global%20environmental%20change.pdf?dl=0
 
-Mandatory:
+Mandatory: <br>
 
 https://www.dropbox.com/s/smo6ziwjbez08au/Assis%20et%20al.%20-%202017%20-%20Bio-ORACLE%20v2.0%20Extending%20marine%20data%20layers%20for%20bioclimatic%20modelling.pdf?dl=0
 
