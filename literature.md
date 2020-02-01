@@ -8,7 +8,7 @@ https://www.dropbox.com/s/cue2jsc7jiv4zxl/Mapping%20species%20distributions%20Sp
 
 #### Session 1
 
-**Interesting** <br>
+*Interesting* <br>
 https://mgimond.github.io/Spatial/index.html
 
 https://www.dropbox.com/s/tx6lew1223zochl/Principles%20of%20Geographic%20Information%20Systems.pdf?dl=0
