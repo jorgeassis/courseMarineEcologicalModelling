@@ -1,21 +1,19 @@
 ## Marine ecological niche modelling and global climate change
-### [Literature]
-
-### Books
+### [Books]
 
 [Mapping species distributions Spatial inference and prediction] <br>
 https://www.dropbox.com/s/cue2jsc7jiv4zxl/Mapping%20species%20distributions%20Spatial%20inference%20and%20prediction.pdf?dl=0
 
-## Papers per session
+### [Papers per session]
 
-### Session 1
+#### Session 1
 
 Interesting: <br>
 https://mgimond.github.io/Spatial/index.html
 
 https://www.dropbox.com/s/tx6lew1223zochl/Principles%20of%20Geographic%20Information%20Systems.pdf?dl=0
 
-### Session 2
+#### Session 2
 
 Interesting: <br>
 
