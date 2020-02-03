@@ -15,8 +15,10 @@ Each student needs to write an individual research study addressing the interact
 > Students must build a conceptual model to address the research question in their study system.
 > Students must read the scientific literature in a systematic, quantitative way, to collect, assess the evidence for the different components of their model and hypotheses, and formulate conclusions and recommendations.
 
+#### Mid-term exam
+
 - Exam (multiple choice + 4 essay questions, up to 90 minutes; at least 9.5).
 
-#### Mid-term exam
+#### Final grade
 
 - Final grade = (Exam * 0.3) + (individual study * 0.7)
