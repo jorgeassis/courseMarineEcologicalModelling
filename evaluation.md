@@ -21,4 +21,4 @@ Each student needs to write an individual research study addressing the interact
 
 #### Final grade
 
-- Final grade = (Exam * 0.3) + (individual study * 0.7)
+- Final grade = (Individual research study * 0.7) + (Mid-term exam * 0.3)
