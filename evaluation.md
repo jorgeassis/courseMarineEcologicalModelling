@@ -1,6 +1,8 @@
 ## Marine ecological niche modelling and global climate change
 ### [Evaluation]
 
+#### Individual research study
+
 Each student needs to write an individual research study addressing the interactions OR impact of global climate changes (past OR future) in one of the different levels of biodiversity. This can be (1) identifying the main climatic drivers shaping distributions, (2) predicting distributional ranges, (3) projecting  future range shifts, (4) predicting marine invasion processes, etc.<br><br>
 
 - [Week 5] Presentation / Discussion : 5 + 10 minutes (10% of grade)
@@ -15,10 +17,6 @@ Each student needs to write an individual research study addressing the interact
 
 - Exam (multiple choice + 4 essay questions, up to 90 minutes; at least 9.5).
 
------
------
+#### Mid-term exam
 
 - Final grade = (Exam * 0.3) + (individual study * 0.7)
-
------
------
