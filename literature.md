@@ -24,10 +24,12 @@
 
 [Evaluating the Performance of Past Climate Model Projections](https://www.dropbox.com/s/r0ijrgfagdvawqo/Evaluating%20the%20Performance%20of%20Past%20Climate%20Model%20Projections.pdf?dl=0)
 
+[Marine Ecoregions of the World: A Bioregionalization of Coastal and Shelf Areas](https://www.dropbox.com/s/6zjtzv9u39i2yvp/Spalding%20et%20al.%20-%202007%20-%20Marine%20Ecoregions%20of%20the%20World%20A%20Bioregionalization%20of%20Coastal%20and%20Shelf%20Areas.pdf?dl=0)
+
 *Mandatory* <br>
 
 [The representative concentration pathways: an overview](https://www.dropbox.com/s/w7jls9xwyhmrbtg/The%20representative%20concentration%20pathways%2C%20an%20overview.pdf?dl=0)
 
 [Bio-ORACLE v2.0: Extending marine data layers for bioclimatic modelling](https://www.dropbox.com/s/smo6ziwjbez08au/Assis%20et%20al.%20-%202017%20-%20Bio-ORACLE%20v2.0%20Extending%20marine%20data%20layers%20for%20bioclimatic%20modelling.pdf?dl=0)
 
-[Marine Ecoregions of the World: A Bioregionalization of Coastal and Shelf Areas](https://www.dropbox.com/s/6zjtzv9u39i2yvp/Spalding%20et%20al.%20-%202007%20-%20Marine%20Ecoregions%20of%20the%20World%20A%20Bioregionalization%20of%20Coastal%20and%20Shelf%20Areas.pdf?dl=0)
+[Future sea level rise constrained by observations and long-term commitment](https://www.dropbox.com/s/jcvh0sr4epvmhrg/Future%20sea%20level%20rise%20constrained%20by%20observations%20and%20long-term%20commitment.pdf?dl=0)
