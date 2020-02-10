@@ -255,15 +255,15 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #363636; marg
 <a class="sourceLine" id="cb20-4" data-line-number="4">courseSchedule</a></code></pre></div>
 <pre><code>##    weeks funFactor
 ## 1      1        ok
-## 2      2     super
+## 2      2        ok
 ## 3      3      pain
 ## 4      4     super
-## 5      5        ok
-## 6      6        ok
-## 7      7      pain
-## 8      8     super
+## 5      5     super
+## 6      6      pain
+## 7      7        ok
+## 8      8        ok
 ## 9      9        ok
-## 10    10      pain</code></pre>
+## 10    10     super</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># lists</span></a>
 <a class="sourceLine" id="cb22-2" data-line-number="2">memccCourse &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">course_name=</span><span class="st">&quot;Marine Ecological Modelling and Global Climate Change&quot;</span>,</a>
 <a class="sourceLine" id="cb22-3" data-line-number="3">                    <span class="dt">module=</span><span class="st">&quot;M1&quot;</span>, <span class="dt">master_programme=</span><span class="st">&quot;Marine Biology&quot;</span>,</a>
@@ -288,15 +288,15 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #363636; marg
 ## $lessons
 ##    weeks funFactor
 ## 1      1        ok
-## 2      2     super
+## 2      2        ok
 ## 3      3      pain
 ## 4      4     super
-## 5      5        ok
-## 6      6        ok
-## 7      7      pain
-## 8      8     super
+## 5      5     super
+## 6      6      pain
+## 7      7        ok
+## 8      8        ok
 ## 9      9        ok
-## 10    10      pain</code></pre>
+## 10    10     super</code></pre>
 <div style="height: 15px">
 
 </div>
@@ -314,21 +314,32 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #363636; marg
 <p><strong>Each element of an object</strong> type is internally assigned an index (positive integer <strong>address</strong>) and you can <strong>retrieve single elements or a subset objects</strong> with these indices.</p>
 <p>Square brackets are used for indexing. In data frames (and lists) we can access columns using the ‘$’ operator.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="co"># produce a sequence vector</span></a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">5</span>,<span class="dv">10</span>,<span class="dt">by=</span>.<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2">x &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">5</span>,<span class="dv">10</span>,<span class="dt">by=</span><span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb28-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co"># retrieve the 3rd element of the vector x</span></a>
 <a class="sourceLine" id="cb28-5" data-line-number="5">x[<span class="dv">3</span>] </a></code></pre></div>
-<pre><code>## [1] 6</code></pre>
+<pre><code>## [1] 7</code></pre>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="co"># use address sequences</span></a>
 <a class="sourceLine" id="cb30-2" data-line-number="2">x[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>] </a></code></pre></div>
-<pre><code>## [1] 6.0 6.5</code></pre>
+<pre><code>## [1] 7 8</code></pre>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co"># use address vectors</span></a>
 <a class="sourceLine" id="cb32-2" data-line-number="2">x[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">6</span>)] </a></code></pre></div>
-<pre><code>## [1] 5.0 6.5 7.5</code></pre>
+<pre><code>## [1]  5  8 10</code></pre>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># use address negative vector integers</span></a>
 <a class="sourceLine" id="cb34-2" data-line-number="2">x[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>)] </a></code></pre></div>
-<pre><code>## [1]  5.5  7.0  7.5  8.0  8.5  9.0  9.5 10.0</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">myArray</a></code></pre></div>
+<pre><code>## [1]  6  9 10</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">myMatrix</a></code></pre></div>
+<pre><code>##          [,1]     [,2]     [,3]      [,4]
+## [1,] 5.000000 6.304348 7.608696  8.913043
+## [2,] 5.217391 6.521739 7.826087  9.130435
+## [3,] 5.434783 6.739130 8.043478  9.347826
+## [4,] 5.652174 6.956522 8.260870  9.565217
+## [5,] 5.869565 7.173913 8.478261  9.782609
+## [6,] 6.086957 7.391304 8.695652 10.000000</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># retrieve the element in a given matrix position</span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2">myMatrix[<span class="dv">2</span>,<span class="dv">2</span>]</a></code></pre></div>
+<pre><code>## [1] 6.521739</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">myArray</a></code></pre></div>
 <pre><code>## , , 1
 ## 
 ##      [,1] [,2] [,3]
@@ -344,52 +355,52 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #363636; marg
 ## [2,]   14   18   22
 ## [3,]   15   19   23
 ## [4,]   16   20   24</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># retrieve the element in a given array position</span></a>
-<a class="sourceLine" id="cb38-2" data-line-number="2">myArray[<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="co"># retrieve the element in a given array position</span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2">myArray[<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">2</span>]</a></code></pre></div>
 <pre><code>## [1] 19</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="co"># retrieve the element in a list</span></a>
-<a class="sourceLine" id="cb40-2" data-line-number="2">memccCourse[<span class="dv">1</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="co"># retrieve the element in a list</span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2">memccCourse[<span class="dv">1</span>]</a></code></pre></div>
 <pre><code>## $course_name
 ## [1] &quot;Marine Ecological Modelling and Global Climate Change&quot;</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="co"># retrieve the element in a list</span></a>
-<a class="sourceLine" id="cb42-2" data-line-number="2">memccCourse[<span class="st">'lessons'</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="co"># retrieve the element in a list</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2">memccCourse[<span class="st">'lessons'</span>]</a></code></pre></div>
 <pre><code>## $lessons
 ##    weeks funFactor
 ## 1      1        ok
-## 2      2     super
+## 2      2        ok
 ## 3      3      pain
 ## 4      4     super
-## 5      5        ok
-## 6      6        ok
-## 7      7      pain
-## 8      8     super
+## 5      5     super
+## 6      6      pain
+## 7      7        ok
+## 8      8        ok
 ## 9      9        ok
-## 10    10      pain</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">memccCourse<span class="op">$</span>course_name</a></code></pre></div>
+## 10    10     super</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">memccCourse<span class="op">$</span>course_name</a></code></pre></div>
 <pre><code>## [1] &quot;Marine Ecological Modelling and Global Climate Change&quot;</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">memccCourse<span class="op">$</span>lessons</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">memccCourse<span class="op">$</span>lessons</a></code></pre></div>
 <pre><code>##    weeks funFactor
 ## 1      1        ok
-## 2      2     super
+## 2      2        ok
 ## 3      3      pain
 ## 4      4     super
-## 5      5        ok
-## 6      6        ok
-## 7      7      pain
-## 8      8     super
+## 5      5     super
+## 6      6      pain
+## 7      7        ok
+## 8      8        ok
 ## 9      9        ok
-## 10    10      pain</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="co"># modifying single elements</span></a>
-<a class="sourceLine" id="cb48-2" data-line-number="2">ecologicalGroups &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">kelp=</span><span class="dv">5</span>, <span class="dt">seagrasses=</span><span class="dv">10</span>, <span class="dt">corals=</span><span class="dv">1</span>, <span class="dt">fish=</span><span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb48-3" data-line-number="3">ecologicalGroups</a></code></pre></div>
+## 10    10     super</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="co"># modifying single elements</span></a>
+<a class="sourceLine" id="cb52-2" data-line-number="2">ecologicalGroups &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">kelp=</span><span class="dv">5</span>, <span class="dt">seagrasses=</span><span class="dv">10</span>, <span class="dt">corals=</span><span class="dv">1</span>, <span class="dt">fish=</span><span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb52-3" data-line-number="3">ecologicalGroups</a></code></pre></div>
 <pre><code>##       kelp seagrasses     corals       fish 
 ##          5         10          1         20</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">ecologicalGroups[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb50-2" data-line-number="2">ecologicalGroups</a></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">ecologicalGroups[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb54-2" data-line-number="2">ecologicalGroups</a></code></pre></div>
 <pre><code>##       kelp seagrasses     corals       fish 
 ##        100         10          1         20</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1">ecologicalGroups[<span class="st">&quot;seagrasses&quot;</span>] &lt;-<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb52-2" data-line-number="2">ecologicalGroups</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1">ecologicalGroups[<span class="st">&quot;seagrasses&quot;</span>] &lt;-<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb56-2" data-line-number="2">ecologicalGroups</a></code></pre></div>
 <pre><code>##       kelp seagrasses     corals       fish 
 ##        100          0          1         20</code></pre>
 <!-- ------------------------------------------------------------------- -->

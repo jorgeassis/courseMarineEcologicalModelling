@@ -6,8 +6,8 @@
 1. Working directory <br>
 2. Load and install packages <br>
 3. Variables and objects <br>
-4. Data types and structures <br>
-5. Indexing <br>
+4. Data types and structures [vectors, matrices and data.frames] <br>
+5. Indexing [vectors, matrices and data.frames] <br>
 
 ### S2 : Basic programming elements
 
@@ -17,6 +17,8 @@
 4. Iteration [for loop] *** <br>
 5. Data import and export <br>
 6. Commenting the code <br>
+
+*** Not mandatory
 
 ### S3 : R as a Geographic Information System
 
@@ -39,5 +41,3 @@
 5. Algebra in raster data <br>
 6. Reclassify raster data <br>
 7. Additional functions for raster data [extract, raster to polygons]
-
- *** Not completely mandatory
