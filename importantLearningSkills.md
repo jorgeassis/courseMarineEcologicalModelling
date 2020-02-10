@@ -11,10 +11,10 @@
 
 ### S2 : Basic programming elements
 
-1. Logic and conditions <br>
+1. Logic and conditions *** <br>
 2. Random numbers <br>
-3. Control flows [if condition] <br>
-4. Iteration [for loop] <br>
+3. Control flows [if condition] *** <br>
+4. Iteration [for loop] *** <br>
 5. Data import and export <br>
 6. Commenting the code <br>
 
@@ -39,3 +39,5 @@
 5. Algebra in raster data <br>
 6. Reclassify raster data <br>
 7. Additional functions for raster data [extract, raster to polygons]
+
+ *** Not completely mandatory
