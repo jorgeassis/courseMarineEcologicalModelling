@@ -254,15 +254,15 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #363636; marg
 <a class="sourceLine" id="cb20-3" data-line-number="3">                             <span class="dt">funFactor=</span><span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">'super'</span>,<span class="st">'ok'</span>,<span class="st">'pain'</span>),<span class="dv">10</span>,<span class="dt">replace=</span>T))</a>
 <a class="sourceLine" id="cb20-4" data-line-number="4">courseSchedule</a></code></pre></div>
 <pre><code>##    weeks funFactor
-## 1      1     super
-## 2      2      pain
-## 3      3        ok
-## 4      4      pain
-## 5      5      pain
+## 1      1        ok
+## 2      2     super
+## 3      3      pain
+## 4      4     super
+## 5      5        ok
 ## 6      6        ok
-## 7      7     super
+## 7      7      pain
 ## 8      8     super
-## 9      9      pain
+## 9      9        ok
 ## 10    10      pain</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># lists</span></a>
 <a class="sourceLine" id="cb22-2" data-line-number="2">memccCourse &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">course_name=</span><span class="st">&quot;Marine Ecological Modelling and Global Climate Change&quot;</span>,</a>
@@ -287,15 +287,15 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #363636; marg
 ## 
 ## $lessons
 ##    weeks funFactor
-## 1      1     super
-## 2      2      pain
-## 3      3        ok
-## 4      4      pain
-## 5      5      pain
+## 1      1        ok
+## 2      2     super
+## 3      3      pain
+## 4      4     super
+## 5      5        ok
 ## 6      6        ok
-## 7      7     super
+## 7      7      pain
 ## 8      8     super
-## 9      9      pain
+## 9      9        ok
 ## 10    10      pain</code></pre>
 <div style="height: 15px">
 
@@ -355,29 +355,29 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #363636; marg
 <a class="sourceLine" id="cb42-2" data-line-number="2">memccCourse[<span class="st">'lessons'</span>]</a></code></pre></div>
 <pre><code>## $lessons
 ##    weeks funFactor
-## 1      1     super
-## 2      2      pain
-## 3      3        ok
-## 4      4      pain
-## 5      5      pain
+## 1      1        ok
+## 2      2     super
+## 3      3      pain
+## 4      4     super
+## 5      5        ok
 ## 6      6        ok
-## 7      7     super
+## 7      7      pain
 ## 8      8     super
-## 9      9      pain
+## 9      9        ok
 ## 10    10      pain</code></pre>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">memccCourse<span class="op">$</span>course_name</a></code></pre></div>
 <pre><code>## [1] &quot;Marine Ecological Modelling and Global Climate Change&quot;</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">memccCourse<span class="op">$</span>lessons</a></code></pre></div>
 <pre><code>##    weeks funFactor
-## 1      1     super
-## 2      2      pain
-## 3      3        ok
-## 4      4      pain
-## 5      5      pain
+## 1      1        ok
+## 2      2     super
+## 3      3      pain
+## 4      4     super
+## 5      5        ok
 ## 6      6        ok
-## 7      7     super
+## 7      7      pain
 ## 8      8     super
-## 9      9      pain
+## 9      9        ok
 ## 10    10      pain</code></pre>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="co"># modifying single elements</span></a>
 <a class="sourceLine" id="cb48-2" data-line-number="2">ecologicalGroups &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">kelp=</span><span class="dv">5</span>, <span class="dt">seagrasses=</span><span class="dv">10</span>, <span class="dt">corals=</span><span class="dv">1</span>, <span class="dt">fish=</span><span class="dv">20</span>)</a>
