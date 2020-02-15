@@ -20,6 +20,8 @@ None
 
 [Principles of Geographic Information Systems](https://www.dropbox.com/s/tx6lew1223zochl/Principles%20of%20Geographic%20Information%20Systems.pdf?dl=0)
 
+<br>
+
 #### Session 3
 
 *Interesting* <br>
@@ -37,6 +39,8 @@ None
 [Niche conservatism as an emerging principle in ecology and conservation biology](https://www.dropbox.com/s/0cqg71zhbmrwg4l/Niche%20conservatism%20as%20an%20emerging%20principle%20in%20ecology%20and%20conservation%20biology.pdf?dl=0)
 
 [Ecological niche conservatism A time-structured review of evidence](https://www.dropbox.com/s/a506fytrrwu70zl/Ecological%20niche%20conservatism%20A%20time-structured%20review%20of%20evidence.pdf?dl=0)
+
+<br>
 
 #### Session 4
 
@@ -62,6 +66,7 @@ None
 
 [The impacts of climate change in coastal marine systems](https://www.dropbox.com/s/5a33orukdfuryom/The%20impacts%20of%20climate%20change%20in%20coastal%20marine%20systems.pdf?dl=0)
 
+<br>
 
 #### Session 5
 
