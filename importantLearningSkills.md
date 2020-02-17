@@ -17,8 +17,6 @@
 4. Data import and export <br>
 5. Commenting the code <br>
 
-*** Not mandatory
-
 ### S3 : R as a Geographic Information System
 
 1. Importing and exporting vector data <br>
@@ -39,7 +37,7 @@
 
 [helpful script in Recipe 1]
 
-### S5 : Environmental data in R
+### S6 : Environmental data in R
 
 1. Environmental data [Bio-ORACLE] <br>
 2. Plot occurrence data with R <br>
