@@ -185,9 +185,19 @@ getCoordinates <- function(address) {
 
 getLocation <- function(coordLon,coordLat) {
   
-  # http://www.mapquestapi.com/geocoding/v1/reverse?key=mpIx2AWq4Lj9R0mDbW1hNWrPe1Jju4X9&location=30.333472,-81.470448&includeRoadMetadata=true&includeNearestIntersection=true
+  construct.geocode.url <- function(coordLon,coordLat, return.call = "json", sensor = "false") {
+    
+    root <- "http://www.mapquestapi.com/geocoding/v1/reverse?key=mpIx2AWq4Lj9R0mDbW1hNWrPe1Jju4X9&"
+    u <- paste(root, "location=", coordLat,",",coordLon,"", sep = "") #&includeRoadMetadata=true&includeNearestIntersection=true
+    return(URLencode(u))
+  }
   
-  return(location)
+  u <- construct.geocode.url(coordLon,coordLat)
+  doc <- getURL(u)
+  x <- fromJSON(doc,simplify = FALSE)
+  
+  
+  return(x$results[[1]]$locations[[1]]$adminArea1)
   
 }
 
