@@ -46,7 +46,7 @@ The student will perform a presentation where they show the major findings of th
 [31 May] Final report (10 minutes) (up to 8000 words with references, paper format).<br>
 The students must send the final report to jmassis@ualg.pt.<br><br>
 
-[31 May] Documented R markdown script as supplementary information of the final report.<br><br>
+[31 May] Documented R markdown script as supplementary information of the final report.<br>
 The students must send the documented R markdown script to jmassis@ualg.pt.<br><br>
 
 
