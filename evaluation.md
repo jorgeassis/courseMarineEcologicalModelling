@@ -3,7 +3,9 @@
 
 #### Individual research study
 
-Each student needs to write an individual research study addressing the interactions OR impact of global climate changes (past OR future) in one of the different levels of biodiversity. This can be (1) identifying the main climatic drivers shaping distributions, (2) predicting distributional ranges, (3) projecting  future range shifts, (4) predicting marine invasion processes, etc.<br><br>
+Each student will conduct an individual research study addressing (1) the interactions OR (2) impact of global climate changes (past OR future) on marine biodiversity.<br><br>
+
+The individual research study can (1) identify the main climatic drivers shaping the distribution of one or more marine species, (2) predict present distributional ranges for one or more marine species, (3) project future range shifts for one or more marine species or (4) predict marine invasion processes for one or more marine species. Additional topics can be proposed (in such case, please contact the professor)<br><br>
 
 - [Week 5] Presentation / Discussion : 5 + 10 minutes (10% of grade)
 - [Week 10] Presentation : 10 + 5 minutes (20% of grade)
