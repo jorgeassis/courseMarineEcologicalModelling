@@ -3,7 +3,7 @@
 
 #### Individual research study
 
-Each student will conduct an individual research study addressing (1) the interactions OR (2) impact of global climate changes (past OR future) on marine biodiversity.<br><br>
+Each student will conduct an individual research study addressing (1) the interactions OR (2) impact of global climate changes (past OR future) on marine biodiversity.
 
 The individual research study can (1) identify the main climatic drivers shaping the distribution of one or more marine species, (2) predict present distributional ranges for one or more marine species, (3) project future range shifts for one or more marine species or (4) predict marine invasion processes for one or more marine species. Additional topics can be proposed (in such case, please contact the professor)<br><br>
 
