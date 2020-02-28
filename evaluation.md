@@ -52,7 +52,7 @@ The students must send the documented R markdown script to jmassis@ualg.pt.<br><
 
 #### Mid-term exam
 
-[04 May] Multiple choice exam with 4 essay questions (up to 90 minutes).<br>
+[11 May] Multiple choice exam with 4 essay questions (up to 90 minutes).<br>
 The student must get, at least, 9.5 out of 20.<br>
 
 ### [Final grade]
