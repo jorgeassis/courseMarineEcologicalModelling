@@ -40,4 +40,4 @@
 ### S6 : Environmental data in R
 
 1. Environmental data [Bio-ORACLE] <br>
-2. Plot occurrence data with R <br>
+2. Collinearity (high correlation) between variables
