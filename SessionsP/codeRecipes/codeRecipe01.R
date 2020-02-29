@@ -13,23 +13,22 @@
 
 # 01. get records from gbif with the function getOccurrencesGBIF()
 # 02. get records from obis with the function getOccurrencesObis()
-# 03. get additional records
-# 04. populate NA coordinates 
-# 05. remove NA coordinates 
-# 06. remove duplicate coordinates with the function duplicated()
-# 07. remove records outside the know distribution of the species
-# 08. remove records outside the known vertical distribution
-# 09. remove records over landmasses 
-# 10. plot records with the functions plot() and ggplot()
-# 11. Save records with the function write.table()
+# 03. get additional external records
+# 04. remove NA coordinates 
+# 05. remove duplicate coordinates with the function duplicated()
+# 06. remove records outside the know distribution of the species
+# 07. remove records outside the known vertical distribution
+# 08. remove records over landmasses 
+# 09. plot records with the functions plot() and ggplot()
+# 10. Save records with the function write.table()
 
 source("sourceFunctions.R")
 
 world <- ne_countries(scale = 'medium')
 
 # download the records for a species
-recordsGBIF <- getOccurrencesGBIF("Laminaria ochroleuca")
-recordsObis <- getOccurrencesObis("Laminaria ochroleuca")
+recordsGBIF <- getOccurrencesGBIF("species name")
+recordsObis <- getOccurrencesObis("species name")
 
 # open additional datasets with read.csv
 # if needed, change colunm names to allow rbind() function
@@ -37,12 +36,10 @@ recordsObis <- getOccurrencesObis("Laminaria ochroleuca")
 # merge datasets
 records <- rbind(recordsGBIF,recordsObis)
 
-# get coordinates based on locality name
+# get coordinates based on locality name and populate NA coordinates [not mandatory, may bring additional bias]
 georeferencedLocalities <- getCoordinates( records[which( is.na(records$Lon) ), "Locality"] )
 head(georeferencedLocalities)
 nrow(georeferencedLocalities)
-
-# populate NA coordinates
 records[which( is.na(records$Lon) ), c("Lon","Lat")] <- georeferencedLocalities
 sum( is.na(records$Lon) )
 
@@ -101,7 +98,7 @@ ggplot() + theme(
   geom_point(data = records, aes(x = Lon, y = Lat), color = "red") +
   scale_y_continuous(breaks = seq(-90,90, by=20)) +
   scale_x_continuous(breaks = seq(-180,180,by=20)) +
-  coord_map("orthographic", orientation=c(30, 0, 0))
+  coord_map("orthographic", orientation=c(20, 20, 0))
 
 # save data frame to external file
 write.table(records,file="",sep=";")
