@@ -89,3 +89,35 @@ None
 [The representative concentration pathways: an overview](https://www.dropbox.com/s/w7jls9xwyhmrbtg/The%20representative%20concentration%20pathways%2C%20an%20overview.pdf?dl=0)
 
 [Bio-ORACLE v2.0: Extending marine data layers for bioclimatic modelling](https://www.dropbox.com/s/smo6ziwjbez08au/Assis%20et%20al.%20-%202017%20-%20Bio-ORACLE%20v2.0%20Extending%20marine%20data%20layers%20for%20bioclimatic%20modelling.pdf?dl=0)
+
+
+#### Session 6
+
+*Interesting* <br>
+
+Coudun, C. & Gegout, J.C. (2007) Quantitative prediction of the distribution and abundance of Vaccinium myrtillus with climatic and edaphic factors. Journal of Vegetation Science, 18, 517–524.
+
+Kadmon, R., Farber, O., & Danin, A. (2003) A systematic analysis of factors affect- ing the performance of climatic envelope models. Ecological Applications, 13, 853–867.
+
+Manly, B. F. J., McDonald, L. L., Thomas, D. L., McDonald, T. L., & Erickson, W. (2002) Resource Selection by Animals: Statistical Design and Analysis for Field Studies. New York, NY, USA: Kluwer Press.
+
+Phillips, S. J. & Dudik, M. (2008) Modeling of species distributions with Maxent: new extensions and a comprehensive evaluation. Ecography, 31, 161–175.
+
+Elith, J., Graham, C. H., Anderson, R. P. et al. (2006) Novel methods improve pre- diction of species distributions from occurrence data. Ecography, 29, 129–151.
+
+Elith, J. & Leathwick, J. (2009) Conservation prioritisation using species distribution
+modelling. In Moilanen, A., Wilson, K. A., & Possingham, H. (Eds.) Spatial Conservation Prioritization: Quantitative Methods and Computational Tools. Oxford, UK: Oxford University Press, pp. 70–93.
+
+*Mandatory* <br>
+
+[Environmental drivers of rhodolith beds and epiphytes community along the South Western Atlantic coast](https://www.dropbox.com/s/519bhfomge0qgsz/Carvalho%20et%20al.%20-%202019%20-%20Environmental%20drivers%20of%20rhodolith%20beds%20and%20epiphytes%20community%20along%20the%20South%20Western%20Atlantic%20coast.pdf?dl=0)
+
+[Overlooked habitat of a vulnerable gorgonian revealed in the Mediterranean and Eastern Atlantic by ecological niche modelling](https://www.dropbox.com/s/fozv0wp23teqof8/Boavida%20et%20al.%20-%202016%20-%20Overlooked%20habitat%20of%20a%20vulnerable%20gorgonian%20revealed%20in%20the%20Mediterranean%20and%20Eastern%20Atlantic%20by%20ecological%20ni.pdf?dl=0)
+
+[Major shifts at the range edge of marine forests: the combined effects of climate changes and limited dispersal](https://www.dropbox.com/s/ozwbrh1eiod17n1/Assis%20et%20al.%20-%202017%20-%20Major%20shifts%20at%20the%20range%20edge%20of%20marine%20forests%20the%20combined%20effects%20of%20climate%20changes%20and%20limited%20dispersal.pdf?dl=0)
+
+[Genes Left Behind: Climate Change Threatens Cryptic Genetic Diversity in the Canopy-Forming Seaweed Bifurcaria bifurcata](https://www.dropbox.com/s/w0sd15b1kilglo8/Neiva%20et%20al.%20-%202015%20-%20Genes%20Left%20Behind%20Climate%20Change%20Threatens%20Cryptic%20Genetic%20Diversity%20in%20the%20Canopy-Forming%20Seaweed%20Bifurcaria%20bifu.pdf?dl=0)
+
+[Oceanographic Conditions Limit the Spread of a Marine Invader along Southern African Shores](https://www.dropbox.com/s/d23uxx8c0tmp3g7/Assis%20et%20al.%20-%202015%20-%20Oceanographic%20Conditions%20Limit%20the%20Spread%20of%20a%20Marine%20Invader%20along%20Southern%20African%20Shores.pdf?dl=0)
+
+[How experimental physiology and ecological niche modelling can inform the management of marine bioinvasions?](https://www.dropbox.com/s/08hb8je2jb7xyj1/Koerich%20et%20al.%20-%202019%20-%20How%20experimental%20physiology%20and%20ecological%20niche%20modelling%20can%20inform%20the%20management%20of%20marine%20bioinvasions.pdf?dl=0)
