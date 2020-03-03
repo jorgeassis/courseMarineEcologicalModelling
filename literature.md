@@ -109,10 +109,6 @@ Elith, J., Graham, C. H., Anderson, R. P. et al. (2006) Novel methods improve pr
 Elith, J. & Leathwick, J. (2009) Conservation prioritisation using species distribution
 modelling. In Moilanen, A., Wilson, K. A., & Possingham, H. (Eds.) Spatial Conservation Prioritization: Quantitative Methods and Computational Tools. Oxford, UK: Oxford University Press, pp. 70–93.
 
-*Mandatory* <br>
-
-None
-
 <br>
 
 #### Session 6
