@@ -111,7 +111,7 @@ modelling. In Moilanen, A., Wilson, K. A., & Possingham, H. (Eds.) Spatial Conse
 
 <br>
 
-#### Session 6
+#### Session 7
 
 *Mandatory* <br>
 
