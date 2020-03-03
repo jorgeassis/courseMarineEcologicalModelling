@@ -90,6 +90,7 @@ None
 
 [Bio-ORACLE v2.0: Extending marine data layers for bioclimatic modelling](https://www.dropbox.com/s/smo6ziwjbez08au/Assis%20et%20al.%20-%202017%20-%20Bio-ORACLE%20v2.0%20Extending%20marine%20data%20layers%20for%20bioclimatic%20modelling.pdf?dl=0)
 
+<br>
 
 #### Session 6
 
