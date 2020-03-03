@@ -111,6 +111,14 @@ modelling. In Moilanen, A., Wilson, K. A., & Possingham, H. (Eds.) Spatial Conse
 
 *Mandatory* <br>
 
+None
+
+<br>
+
+#### Session 6
+
+*Mandatory* <br>
+
 [Environmental drivers of rhodolith beds and epiphytes community along the South Western Atlantic coast](https://www.dropbox.com/s/519bhfomge0qgsz/Carvalho%20et%20al.%20-%202019%20-%20Environmental%20drivers%20of%20rhodolith%20beds%20and%20epiphytes%20community%20along%20the%20South%20Western%20Atlantic%20coast.pdf?dl=0)
 
 [Overlooked habitat of a vulnerable gorgonian revealed in the Mediterranean and Eastern Atlantic by ecological niche modelling](https://www.dropbox.com/s/fozv0wp23teqof8/Boavida%20et%20al.%20-%202016%20-%20Overlooked%20habitat%20of%20a%20vulnerable%20gorgonian%20revealed%20in%20the%20Mediterranean%20and%20Eastern%20Atlantic%20by%20ecological%20ni.pdf?dl=0)
