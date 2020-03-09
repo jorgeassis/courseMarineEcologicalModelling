@@ -97,7 +97,8 @@ removeOverLand <- function(spobj1,lonName,latName) {
   cat("Removing",length(overLand),"records over Land")
   overLand <- which( is.na(over(spobj1,spobj2)[,1] ))
   spobj1 <- spobj1[-overLand,]
-  
+  spobj1 <- as.data.frame(spobj1)[,c(lonName,latName)]
+
 }
 
 
