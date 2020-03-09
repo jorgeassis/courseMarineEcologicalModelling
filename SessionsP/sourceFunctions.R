@@ -78,7 +78,7 @@ selectRecords <- function(records) {
 
 ## -----------------------------------------------------------------------------------------------
   
-whichOverLand <- function(spobj1) {
+removeOverLand <- function(spobj1) {
   
   spobj2 <- ne_countries(scale = 'large')
   
@@ -91,7 +91,10 @@ whichOverLand <- function(spobj1) {
   crs(spobj1) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   crs(spobj2) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   
-  which( ! is.na(over(spobj1,spobj2)[,1] ))
+  overLand <- which( ! is.na(over(spobj1,spobj2)[,1] ))
+  cat("Removing",length(overLand),"records over Land")
+  overLand <- which( is.na(over(spobj1,spobj2)[,1] ))
+  spobj1 <- spobj1[-overLand,]
   
 }
 
@@ -104,6 +107,27 @@ whichOverPolygon <- function(spobj1,spobj2) {
   crs(spobj2) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   
   which( ! is.na(over(spobj2,spobj1)[,1] ))
+  
+}
+
+## -----------------------------------------------------------------------------------------------
+
+removeNA <- function(records,lonName,latName) {
+  
+  cat("Removing",sum( is.na( records[,lonName] ) ),"NA records")
+  records <- records[which( ! is.na(records[,lonName]) ), ]
+  return(records)
+  
+}
+
+## -----------------------------------------------------------------------------------------------
+
+removeDuplicated <- function(records,lonName,latName) {
+  
+  cat("Removing",length(which( duplicated( records[,c(lonName,latName)] ) )),"NA records")
+  records <- records[ which( ! duplicated( records[,c(lonName,latName)] ) ), ]
+  
+  return(records)
   
 }
 ## -----------------------------------------------------------------------------------------------

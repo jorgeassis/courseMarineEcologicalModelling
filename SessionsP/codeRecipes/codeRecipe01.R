@@ -37,19 +37,17 @@ recordsObis <- getOccurrencesObis("species name")
 records <- rbind(recordsGBIF,recordsObis)
 
 # get coordinates based on locality name and populate NA coordinates [not mandatory, may bring additional bias]
-georeferencedLocalities <- getCoordinates( records[which( is.na(records$Lon) ), "Locality"] )
-head(georeferencedLocalities)
-nrow(georeferencedLocalities)
-records[which( is.na(records$Lon) ), c("Lon","Lat")] <- georeferencedLocalities
-sum( is.na(records$Lon) )
+# georeferencedLocalities <- getCoordinates( records[which( is.na(records$Lon) ), "Locality"] )
+# head(georeferencedLocalities)
+# nrow(georeferencedLocalities)
+# records[which( is.na(records$Lon) ), c("Lon","Lat")] <- georeferencedLocalities
+# sum( is.na(records$Lon) )
 
 # remove NA coordinates
-sum( is.na(records$Lon) )
-records <- records[which( ! is.na(records$Lon) ), ]
+records <- removeNA(records,"Lon","Lat")
 
 # remove duplicate coordinates
-sum( duplicated(records[,c("Lon","Lat")]) )
-records <- records[which( ! duplicated( records[,c("Lon","Lat")] ) ), ]
+records <- removeDuplicated(records,"Lon","Lat")
 
 # confirm that all records bellong to the know distribution of the species
 plot(world, col="Gray", border="Gray", axes=TRUE, main="Clean distribution records" , ylab="latitude", xlab="longitude")
@@ -63,6 +61,10 @@ records <- selectRecords(records)
 plot(world, col="Gray", border="Gray", axes=TRUE, main="Clean distribution records" , ylab="latitude", xlab="longitude")
 points(records[,3:4], pch=20, col="Black")
 
+# remove records outside known distributions
+defineRegion(records)
+records <- selectRecords(records)
+
 # remove records outside the known vertical distribution (example at 80m depth)
 bathymetry <- raster("Data/rasterLayers/BathymetryDepthMean.tif")
 depthUse <- extract(bathymetry,records[,c("Lon","Lat")])
@@ -71,9 +73,7 @@ hist(depthUse,breaks=50)
 records <- records[ which(depthUse > -80) ,]
 
 # identify and remove records on land
-overLand <- whichOverLand(records)
-length(overLand)
-records <- records[-overLand,]
+records <- removeOverLand(records)
 
 # plot records V1
 plot(world, col="Gray", border="Gray", axes=TRUE, main="Clean distribution records" , ylab="latitude", xlab="longitude")
