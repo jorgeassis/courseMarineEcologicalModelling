@@ -54,6 +54,9 @@ plot(world, col="Gray", border="Gray", axes=TRUE, main="Clean distribution recor
 points(records[,3:4], pch=20, col="Black")
 
 # identify final records and remove those outside the know distibution 
+# use function defineRegion() to choose the region where the species occur.
+# draw a polygon of the region of interest, click finish and close the window.
+# use function selectRecords() to select the records within the region of interest.
 defineRegion(records)
 records <- selectRecords(records)
 
