@@ -25,9 +25,9 @@ options(warn=0)
 
 ## -----------------------------------------------------------------------------------------------
 
-defineRegion <- function(records) {
+defineRegion <- function(records,lonName,latName) {
   
-  records <- records[which(!is.na(records$Lon)),c("Lon","Lat")] 
+  records <- records[which(!is.na(records[,lonName])),c(lonName,latName)] 
   
   ui <- fluidPage(leafletOutput("mymap",height=500))
   
@@ -37,7 +37,7 @@ defineRegion <- function(records) {
       leaflet() %>%
         addProviderTiles("Esri.OceanBasemap",group = "Ocean Basemap") %>%
         
-        addCircles(lng=records[,"Lon"], lat=records[,"Lat"] , weight = 3,color="Black",radius = 6) %>%
+        addCircles(lng=records[,lonName], lat=records[,latName] , weight = 3,color="Black",radius = 6) %>%
         
         addDrawToolbar(
           targetGroup='draw')  
@@ -59,15 +59,15 @@ defineRegion <- function(records) {
   
 ## -----------------------------------------------------------------------------------------------
 
-selectRecords <- function(records) {
+selectRecords <- function(records,lonName,latName) {
   
-  records <- records[which(!is.na(records$Lon)),] 
+  records <- records[which(!is.na(records[,lonName])),] 
   
   nPoints <- length(feature$geometry$coordinates[[1]])
   sapply(1:nPoints,function(x) { unlist(feature$geometry$coordinates[[1]][[x]]) })
   poly <- spPolygons(t(sapply(1:nPoints,function(x) { unlist(feature$geometry$coordinates[[1]][[x]]) })))
   
-  spobj1 <- SpatialPointsDataFrame(records[,c("Lon","Lat")], data=records)
+  spobj1 <- SpatialPointsDataFrame(records[,c(lonName,latName)], data=records)
   crs(spobj1) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   crs(poly) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   
@@ -78,13 +78,15 @@ selectRecords <- function(records) {
 
 ## -----------------------------------------------------------------------------------------------
   
-removeOverLand <- function(spobj1) {
+removeOverLand <- function(spobj1,lonName,latName) {
+  
+  spobj1 <- spobj1[which(!is.na(spobj1[,lonName])),] 
   
   spobj2 <- ne_countries(scale = 'large')
   
   if(class(spobj1) == "data.frame" ) {
     
-    spobj1 <- SpatialPointsDataFrame(records[,c("Lon","Lat")], data=records)
+    spobj1 <- SpatialPointsDataFrame(spobj1[,c(lonName,latName)], data=spobj1)
     
   }
 
