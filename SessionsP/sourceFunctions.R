@@ -81,8 +81,7 @@ selectRecords <- function(records,lonName,latName) {
 removeOverLand <- function(spobj1,lonName,latName) {
   
   spobj1 <- spobj1[which(!is.na(spobj1[,lonName])),] 
-  
-  spobj2 <- ne_countries(scale = 'large')
+  spobj2 <- ne_countries(scale = 110)
   
   if(class(spobj1) == "data.frame" ) {
     
@@ -93,10 +92,12 @@ removeOverLand <- function(spobj1,lonName,latName) {
   crs(spobj1) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   crs(spobj2) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   
-  overLand <- which( ! is.na(over(spobj1,spobj2)[,1] ))
-  cat("Removing",length(overLand),"records over Land")
   overLand <- which( is.na(over(spobj1,spobj2)[,1] ))
+  cat("Removing",length(overLand),"records over Land")
+  overLand <- which( ! is.na(over(spobj1,spobj2)[,1] ))
   spobj1 <- spobj1[-overLand,]
+  spobj1 <- as.data.frame(spobj1)[,c(lonName,latName)]
+  return(spobj1)
   
 }
 
