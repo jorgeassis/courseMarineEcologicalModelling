@@ -101,7 +101,6 @@ removeOverLand <- function(spobj1,lonName,latName) {
   
 }
 
-
 ## -----------------------------------------------------------------------------------------------
 
 whichOverPolygon <- function(spobj1,spobj2) {
