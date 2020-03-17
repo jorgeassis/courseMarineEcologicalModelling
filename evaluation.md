@@ -60,6 +60,8 @@ The student must get, at least, 9.5 out of 20.<br>
 Individual research = (Brief presentation * 0.1 ) + (Final presentation * 0.2 ) + (Final report * 0.6 ) + (Markdown script * 0.1 )<br>
 Final grade = (Individual research * 0.7) + (Mid-term exam * 0.3)
 
+<br>
+
 ### Oral Presentations Grading Criteria
 
 01. Comfort [10%]
