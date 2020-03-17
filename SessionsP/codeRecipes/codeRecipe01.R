@@ -51,7 +51,7 @@ records <- removeDuplicated(records,"Lon","Lat")
 
 # confirm that all records bellong to the know distribution of the species
 plot(world, col="Gray", border="Gray", axes=TRUE, main="Clean distribution records" , ylab="latitude", xlab="longitude")
-points(records[,3:4], pch=20, col="Black")
+points(records[,c("Lon","Lat")], pch=20, col="Black")
 
 # identify final records and remove those outside the know distibution 
 # use function defineRegion() to choose the region where the species occur.
@@ -63,11 +63,7 @@ records <- selectRecords(records,"Lon","Lat")
 
 # reconfirm that all records bellong to the know distribution of the species
 plot(world, col="Gray", border="Gray", axes=TRUE, main="Clean distribution records" , ylab="latitude", xlab="longitude")
-points(records[,3:4], pch=20, col="Black")
-
-# remove records outside known distributions
-defineRegion(records)
-records <- selectRecords(records)
+points(records[,c("Lon","Lat")], pch=20, col="Black")
 
 # remove records outside the known vertical distribution (example at 80m depth)
 bathymetry <- raster("Data/rasterLayers/BathymetryDepthMean.tif")
@@ -81,7 +77,7 @@ records <- removeOverLand(records,"Lon","Lat")
 
 # plot records V1
 plot(world, col="Gray", border="Gray", axes=TRUE, main="Clean distribution records" , ylab="latitude", xlab="longitude")
-points(records[,3:4], pch=20, col="Black")
+points(records[,c("Lon","Lat")], pch=20, col="Black")
 
 # plot records V2
 ggplot() + 

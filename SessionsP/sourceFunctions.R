@@ -14,7 +14,10 @@ for(package in packages.to.use) {
   
   if( ! "rnaturalearthhires" %in% rownames(installed.packages()) ) { devtools::install_github("ropensci/rnaturalearthhires")  }
   if( ! "robis" %in% rownames(installed.packages()) ) { devtools::install_github("iobis/robis")  }
+
+  if( ! package %in% rownames(installed.packages()) ) { install.packages( package ) }
   if( ! package %in% rownames(installed.packages()) ) { install.packages( package , type = "source" ) }
+
   if( ! package %in% rownames(installed.packages()) ) { stop("Error on package instalation") }
   
   library(package, character.only = TRUE)
@@ -100,6 +103,7 @@ removeOverLand <- function(spobj1,lonName,latName) {
   return(spobj1)
   
 }
+
 
 ## -----------------------------------------------------------------------------------------------
 
