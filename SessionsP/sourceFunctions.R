@@ -6,7 +6,7 @@
 ## -----------------------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------------------
 
-packages.to.use <- c("RColorBrewer","SDMtune","devtools","shiny","robis","mapproj","knitr","sf","worms","RCurl","RJSONIO","sp","rgdal","rgeos","raster","geosphere","ggplot2","gridExtra","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","rgbif","dismo","sdmpredictors")
+packages.to.use <- c("ENMeval","plotROC","RColorBrewer","devtools","shiny","robis","mapproj","knitr","sf","worms","RCurl","RJSONIO","sp","rgdal","rgeos","raster","geosphere","ggplot2","gridExtra","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","rgbif","dismo","SDMTools","SDMtune","sdmpredictors")
 
 options(warn=-1)
 
@@ -14,10 +14,13 @@ for(package in packages.to.use) {
   
   if( ! "rnaturalearthhires" %in% rownames(installed.packages()) ) { devtools::install_github("ropensci/rnaturalearthhires")  }
   if( ! "robis" %in% rownames(installed.packages()) ) { devtools::install_github("iobis/robis")  }
-
+  if( ! "SDMTools" %in% rownames(installed.packages()) ) { devtools::install_github('dbahrdt/SDMTools@ignore_invalid')  }
+  
   if( ! package %in% rownames(installed.packages()) ) { install.packages( package ) }
   if( ! package %in% rownames(installed.packages()) ) { install.packages( package , type = "source" ) }
 
+  
+  
   if( ! package %in% rownames(installed.packages()) ) { stop("Error on package instalation") }
   
   library(package, character.only = TRUE)
@@ -62,6 +65,44 @@ defineRegion <- function(records,lonName,latName) {
   
 ## -----------------------------------------------------------------------------------------------
 
+getAccuracy <- function(model,threshold=0.5) {
+  
+  acc <- accuracy(model@data@pa,  predict(model, model@data@data, type=c("logistic")) , threshold = threshold)
+
+return(acc)
+
+}
+
+## -----------------------------------------------------------------------------------------------
+
+getAUC <- function(model, test = NULL) {
+  
+  return(SDMtune::auc(model, test = test))
+  
+}
+
+## -----------------------------------------------------------------------------------------------
+
+trainGLM <- function(modelData) {
+  
+  data <- modelData@data
+  data <- data.frame(PA=modelData@pa,modelData@data)
+  model <- glm( paste0("PA ~ ",paste(colnames(modelData@data),collapse = " + ")) , family="binomial", data=data)
+
+return(model)
+
+}
+
+## -----------------------------------------------------------------------------------------------
+
+prepareModelData <- function(p,a,env) {
+    
+    return(prepareSWD(species = "Model species", p = p, a = a, env = env))
+    
+  }
+
+## -----------------------------------------------------------------------------------------------
+
 backgroundInformation <- function(rasters,n) {
   
   shape <- subset(rasters,1)
@@ -75,6 +116,7 @@ backgroundInformation <- function(rasters,n) {
   return(absences)
   
 }
+
 
 ## -----------------------------------------------------------------------------------------------
 
