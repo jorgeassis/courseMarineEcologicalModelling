@@ -34,17 +34,15 @@ S02. Principles of Geographic Information Systems<br>
 S03. Ecological niches and geographic distributions, a perspective from macroecology<br>
 S04. Climate oscillations and distributional shifts of marine biodiversity<br>
 S05. Biological and environmental data for macroecology<br>
-S06. Principles of Ecological Niche Modelling
+S06. Principles of Ecological Niche Modelling<br>
 S07. Potential applications of Ecological Niche Modelling<br>
 S08. Model fitting and transferability in space and time<br>
-S09. Bringing realism to Ecological Niche Modelling<br>
-SS1. Presentations [1]<br>
+S09. The diversity of algorithms of Ecological Niche Modelling and ensembles<br>
 S10. Evaluating predictive performance and setting decision thresholds<br>
-S11. The diversity of algorithms of Ecological Niche Modelling and ensembles<br>
+S11. Bringing realism to Ecological Niche Modelling<br>
 S12. Improving transferability of Ecological Niche Modelling<br>
 S13. Exploring niche evolution and speciation mechanisms<br>
-S14. Dissemination of results<br>
-SS2. Presentations [2]
+S14. Dissemination of results
 
 ### Sessions P
 S01. Brief recap of R basics<br>

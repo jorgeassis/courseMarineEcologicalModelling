@@ -6,7 +6,7 @@
 ## -----------------------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------------------
 
-packages.to.use <- c("devtools","shiny","robis","mapproj","knitr","sf","worms","RCurl","RJSONIO","sp","rgdal","rgeos","raster","geosphere","ggplot2","gridExtra","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","rgbif","dismo","sdmpredictors")
+packages.to.use <- c("RColorBrewer","SDMtune","devtools","shiny","robis","mapproj","knitr","sf","worms","RCurl","RJSONIO","sp","rgdal","rgeos","raster","geosphere","ggplot2","gridExtra","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","rgbif","dismo","sdmpredictors")
 
 options(warn=-1)
 
@@ -60,6 +60,58 @@ defineRegion <- function(records,lonName,latName) {
   
 }
   
+## -----------------------------------------------------------------------------------------------
+
+backgroundInformation <- function(rasters,n) {
+  
+  shape <- subset(rasters,1)
+  nonNACells <- Which(!is.na(shape), cells=TRUE) 
+  sink.points <- xyFromCell(shape, nonNACells)
+  
+  absences <- sample( 1:nrow(sink.points) , min(n,nrow(sink.points)) , replace=FALSE)
+  absences <- sink.points[absences,]
+  colnames(absences) <- c("Lon","Lat")
+  
+  return(absences)
+  
+}
+
+## -----------------------------------------------------------------------------------------------
+
+
+
+pseudoAbsences <- function(rasters,records,n) {
+  
+  shape <- subset(rasters,1)
+  nonNACells <- Which(!is.na(shape), cells=TRUE) 
+  sink.points <- xyFromCell(shape, nonNACells)
+  
+  absences <- sample( 1:nrow(sink.points) , min(n,nrow(sink.points)) , replace=FALSE)
+  absences <- sink.points[absences,]
+  colnames(absences) <- c("Lon","Lat")
+  
+    # Removes those closer than paDist
+    
+    sink.points.poly <- as.data.frame(records)
+    coordinates( sink.points.poly ) <- c( "Lon", "Lat" )
+    proj4string( sink.points.poly ) <- CRS( "+proj=longlat +datum=WGS84" )
+    
+    sink.points.poly <- gBuffer( sink.points.poly, width=25 / 111.699, byid=TRUE )
+    # plot(sink.points.poly)
+    
+    sink.points.pts <- as.data.frame(absences)
+    colnames( sink.points.pts ) <- c( "Lon", "Lat" )
+    coordinates( sink.points.pts ) <- c( "Lon", "Lat" )
+    proj4string( sink.points.pts ) <- CRS( "+proj=longlat +datum=WGS84" )
+    
+    to.remove.id <- sp::over(sink.points.pts,sink.points.poly)
+    to.keep <- which(is.na(to.remove.id))
+    absences <- absences[to.keep,]
+    
+  return(absences)
+    
+}
+
 ## -----------------------------------------------------------------------------------------------
 
 selectRecords <- function(records,lonName,latName) {
