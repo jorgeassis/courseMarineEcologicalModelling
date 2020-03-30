@@ -13,14 +13,11 @@ options(warn=-1)
 for(package in packages.to.use) {
   
   if( ! "rnaturalearthhires" %in% rownames(installed.packages()) ) { devtools::install_github("ropensci/rnaturalearthhires")  }
-  if( ! "robis" %in% rownames(installed.packages()) ) { devtools::install_github("iobis/robis")  }
   if( ! "SDMTools" %in% rownames(installed.packages()) ) { devtools::install_github('dbahrdt/SDMTools@ignore_invalid')  }
   
   if( ! package %in% rownames(installed.packages()) ) { install.packages( package ) }
   if( ! package %in% rownames(installed.packages()) ) { install.packages( package , type = "source" ) }
 
-  
-  
   if( ! package %in% rownames(installed.packages()) ) { stop("Error on package instalation") }
   
   library(package, character.only = TRUE)
@@ -68,7 +65,7 @@ defineRegion <- function(records,lonName,latName) {
 getAccuracy <- function(model,threshold=0.5) {
   
   acc <- accuracy(model@data@pa,  predict(model, model@data@data, type=c("logistic")) , threshold = threshold)
-
+  acc <- acc[,c("threshold","omission.rate","sensitivity","specificity","prop.correct","Kappa")]
 return(acc)
 
 }
@@ -80,6 +77,25 @@ getAUC <- function(model, test = NULL) {
   return(SDMtune::auc(model, test = test))
   
 }
+
+## -----------------------------------------------------------------------------------------------
+
+thresholdMaxTSS <- function(model) {
+  
+  r <- data.frame(t(sapply(seq(0,1,by=0.01),function(x) { getAccuracy(model,threshold = x) })))
+
+  plot(r$threshold,r$sensitivity,type="l", xlab="Threshold",ylab="Performance" , lty=1, lwd=1 )
+  lines(r$threshold,r$specificity , lty=1, lwd=4 , col= "gray")
+  
+  val <- unlist(r$threshold)[which.max( unlist(r$sensitivity) + unlist(r$specificity) )]
+  
+  abline(v=val , lty=3, lwd=0.7 )
+  legend(0.7, 0.9, legend=c("Sensitivity", "Specificity"),col=c("black", "gray"), lty=1, lwd=c(1,4) , cex=1)
+  
+  return(val)
+  
+}
+
 
 ## -----------------------------------------------------------------------------------------------
 
