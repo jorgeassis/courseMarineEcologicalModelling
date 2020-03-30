@@ -126,3 +126,21 @@ modelling. In Moilanen, A., Wilson, K. A., & Possingham, H. (Eds.) Spatial Conse
 [Oceanographic Conditions Limit the Spread of a Marine Invader along Southern African Shores](https://www.dropbox.com/s/d23uxx8c0tmp3g7/Assis%20et%20al.%20-%202015%20-%20Oceanographic%20Conditions%20Limit%20the%20Spread%20of%20a%20Marine%20Invader%20along%20Southern%20African%20Shores.pdf?dl=0)
 
 [How experimental physiology and ecological niche modelling can inform the management of marine bioinvasions?](https://www.dropbox.com/s/08hb8je2jb7xyj1/Koerich%20et%20al.%20-%202019%20-%20How%20experimental%20physiology%20and%20ecological%20niche%20modelling%20can%20inform%20the%20management%20of%20marine%20bioinvasions.pdf?dl=0)
+
+#### Sessions 8:10
+
+*Mandatory* <br>
+
+[Ecological niches and geographic distributions](https://www.dropbox.com/s/hfvawmuy6pst2ws/Ecological%20niches%20and%20geographic%20distributions.pdf?dl=0)
+
+#### Session 11
+
+*Mandatory* <br>
+
+[Bio-ORACLE v2.0: Extending marine data layers for bioclimatic modelling](https://www.dropbox.com/s/smo6ziwjbez08au/Assis%20et%20al.%20-%202017%20-%20Bio-ORACLE%20v2.0%20Extending%20marine%20data%20layers%20for%20bioclimatic%20modelling.pdf?dl=0)
+
+#### Session 12
+
+*Interesting* <br>
+
+[Outstanding Challenges in the Transferability of Ecological Models](https://www.dropbox.com/s/2s5a6cez80eq1uf/Outstanding%20Challenges%20in%20the%20Transferability%20of%20Ecological%20Models.pdf?dl=0)
