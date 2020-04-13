@@ -40,13 +40,13 @@ To successfully write the report, the students must:
 [16 March] Brief presentation (5 minutes) + Brief discussion (5 minutes).<br>
 The student will perform a small presentation where they formulate a research ecological question and hypothesis based on literature revision and show a conceptual model to address the research question. Also, preliminary biodiversity and environmental data can be shown.
 
-[20 April] Final presentation (10 minutes) + Brief discussion (5 minutes).<br>
+[11 May] Final presentation (10 minutes) + Brief discussion (5 minutes).<br>
 The student will perform a presentation where they show the major findings of their research study addressing the interactions or impacts of global climate changes on marine biodiversity.<br><br>
 
-[31 May] Final report (10 minutes) (up to 8000 words with references, paper format).<br>
+[15 May] Final report (10 minutes) (up to 8000 words with references, paper format).<br>
 The students must send the final report to jmassis@ualg.pt.<br><br>
 
-[31 May] Documented R markdown script as supplementary information of the final report.<br>
+[15 May] Documented R markdown script as supplementary information of the final report.<br>
 The students must send the documented R markdown script to jmassis@ualg.pt.<br><br>
 
 
