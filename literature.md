@@ -144,3 +144,11 @@ modelling. In Moilanen, A., Wilson, K. A., & Possingham, H. (Eds.) Spatial Conse
 *Interesting* <br>
 
 [Outstanding Challenges in the Transferability of Ecological Models](https://www.dropbox.com/s/2s5a6cez80eq1uf/Outstanding%20Challenges%20in%20the%20Transferability%20of%20Ecological%20Models.pdf?dl=0)
+
+#### Session 13
+
+*Interesting* <br>
+
+Sandve GK, Nekrutenko A, Taylor J, Hovig E (2013) Ten Simple Rules for Reproducible Computational Research. PLoS Comput Biol 9(10): e1003285.<br>
+
+Open Science Collaboration (2017): Estimating the reproducibility of psychological science, Science Vol. 349, Issue 6251.
