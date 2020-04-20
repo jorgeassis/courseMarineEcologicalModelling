@@ -43,7 +43,7 @@ The student will perform a small presentation where they formulate a research ec
 [11 May] Final presentation (10 minutes) + Brief discussion (5 minutes).<br>
 The student will perform a presentation where they show the major findings of their research study addressing the interactions or impacts of global climate changes on marine biodiversity.<br><br>
 
-[31 May] Final report (10 minutes) (up to 8000 words with references, paper format).<br>
+[31 May] Final report (up to 8000 words with references, paper format).<br>
 The students must send the final report to jmassis@ualg.pt.<br><br>
 
 [31 May] Documented R markdown script as supplementary information of the final report.<br>
