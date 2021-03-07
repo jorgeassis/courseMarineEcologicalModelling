@@ -1,7 +1,7 @@
 ## Marine ecological niche modelling and global climate change
 ### [Important learning skill]
 
-### S1 : Brief recap of R computing basics
+### S1.1 : Brief recap of R computing basics
 
 1. Working directory <br>
 2. Load and install packages <br>
@@ -9,7 +9,7 @@
 4. Data types and structures [vectors, matrices and data.frames] <br>
 5. Indexing [vectors, matrices and data.frames] <br>
 
-### S2 : Basic programming elements
+### S1.2 : Basic programming elements
 
 1. Logic and conditions <br>
 2. Random numbers <br>
@@ -17,7 +17,7 @@
 4. Data import and export <br>
 5. Commenting the code <br>
 
-### S3 : R as a Geographic Information System
+### S2 : R as a Geographic Information System
 
 1. Importing and exporting vector data <br>
 2. Vector data operations [crop, area, overlap] <br>
@@ -27,7 +27,7 @@
 6. Reclassify raster data <br>
 7. Additional functions for raster data [extract]
 
-### S5 : Biodiversity data in R
+### S4 : Biodiversity data in R
 
 1. Biodiversity data <br>
 2. Plot occurrence data with R <br>
@@ -37,30 +37,30 @@
 
 [helpful script in Recipe 1]
 
-### S6 : Environmental data in R
+### S5 : Environmental data in R
 
 1. Environmental data [Bio-ORACLE] <br>
 2. Collinearity (high correlation) between variables
 
-### S7 : Developing Ecological Niche Models
+### S6 : Developing Ecological Niche Models
 
 1. Model fitting <br>
 2. Model transferability
 
-### S8 : Predictive performance in Ecological Modelling
+### S7 : Predictive performance in Ecological Modelling
 
 1. Model evaluation <br>
 2. Reclassify predictive surfaces <br>
 3. Variable relative importance and response curves
 
-### S9 : Data-driven hyperparameter and variable selection
+### S8 : Data-driven hyperparameter and variable selection
 
 1. Data-driven model selection
 
-### S10 : Comparing predictive performances of modelling algorithms
+### S09 : Comparing predictive performances of modelling algorithms
 
 1. Comparing the performances of distinct models
 
-### S10 : Comparing predictive performances of modelling algorithms
+### S10 : Ensembling ecological model responses
 
 **not mandatory**

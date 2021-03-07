@@ -44,14 +44,14 @@ S12. Improving transferability of Ecological Niche Modelling;<br>
 S13. Dissemination of results under the Open Science framework.<br>
 
 ### Sessions P
-S01. Brief recap of R basics;<br>
-S02. Basic programming elements;<br>
-S03. R as a Geographic Information System;<br>
-S04. Interactive maps with leaflet;<br>
-S05. Biodiversity data in R;<br>
-S06. Environmental data in R;<br>
-S07. Developing Ecological Niche Models;<br>
-S08. Predictive performance in Ecological Modelling;<br>
-S09. Data-driven hyperparameter and variable selection;<br>
-S10. Comparing predictive performances of modelling algorithms;<br>
-S11. Ensembling ecological model responses.<br>
+S01.1. Brief recap of R basics;<br>
+S01.2. Basic programming elements;<br>
+S02. R as a Geographic Information System;<br>
+S03. Better GIS maps with ggplot and leaflet;<br>
+S04. Biodiversity data in R;<br>
+S05. Environmental data in R;<br>
+S06. Developing Ecological Niche Models;<br>
+S07. Predictive performance in Ecological Modelling;<br>
+S08. Data-driven hyperparameter and variable selection;<br>
+S09. Comparing predictive performances of modelling algorithms;<br>
+S10. Ensembling ecological model responses.<br>
