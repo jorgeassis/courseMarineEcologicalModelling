@@ -246,10 +246,14 @@ detach(package:sp)
 install.packages(&quot;sp&quot;, dependencies = TRUE)
 devtools::install_github(&quot;ropensci/rnaturalearthhires&quot;)</pre>
 
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-1">
+
 <h3>Challenge 1</h3>
 
+<p>The main objective of this challenge is to <strong>install</strong> a set of key R packages.</p>
+
 <div class="notebox yellowmode">
-<p>Install the R packages:<br> &ldquo;devtools&rdquo;, &ldquo;raster&rdquo;, &ldquo;sp&rdquo;, &ldquo;ggplot2&rdquo;, &ldquo;rgeos&rdquo;, &ldquo;rnaturalearth&rdquo;, &ldquo;rnaturalearthdata&rdquo;, &ldquo;rnaturalearthhires,&rdquo;rgdal&quot;</p></div>
+<p>Install the flowwong R packages:<br> &ldquo;devtools&rdquo;<br> &ldquo;raster&rdquo;<br> &ldquo;sp&rdquo;<br> &ldquo;ggplot2&rdquo;<br> &ldquo;rgeos&rdquo;<br> &ldquo;rnaturalearth&rdquo;<br> &ldquo;rnaturalearthdata&rdquo;<br> &ldquo;rnaturalearthhires<br>&rdquo;rgdal&quot;</p></div>
 
 <div class="footer">
 S1 // Brief recap on R computing basics</div>
@@ -281,7 +285,7 @@ S1 // Brief recap on R computing basics</div>
 
 <!-- ------------------------------------------------------------------- -->
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-1">
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-2">
 
 <p>We can remove objects from the workspace using rm().</p>
 
@@ -340,7 +344,7 @@ S1 // Brief recap on R computing basics</div>
 
 <!-- ------------------------------------------------------------------- -->
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-2">
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-3">
 
 <p>R <strong>object types</strong> differ in complexity. <strong>Vectors, matrices and arrays can only contain one data type</strong>.</p>
 
@@ -364,7 +368,7 @@ S1 // Brief recap on R computing basics</div>
 
 <!-- ------------------------------------------------------------------- -->
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-3">
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-4">
 
 <pre class = 'prettyprint lang-r'># array (a matrix with multiple dimensions)
 myArray &lt;- array(1:24, c(4, 3, 2))
@@ -391,7 +395,7 @@ S1 // Brief recap on R computing basics</div>
 
 <!-- ------------------------------------------------------------------- -->
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-4">
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-5">
 
 <p><strong>Data frames can contain different data types in separate columns</strong> but all columns need to have the same length.</p>
 
@@ -574,7 +578,7 @@ S1 // Brief recap on R computing basics</div>
 
 <!-- ------------------------------------------------------------------- -->
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-5">
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-6">
 
 <p><strong>Lists can contain different object types and data types</strong>.</p>
 
@@ -597,7 +601,7 @@ S1 // Brief recap on R computing basics</div>
 
 <!-- ------------------------------------------------------------------- -->
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-6">
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-7">
 
 <p><strong>Missing values are as NA (Not Available)</strong>.<br> e.g., In a dataset with daily weather measurements over a longer period of time. On one day, the batteries of the weather station were empty and no measurements were taken. <strong>For integrity reasons, empty entries will still be stored</strong> in the data set but will be assigned the missing value &lsquo;NA&rsquo;.</p>
 
@@ -637,7 +641,7 @@ S1 // Brief recap on R computing basics</div>
 
 <!-- ------------------------------------------------------------------- -->
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-7">
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-8">
 
 <pre class = 'prettyprint lang-r'># use address vectors
 x[c(1, 4, 6)]</pre>
@@ -661,7 +665,7 @@ S1 // Brief recap on R computing basics</div>
 
 <!-- ------------------------------------------------------------------- -->
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-8">
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-9">
 
 <pre class = 'prettyprint lang-r'># retrieve the matrix element located in the 1st row and 2nd column
 myMatrix[1, 2]</pre>
@@ -683,7 +687,7 @@ S1 // Brief recap on R computing basics</div>
 
 <!-- ------------------------------------------------------------------- -->
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-9">
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-10">
 
 <pre class = 'prettyprint lang-r'># retrieve the 1st row of a data.frame
 courseSchedule[1, ]</pre>
@@ -749,7 +753,7 @@ S1 // Brief recap on R computing basics</div>
 
 <!-- ------------------------------------------------------------------- -->
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-10">
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-11">
 
 <pre class = 'prettyprint lang-r'># determine the mean of a vector
 myData &lt;- c(2, 4, 3, 2, 3, 4, 2, 2)
@@ -760,12 +764,12 @@ mean(myData)</pre>
 <pre class = 'prettyprint lang-r'># random numbers drawn from a given distribution without replacement
 sample(1:30, size = 5)</pre>
 
-<pre >## [1]  5 14  8 20  4</pre>
+<pre >## [1] 10 14 22 13  9</pre>
 
 <pre class = 'prettyprint lang-r'># random numbers drawn from a given distribution without replacement
 sample(1:10, size = 5, replace = FALSE)</pre>
 
-<pre >## [1] 4 3 6 8 2</pre>
+<pre >## [1] 1 9 5 2 8</pre>
 
 <div class="footer">
 S1 // Brief recap on R computing basics</div>
@@ -792,7 +796,7 @@ S1 // Brief recap on R computing basics</div>
 
 <!-- ------------------------------------------------------------------- -->
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-11">
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-12">
 
 <pre class = 'prettyprint lang-r'># data frames can be written to files using e.g write.table
 mySpeciesSurvey &lt;- data.frame(Location = c(&quot;San Luiz&quot;, &quot;La marchila&quot;), Lon = c(25.45, 85.41), 
@@ -887,7 +891,7 @@ S1 // Brief recap on R computing basics</div>
 
 <!-- ------------------------------------------------------------------- -->
 
-</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-12">
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article  id="section-13">
 
 <p>Objects available in the environment can also be saved (&ldquo;.RData file&rdquo;).</p>
 

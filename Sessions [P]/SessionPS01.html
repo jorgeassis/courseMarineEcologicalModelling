@@ -254,15 +254,15 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #363636; marg
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">funFactor=</span><span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">&#39;super&#39;</span>,<span class="st">&#39;ok&#39;</span>,<span class="st">&#39;pain&#39;</span>),<span class="dv">10</span>,<span class="at">replace=</span>T))</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>courseSchedule</span></code></pre></div>
 <pre><code>##    weeks funFactor
-## 1      1        ok
+## 1      1     super
 ## 2      2     super
-## 3      3     super
-## 4      4        ok
-## 5      5     super
+## 3      3        ok
+## 4      4      pain
+## 5      5        ok
 ## 6      6      pain
 ## 7      7     super
-## 8      8        ok
-## 9      9     super
+## 8      8      pain
+## 9      9        ok
 ## 10    10      pain</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lists</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>memccCourse <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">course_name=</span><span class="st">&quot;Marine Ecological Modelling and Global Climate Change&quot;</span>,</span>
@@ -287,15 +287,15 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #363636; marg
 ## 
 ## $lessons
 ##    weeks funFactor
-## 1      1        ok
+## 1      1     super
 ## 2      2     super
-## 3      3     super
-## 4      4        ok
-## 5      5     super
+## 3      3        ok
+## 4      4      pain
+## 5      5        ok
 ## 6      6      pain
 ## 7      7     super
-## 8      8        ok
-## 9      9     super
+## 8      8      pain
+## 9      9        ok
 ## 10    10      pain</code></pre>
 <div style="height: 15px">
 
@@ -366,29 +366,29 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #363636; marg
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>memccCourse[<span class="st">&#39;lessons&#39;</span>]</span></code></pre></div>
 <pre><code>## $lessons
 ##    weeks funFactor
-## 1      1        ok
+## 1      1     super
 ## 2      2     super
-## 3      3     super
-## 4      4        ok
-## 5      5     super
+## 3      3        ok
+## 4      4      pain
+## 5      5        ok
 ## 6      6      pain
 ## 7      7     super
-## 8      8        ok
-## 9      9     super
+## 8      8      pain
+## 9      9        ok
 ## 10    10      pain</code></pre>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>memccCourse<span class="sc">$</span>course_name</span></code></pre></div>
 <pre><code>## [1] &quot;Marine Ecological Modelling and Global Climate Change&quot;</code></pre>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>memccCourse<span class="sc">$</span>lessons</span></code></pre></div>
 <pre><code>##    weeks funFactor
-## 1      1        ok
+## 1      1     super
 ## 2      2     super
-## 3      3     super
-## 4      4        ok
-## 5      5     super
+## 3      3        ok
+## 4      4      pain
+## 5      5        ok
 ## 6      6      pain
 ## 7      7     super
-## 8      8        ok
-## 9      9     super
+## 8      8      pain
+## 9      9        ok
 ## 10    10      pain</code></pre>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># modifying single elements</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>ecologicalGroups <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">kelp=</span><span class="dv">5</span>, <span class="at">seagrasses=</span><span class="dv">10</span>, <span class="at">corals=</span><span class="dv">1</span>, <span class="at">fish=</span><span class="dv">20</span>)</span>
@@ -453,10 +453,10 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #363636; marg
 <pre><code>## [1] 0.8864053</code></pre>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># random numbers drawn from a given distribution without replacement </span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,<span class="at">size=</span><span class="dv">5</span>) </span></code></pre></div>
-<pre><code>## [1]  2 29  8 18 26</code></pre>
+<pre><code>## [1] 28 16 29 13 24</code></pre>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># random numbers drawn from a given distribution without replacement </span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="at">size=</span><span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>) </span></code></pre></div>
-<pre><code>## [1] 8 5 4 1 7</code></pre>
+<pre><code>## [1]  8  4  3 10  2</code></pre>
 <div style="height: 15px">
 
 </div>
@@ -619,17 +619,17 @@ hr { display: block; height: 1px; border: 0; border-top: 1px solid #363636; marg
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
 <span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">5</span>)</span>
 <span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>r</span></code></pre></div>
-<pre><code>## [1]  4  7  1 10  3</code></pre>
+<pre><code>## [1]  2  3  8  4 10</code></pre>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>r</span></code></pre></div>
-<pre><code>## [1] 10  7  3  4  6</code></pre>
+<pre><code>## [1]  7 10  3  4  8</code></pre>
 <p>If you run the functions above, you will get different numbers. After all, they are random numbers! Well, <strong>computer generated numbers that are not truly random</strong>, but ‘pseudo-random’. To be able to exactly reproduce examples or data analysis we often want to assure that we take exactly the same ‘random’ sample each time we run our code.</p>
 <p>To do that we use <strong>set.seed</strong>. This function initializes the random number generator to a specific point. This is a very important feature, as it allows us to <strong>exactly reproduce results</strong> that involve random sampling.</p>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># random numbers within a given distribution</span></span>
 <span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">5</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## [1] 0.8088447 0.9930031 0.9170216 0.6103617 0.6410170</code></pre>
+<pre><code>## [1] 0.09259984 0.79363828 0.17367753 0.32958138 0.98237723</code></pre>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">5</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>)</span></code></pre></div>
-<pre><code>## [1] 0.98547342 0.01773192 0.52271323 0.53300411 0.90685358</code></pre>
+<pre><code>## [1] 0.1741895 0.2405457 0.4329092 0.6978912 0.2694788</code></pre>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span>
 <span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">5</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 0.06936092 0.81777520 0.94262173 0.26938188 0.16934812</code></pre>

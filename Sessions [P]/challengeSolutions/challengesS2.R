@@ -1,7 +1,7 @@
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 2.1
-# The main objetive of this challenge is to plot a shapefile with the European distribution of a seagrass species. The plot must include the landmass shapefile of the world.
+# The main objective of this challenge is to plot a shapefile with the European distribution of a seagrass species. The plot must include the landmass shapefile of the world.
 
 library(raster)
 
@@ -19,14 +19,10 @@ plot(records)
 plot(world)
 plot(records, add=TRUE,col="red")
 
-# better map
-plot(world, main = "European distribution of a seagrass species", col="#E5E5E5" , border="#959595", axes=TRUE)
-points(records, pch=16, col="Black")
-
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 2.2
-# The main objetive of this challenge is to crop a global map to the Azores islands region and plot it.
+# The main objective of this challenge is to crop a global map to the Azores islands region and plot it.
 
 library(raster)
 library(rnaturalearth)
@@ -43,7 +39,7 @@ plot(azores)
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 2.3
-# The main objetive of this challenge is to plot the centroids of the European no-Take MPA.
+# The main objective of this challenge is to plot the centroids of the European no-Take MPA.
 
 library(raster)
 library(rgeos)
@@ -58,12 +54,12 @@ mediterranean <- shapefile(data2)
 centroids <- gCentroid(mpa, byid=TRUE)
 
 plot(mediterranean)
-plot(mpa,add=TRUE,col="red")
+plot(centroids,add=TRUE,col="red")
 
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 2.4
-# The main objetive of this challenge is to determine and plot the more distant European no-Take MPA.
+# The main objective of this challenge is to determine and plot the more distant European no-Take MPA.
 
 # Getting the centroid of a polygon
 longitude <- c(-15,45,45,-15)
@@ -97,8 +93,8 @@ text(x=12.25, y=39, paste0(round(max(distanceMatrix)), "km"), font=4)
 
 # ----------------------------------------------------
 # ----------------------------------------------------
-# Challenge 2.5
-# The main objetive of this challenge is to plot the smallest no-Take MPA in Europe.
+# Challenge 2.5.1 & 2.5.2
+# The main objective of this challenge is to plot the smallest no-Take MPA in Europe.
 
 longitude <- c(-15,45,45,-15)
 latitude <- c(30,30,47.5,47.5)
@@ -113,50 +109,47 @@ coastlinesMed <- crop(coastlines,region)
 
 map <- shapefile(data2)
 
-mpaAreas <- area(mpa)
+mpaAreas <- raster::area(mpa)
 which.min(mpaAreas)
 mpa$name[120]
 
-plot(coastlinesMed, main = "The smaller no-Take MPA in European coastlines", col="gray",axes = TRUE)
-points(mpa[120,],col="Red",pch=16)
+plot(coastlinesMed, main = "The smaller no-Take MPA in European coastlines", col="gray", border="gray",axes = TRUE)
+plot(mpa[120,],col="Black",add=TRUE)
 
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 2.6
-# The main objetive of this challenge is to make two plots of the global maximum and minimum SST.
+# The main objective of this challenge is to make two plots of the global maximum and minimum SST.
 
 library(raster)
 
 maxSST <- raster("Data/rasterLayers/Present Temperature LtMax.tif")
-minSST <- raster("Data/rasterLayers/Present Temperature LtMin.tif")
 
 plot(maxSST, main ="Maximum Sea Surface Temperatures")
-plot(minSST, main ="Minimum Sea Surface Temperatures")
 
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 2.7
-# The main objetive of this challenge is to plot of the global range of sea surface temperatures.
+# The main objective of this challenge is to plot of the global range of sea surface temperatures.
 
 library(raster)
 
 maxSST <- raster("Data/rasterLayers/Present Temperature LtMax.tif")
 minSST <- raster("Data/rasterLayers/Present Temperature LtMin.tif")
 
-rageSST <-maxSST - minSST
+rageSST <- maxSST - minSST
 plot(rageSST, main ="Range of Sea Surface Temperatures")
 
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 2.8
-# The main objetive of this challenge is to plot the minimum sea surface temperatures in Europe
+# The main objective of this challenge is to plot the minimum sea surface temperatures in Europe
 
 library(raster)
 
 longitude <- c(-15,45,45,-15)
 latitude <- c(30,30,47.5,47.5)
-region <- cbind(longitude,latitude)
-region <- spPolygons(region)
+region <- extent(-15,45,30,47.5)
 
 minSST <- raster("Data/rasterLayers/Present Temperature LtMin.tif")
 minSSTEurope <- crop(minSST,region)
@@ -165,7 +158,7 @@ plot(minSSTEurope, main ="Minimum European Sea Surface Temperatures")
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 2.9
-# The main objetive of this challenge is to reclassify a set of environmental rasters and plot the potential ecological niche of a marine forest species in European coastlines using a mechanistic approach (i.e., process based model).
+# The main objective of this challenge is to reclassify a set of environmental rasters and plot the potential ecological niche of a marine forest species in European coastlines using a mechanistic approach (i.e., process based model).
 
 library(raster)
 
@@ -174,21 +167,24 @@ salinity <- raster("Data/rasterLayers/Present Salinity LtMin.tif")
 maxsst <- raster("Data/rasterLayers/Present Temperature LtMax.tif")
 minsst <- raster("Data/rasterLayers/Present Temperature LtMin.tif")
 
-lightConditions <- data.frame(from = c(0,5) , to=c(5,9999) , reclassValue=c(0,1))
+lightConditions <- data.frame(from = c(0,5) , to=c(5,+Inf) , reclassValue=c(0,1))
 lightConditions <- reclassify(light,lightConditions)
 
-salinityConditions <- data.frame(from = c(0,10) , to=c(10,9999) , reclassValue=c(0,1))
+salinityConditions <- data.frame(from = c(0,10) , to=c(10,+Inf) , reclassValue=c(0,1))
 salinityConditions <- reclassify(salinity,salinityConditions)
 
-maxsstConditions <- data.frame(from = c(-3,20.5) , to=c(20.5,9999) , reclassValue=c(1,0))
+maxsstConditions <- data.frame(from = c(-Inf,20.5) , to=c(20.5,+Inf) , reclassValue=c(1,0))
 maxsstConditions <- reclassify(maxsst,maxsstConditions)
 
-minsstConditions <- data.frame(from = c(-3,5) , to=c(5,9999) , reclassValue=c(0,1))
+minsstConditions <- data.frame(from = c(-Inf,5) , to=c(5,+Inf) , reclassValue=c(0,1))
 minsstConditions <- reclassify(minsst,minsstConditions)
 
 niche <- lightConditions * salinityConditions * maxsstConditions * minsstConditions
 
-europeanExtent <- c(-15,40,25,70.5)
+# or use the function calc with a stack of Rasters
+niche <- calc(stack(lightConditions , salinityConditions , maxsstConditions , minsstConditions), prod)
+
+europeanExtent <- c(-30,40,20,75)
 niche <- crop(niche,europeanExtent)
 
 plot(niche, main = "The ecological niche of Saccorhiza polyschides",axes = TRUE)
@@ -197,7 +193,7 @@ plot(niche, main = "The ecological niche of Saccorhiza polyschides",axes = TRUE,
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 2.10
-# The main objetive of this individual assignment is to **extract** the depth range used (values) by a mediterranean coral and plot it as an histogram.
+# The main objective of this individual assignment is to **extract** the depth range used (values) by a mediterranean coral and plot it as an histogram.
 
 data1 <- "Data/rasterLayers/BathymetryDepthMean.tif"
 data2 <- "Data/dataBases/Paramuricea_clavata.csv"
@@ -213,7 +209,7 @@ hist(depthsUsed,breaks=100)
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 2.11
-# The main objetive of this individual assignment is to **extract** the depth range used (values) by a mediterranean coral and plot it as an histogram.
+# The main objective of this individual assignment is to **extract** the depth range used (values) by a mediterranean coral and plot it as an histogram.
 
 data1 <- "Data/rasterLayers/Present Nitrate LtMin.tif"
 data2 <- "Data/rasterLayers/Present Salinity LtMin.tif"
@@ -233,34 +229,3 @@ colnames(occurrences)
 
 environmentUsed <- extract(environment,occurrences[,c("Lon","Lat")])
 summary(environmentUsed)
-
-read.csv(path)
-raster(path)
-stack(object)
-colnames(object)
-extract(object)
-hist(object)
-
-# ----------------------------------------------------
-# ----------------------------------------------------
-# Challenge 2.12
-# The main objetive of this individual assignment is to determine the area of loss landmasses anticipated in a business as usual climate scenario for the Mediteranean Sea.
-
-dtmPresent <- raster("data/rasterLayers/dtmEurope.tif")
-dtmFuture <- raster("data/rasterLayers/dtmEurope.tif")
-
-dtmPresent[dtmPresent <= 0] <- NA
-dtmPresent[dtmPresent > 0] <- 1
-
-dtmFuture[dtmFuture <= 1] <- NA
-dtmFuture[dtmFuture > 1] <- 1
-
-myLandmassPresent <- rasterToPolygons(dtmPresent)
-myLandmassFuture <- rasterToPolygons(dtmFuture, fun=NULL, n=8, digits=12, dissolve=TRUE)
-
-(area(myLandmassFuture) / 1000000 ) - ( area(myLandmassPresent) / 1000000 )
-
-plot(myLandmassPresent, main = "Loss of European coastlines by 2100 [RCP85]", col="Black", border="Black",axes = TRUE)
-plot(myLandmassFuture, col="gray", border="gray",add = TRUE)
-
-
