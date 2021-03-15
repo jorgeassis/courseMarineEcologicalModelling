@@ -6,7 +6,7 @@
 ## -----------------------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------------------
 
-packages.to.use <- c("dismo","sp","rgdal","rgeos","raster","ggplot2","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","robis","sdmpredictors")
+packages.to.use <- c("dismo","sp","rgdal","rgeos","raster","ggplot2","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","robis","sdmpredictors","SDMtune","RColorBrewer","ENMeval","enmSdm")
 
 # packages.to.use <- c("ENMeval","plotROC","RColorBrewer","devtools","shiny","robis","mapproj","knitr","sf","worms","RCurl","RJSONIO","sp","rgdal","rgeos","raster","geosphere","ggplot2","gridExtra","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","rgbif","dismo","SDMTools","SDMtune","sdmpredictors")
 
@@ -93,6 +93,14 @@ whichOverPolygon <- function(spobj1,spobj2) {
 
 ## -----------------------------------------------------------------------------------------------
 
+prepareModelData <- function(p,a,env) {
+  
+  return(prepareSWD(species = "Model species", p = p, a = a, env = env))
+  
+}
+
+## -----------------------------------------------------------------------------------------------
+
 removeNA <- function(records,lonName,latName) {
   
   cat("Removing",sum( is.na( records[,lonName] ) ),"NA records")
@@ -105,9 +113,96 @@ removeNA <- function(records,lonName,latName) {
 
 removeDuplicated <- function(records,lonName,latName) {
   
-  cat("Removing",length(which( duplicated( records[,c(lonName,latName)] ) )),"NA records")
+  cat("Removing",length(which( duplicated( records[,c(lonName,latName)] ) )),"duplicated records")
   records <- records[ which( ! duplicated( records[,c(lonName,latName)] ) ), ]
   
   return(records)
   
+}
+
+## -----------------------------------------------------------------------------------------------
+
+trainGLM <- function(modelData) {
+  
+  data <- modelData@data
+  data <- data.frame(PA=modelData@pa,modelData@data)
+  model <- glm( paste0("PA ~ ",paste(colnames(modelData@data),collapse = " + ")) , family="binomial", data=data)
+  
+  return(model)
+  
+}
+
+## -----------------------------------------------------------------------------------------------
+
+pseudoAbsences <- function(rasters,records,n) {
+  
+  shape <- subset(rasters,1)
+  nonNACells <- Which(!is.na(shape), cells=TRUE) 
+  sink.points <- xyFromCell(shape, nonNACells)
+  
+  absences <- sample( 1:nrow(sink.points) , min(n,nrow(sink.points)) , replace=FALSE)
+  absences <- sink.points[absences,]
+  colnames(absences) <- c("Lon","Lat")
+  
+  # Removes those closer than paDist
+  
+  sink.points.poly <- as.data.frame(records)
+  coordinates( sink.points.poly ) <- c( "Lon", "Lat" )
+  proj4string( sink.points.poly ) <- CRS( "+proj=longlat +datum=WGS84" )
+  
+  sink.points.poly <- gBuffer( sink.points.poly, width=25 / 111.699, byid=TRUE )
+  # plot(sink.points.poly)
+  
+  sink.points.pts <- as.data.frame(absences)
+  colnames( sink.points.pts ) <- c( "Lon", "Lat" )
+  coordinates( sink.points.pts ) <- c( "Lon", "Lat" )
+  proj4string( sink.points.pts ) <- CRS( "+proj=longlat +datum=WGS84" )
+  
+  to.remove.id <- sp::over(sink.points.pts,sink.points.poly)
+  to.keep <- which(is.na(to.remove.id))
+  absences <- absences[to.keep,]
+  
+  return(absences)
+  
+}
+
+## -----------------------------------------------------------------------------------------------
+
+backgroundInformation <- function(rasters,n) {
+  
+  shape <- subset(rasters,1)
+  nonNACells <- Which(!is.na(shape), cells=TRUE) 
+  sink.points <- xyFromCell(shape, nonNACells)
+  
+  absences <- sample( 1:nrow(sink.points) , min(n,nrow(sink.points)) , replace=FALSE)
+  absences <- sink.points[absences,]
+  colnames(absences) <- c("Lon","Lat")
+  
+  return(absences)
+  
+}
+
+## -----------------------------------------------------------------------------------------------
+
+trainBRT <- function(x) { return("A") }
+  
+trainBRT <- function(data, distribution = "bernoulli", n.trees = 100,
+                     interaction.depth = 1, shrinkage = 0.1,
+                     bag.fraction = 0.5) {
+  
+  result <- SDMmodel(data = data)
+  
+  df <- data@data
+  df <- cbind(pa = data@pa, df)
+  model <- gbm::gbm(pa ~ ., data = df, distribution = distribution,
+                    n.trees = n.trees, interaction.depth = interaction.depth,
+                    shrinkage = shrinkage, bag.fraction = bag.fraction)
+  
+  model_object <- BRT(n.trees = n.trees, distribution = distribution,
+                      interaction.depth = interaction.depth,
+                      shrinkage = shrinkage, bag.fraction = bag.fraction,
+                      model = model)
+  result@model <- model_object
+  
+  return(result)
 }
