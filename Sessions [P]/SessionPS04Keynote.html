@@ -185,8 +185,11 @@ slide:not(.current) .plotly.html-widget{
 
 <p>Ecological niche models require georeferenced biodiversity occurrence data (e.g. species locations, which is the response or dependent variable). Such information are widely available in digital format (e.g., online repositories provide data on species distributions like GBIF).</p>
 
-<pre class = 'prettyprint lang-r'># read records and display the DF structure View(records)
+<pre class = 'prettyprint lang-r'># read records
 records &lt;- read.csv(&quot;Data/dataBases/gbif.csv&quot;, sep = &quot;;&quot;)
+
+# display the DF structure
+View(records)
 
 # read a landmass polygon
 world &lt;- ne_countries(scale = &quot;medium&quot;)

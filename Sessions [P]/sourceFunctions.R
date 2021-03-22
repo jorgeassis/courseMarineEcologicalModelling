@@ -6,9 +6,11 @@
 ## -----------------------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------------------
 
-packages.to.use <- c("dismo","sp","rgdal","rgeos","raster","ggplot2","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","robis","sdmpredictors","SDMtune","RColorBrewer","ENMeval","enmSdm")
+packages.to.use <- c("dismo","sp","rgdal","rgeos","raster","ggplot2","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","robis","sdmpredictors","SDMtune", "RColorBrewer")
 
-# packages.to.use <- c("ENMeval","plotROC","RColorBrewer","devtools","shiny","robis","mapproj","knitr","sf","worms","RCurl","RJSONIO","sp","rgdal","rgeos","raster","geosphere","ggplot2","gridExtra","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","rgbif","dismo","SDMTools","SDMtune","sdmpredictors")
+# "SDMTools"
+# "RColorBrewer","ENMeval","enmSdm"
+# packages.to.use <- c("ENMeval","plotROC","RColorBrewer","devtools","shiny","robis","mapproj","knitr","sf","worms","RCurl","RJSONIO","sp","rgdal","rgeos","raster","geosphere","ggplot2","gridExtra","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","rgbif","dismo","SDMtune","sdmpredictors")
 
 options(warn=-1)
 
@@ -150,7 +152,7 @@ pseudoAbsences <- function(rasters,records,n) {
   coordinates( sink.points.poly ) <- c( "Lon", "Lat" )
   proj4string( sink.points.poly ) <- CRS( "+proj=longlat +datum=WGS84" )
   
-  sink.points.poly <- gBuffer( sink.points.poly, width=25 / 111.699, byid=TRUE )
+  sink.points.poly <- gBuffer( sink.points.poly, width=50 / 111.699, byid=TRUE )
   # plot(sink.points.poly)
   
   sink.points.pts <- as.data.frame(absences)
@@ -161,7 +163,7 @@ pseudoAbsences <- function(rasters,records,n) {
   to.remove.id <- sp::over(sink.points.pts,sink.points.poly)
   to.keep <- which(is.na(to.remove.id))
   absences <- absences[to.keep,]
-  
+  absences <- as.data.frame(absences)
   return(absences)
   
 }
@@ -184,25 +186,84 @@ backgroundInformation <- function(rasters,n) {
 
 ## -----------------------------------------------------------------------------------------------
 
-trainBRT <- function(x) { return("A") }
-  
-trainBRT <- function(data, distribution = "bernoulli", n.trees = 100,
+trainBRT <- function(data, distribution = "bernoulli", n.trees = 1000,
                      interaction.depth = 1, shrinkage = 0.1,
-                     bag.fraction = 0.5) {
+                     bag.fraction = 0.5 ) {
   
   result <- SDMmodel(data = data)
   
   df <- data@data
   df <- cbind(pa = data@pa, df)
-  model <- gbm::gbm(pa ~ ., data = df, distribution = distribution,
-                    n.trees = n.trees, interaction.depth = interaction.depth,
-                    shrinkage = shrinkage, bag.fraction = bag.fraction)
+
+  if(exists("var.monotone")) {
+    
+    model <- gbm::gbm(pa ~ ., data = df, distribution = distribution,
+                      n.trees = n.trees, interaction.depth = interaction.depth,
+                      shrinkage = shrinkage, bag.fraction = bag.fraction, var.monotone=var.monotone[,which(colnames(var.monotone) %in% colnames(df))])
+    
+  }
+  if(!exists("var.monotone")) {
+    
+    model <- gbm::gbm(pa ~ ., data = df, distribution = distribution,
+                      n.trees = n.trees, interaction.depth = interaction.depth,
+                      shrinkage = shrinkage, bag.fraction = bag.fraction)
+    
+  }
   
   model_object <- BRT(n.trees = n.trees, distribution = distribution,
                       interaction.depth = interaction.depth,
                       shrinkage = shrinkage, bag.fraction = bag.fraction,
                       model = model)
+
   result@model <- model_object
   
   return(result)
+}
+
+environment(trainBRT) <- asNamespace('SDMtune')
+assignInNamespace("trainBRT", trainBRT, ns = "SDMtune")
+
+getAUC <- function(model, test = NULL) {
+  
+  return(SDMtune::auc(model, test = test))
+  
+}
+
+
+thresholdMaxTSS <- function(model) {
+  
+  r <- getAccuracy(model,threshold = seq(0,1,by=0.01))
+  
+  plot(r$threshold,r$sensitivity,type="l", xlab="Threshold",ylab="Performance" , lty=1, lwd=1 )
+  lines(r$threshold,r$specificity , lty=1, lwd=4 , col= "gray")
+  
+  val <- unlist(r$threshold)[which.max( unlist(r$sensitivity) + unlist(r$specificity) )]
+  
+  abline(v=val , lty=3, lwd=0.7 )
+  legend(0.7, 0.9, legend=c("Sensitivity", "Specificity"),col=c("black", "gray"), lty=1, lwd=c(1,4) , cex=1)
+  
+  return(val)
+  
+}
+
+getAccuracy <- function(model,threshold=0.5) {
+  
+  predMain <- predict(model, model@data@data, type=c("logistic")) 
+  acc <- data.frame()
+  
+  for(threshold.i in threshold ) {
+    
+    pred <- predMain
+    pred[pred >= threshold.i] <- 1
+    pred[pred < threshold.i] <- 0
+    
+    confusionDF <- data.frame(obs=model@data@pa,pred)
+    sensitivity <- sum(apply(confusionDF[confusionDF$obs == 1,],1,function(x) { ifelse(x[1] == 1 & x[2] == 1 , 1 , 0 ) })) / sum(confusionDF$obs == 1)
+    specificity <- sum(apply(confusionDF[confusionDF$obs == 0,],1,function(x) { ifelse(x[1] == 0 & x[2] == 0 , 1 , 0 ) })) / sum(confusionDF$obs == 0)
+    
+    acc <- rbind(acc,data.frame(threshold=threshold.i,tss=specificity+sensitivity-1,sensitivity=sensitivity,specificity=specificity))
+    
+  }
+ return(acc)
+  
 }
