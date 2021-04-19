@@ -8,7 +8,7 @@ source("sourceFunctions.R")
 # read occurrence records
 presences <- read.csv("Data/dataBases/Paramuricea_clavata.csv", sep = ";")
 presences <- presences[, c("Lon", "Lat")]
-  
+
 # list present layers
 BOLayers <- list_layers(datasets = "Bio-ORACLE")
 View(BOLayers)
@@ -151,10 +151,10 @@ model <- train("Maxnet", modelData, folds = NULL)
 mapNative <- predict(model, envConditionsNative, type = c("logistic"))
 
 # predict with Maxent to the inavasive extent
-mapEurope <- predict(model, envConditionsEurope, type = c("logistic"))                             
+mapEurope <- predict(model, envConditionsEurope, type = c("logistic"))
 
 # plot suitable habitats for native extent
 plot(mapNative, main = "Native suitable habitats of Undaria pinnatifida", col = brewer.pal(n = 11, name = "YlOrRd"))
-                      
+
 # plot suitable habitats for invasive extent
 plot(mapEurope, main = "Invasive suitable habitats of Undaria pinnatifida", col = brewer.pal(n = 11, name = "YlOrRd"))

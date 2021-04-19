@@ -14,16 +14,19 @@
 # 01. get records from gbif with the function getOccurrencesGBIF()
 # 02. get records from obis with the function getOccurrencesObis()
 # 03. get additional external records
-# 04. remove NA coordinates 
+# 04. remove NA coordinates
 # 05. remove duplicate coordinates with the function duplicated()
 # 06. remove records outside the know distribution of the species
 # 07. remove records outside the known vertical distribution
-# 08. remove records over landmasses 
+# 08. remove records over landmasses
 # 09. plot records with the functions plot() and ggplot()
 # 10. Save records with the function write.table()
 
 ## -----------------------
 ## -----------------------
+
+# Set the working directory to where the data is located
+setwd()
 
 # Load main functions
 source("sourceFunctions.R")
@@ -71,11 +74,20 @@ records <- removeNA(records,"Lon","Lat")
 records <- removeDuplicated(records,"Lon","Lat")
 
 # identify and remove records on land
+## based on a polygon
 records <- removeOverLand(records,"Lon","Lat")
 
+## based on a distance (km) to shore [alternative]
+records <- removeOverLandDist(records, "Lon", "Lat", dist = 9)
+
 # confirm that all records belong to the know distribution of the species
-# plot a polygon defining the region of interest
-plot(world)
+# produce and plot a polygon defining the region of interest
+world <- ne_countries(scale = 'medium')
+
+myExtent <- c(-25,40,25,70.5)
+myRegion <- crop(world,extent(myExtent))
+plot(myRegion,col="gray",border="gray")
+points(records,col="red")
 
 # choose the region where the species occur
 regionOfInterest <- drawPoly()
@@ -85,6 +97,9 @@ pointsInRegion <- whichOverPolygon(records,regionOfInterest)
 
 # clip the records of occurrence
 records <- records[pointsInRegion,]
+
+plot(myRegion,col="gray",border="gray")
+points(records,col="red")
 
 # remove records outside the known vertical distribution (example at 80m depth)
 bathymetry <- raster("Data/rasterLayers/BathymetryDepthMean.tif")
@@ -100,8 +115,8 @@ plot(world, col="Gray", border="Gray", axes=TRUE, main="Clean distribution recor
 points(records[,c("Lon","Lat")], pch=20, col="Black")
 
 # plot records with ggplot
-ggplot() + 
-  geom_polygon(data = world, fill = "#B9B8B0", colour = "#707070", size = 0.2, aes(x = long, y = lat, group = group)) +
+ggplot() +
+  geom_polygon(data = myRegion, fill = "#B9B8B0", colour = "#707070", size = 0.2, aes(x = long, y = lat, group = group)) +
   geom_point(data = records, aes(x = Lon, y = Lat), color = "#9A3B04") +
   scale_y_continuous(breaks = seq(-90,90, by=20)) +
   scale_x_continuous(breaks = seq(-180,180,by=20)) +

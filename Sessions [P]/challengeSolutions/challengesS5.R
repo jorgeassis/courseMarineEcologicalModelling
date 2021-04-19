@@ -36,6 +36,9 @@ SSTRCP85 <- crop(SSTRCP85,extent(-15,40,25,70.5))
 plot(SSTRCP26, main="Maximum sea surface temperature; 2100 RCP26")
 plot(SSTRCP85, main="Maximum sea surface temperature; 2100 RCP85")
 
+SSTRCP <- stack(SSTRCP26,SSTRCP85)
+plot(SSTRCP, main="Maximum sea surface temperature; 2100 different conditions")
+
 # plot layers with fixed scale and a redish gradient
 
 min(getValues(SSTRCP26),na.rm=T)

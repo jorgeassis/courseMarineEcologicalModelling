@@ -6,7 +6,7 @@
 ## -----------------------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------------------
 
-packages.to.use <- c("dismo","sp","rgdal","rgeos","raster","ggplot2","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","robis","sdmpredictors","SDMtune", "RColorBrewer")
+packages.to.use <- c("ENMeval","plotROC","dismo","sp","rgdal","rgeos","raster","ggplot2","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","robis","sdmpredictors","SDMtune", "RColorBrewer")
 
 # "SDMTools"
 # "RColorBrewer","ENMeval","enmSdm"
@@ -17,7 +17,8 @@ options(warn=-1)
 for(package in packages.to.use) {
   
   if( ! "rnaturalearthhires" %in% rownames(installed.packages()) ) { devtools::install_github("ropensci/rnaturalearthhires")  }
-  if( ! "SDMTools" %in% rownames(installed.packages()) ) { devtools::install_github('dbahrdt/SDMTools@ignore_invalid')  }
+  
+  # if( ! "SDMTools" %in% rownames(installed.packages()) ) { devtools::install_github('dbahrdt/SDMTools@ignore_invalid')  }
   
   if( ! package %in% rownames(installed.packages()) ) { install.packages( package ) }
   if( ! package %in% rownames(installed.packages()) ) { install.packages( package , type = "source" ) }
@@ -74,6 +75,52 @@ removeOverLand <- function(spobj1,lonName,latName) {
   spobj1 <- as.data.frame(spobj1)[,c(lonName,latName)]
   return(spobj1)
   
+}
+
+## -----------------------------------------------------------------------------------------------
+
+removeOverLandDist <- function(spobj1,lonName,latName,dist=9) {
+  
+  options(warn=-1)
+  spobj1 <- spobj1[which(!is.na(spobj1[,lonName])),] 
+  spobj1 <- spobj1[which(!is.na(spobj1[,latName])),] 
+  spobj2 <- sdmpredictors::load_layers("BO_bathymean")
+  spobj2 <- crop(spobj2,extent(c(min(spobj1[,lonName])-1,max(spobj1[,lonName])+1,min(spobj1[,latName])-1,max(spobj1[,latName])+1)))
+  
+  toCorrect <- which(is.na(extract(spobj2,spobj1[c(lonName,latName)])))
+  overLand <- 0
+  
+  if( length(toCorrect) > 0) {
+    
+    spobj2Cells <- Which(!is.na(spobj2),cells=T)
+    corrected <- xyFromCell(spobj2,spobj2Cells)
+
+    for(i in 1:length(toCorrect)) {
+      
+      dists <- spDistsN1(as.matrix(corrected),as.matrix(spobj1[,c(lonName,latName)])[toCorrect[i],],longlat = TRUE)
+      
+      if( min(dists) <= dist){ 
+        closest <- which.min(spDistsN1(as.matrix(corrected),as.matrix(spobj1[,c(lonName,latName)])[toCorrect[i],],longlat = TRUE))
+        spobj1[toCorrect[i],lonName] <- corrected[closest,1]
+        spobj1[toCorrect[i],latName] <- corrected[closest,2]
+      }
+      
+      if(min(dists) > dist){ 
+        spobj1[toCorrect[i],lonName] <- NA
+        spobj1[toCorrect[i],latName] <- NA
+        overLand <- overLand + 1
+      }
+    }
+    
+  }
+
+  options(warn=0)
+  
+  cat("Removing",overLand,"records over Land")
+  
+  spobj1 <- spobj1[which(!is.na(spobj1[,lonName])),] 
+  return(spobj1)
+
 }
 
 ## -----------------------------------------------------------------------------------------------
@@ -195,14 +242,14 @@ trainBRT <- function(data, distribution = "bernoulli", n.trees = 1000,
   df <- data@data
   df <- cbind(pa = data@pa, df)
 
-  if(exists("var.monotone")) {
+  if( exists("monotonicity") ) {
     
     model <- gbm::gbm(pa ~ ., data = df, distribution = distribution,
                       n.trees = n.trees, interaction.depth = interaction.depth,
-                      shrinkage = shrinkage, bag.fraction = bag.fraction, var.monotone=var.monotone[,which(colnames(var.monotone) %in% colnames(df))])
+                      shrinkage = shrinkage, bag.fraction = bag.fraction, var.monotone=monotonicity[,which(colnames(monotonicity) %in% colnames(df))])
     
   }
-  if(!exists("var.monotone")) {
+  if( ! exists("monotonicity")) {
     
     model <- gbm::gbm(pa ~ ., data = df, distribution = distribution,
                       n.trees = n.trees, interaction.depth = interaction.depth,
@@ -223,12 +270,15 @@ trainBRT <- function(data, distribution = "bernoulli", n.trees = 1000,
 environment(trainBRT) <- asNamespace('SDMtune')
 assignInNamespace("trainBRT", trainBRT, ns = "SDMtune")
 
+## -----------------------------------------------------------------------------------------------
+
 getAUC <- function(model, test = NULL) {
   
   return(SDMtune::auc(model, test = test))
   
 }
 
+## -----------------------------------------------------------------------------------------------
 
 thresholdMaxTSS <- function(model) {
   
@@ -245,6 +295,8 @@ thresholdMaxTSS <- function(model) {
   return(val)
   
 }
+
+## -----------------------------------------------------------------------------------------------
 
 getAccuracy <- function(model,threshold=0.5) {
   
