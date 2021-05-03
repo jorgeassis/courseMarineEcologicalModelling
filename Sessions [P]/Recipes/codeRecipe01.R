@@ -35,7 +35,7 @@ source("sourceFunctions.R")
 world <- ne_countries(scale = 'medium')
 
 ## -----------------------
-# 01. get records from gbif with the function getOccurrencesGBIF()
+# 01. get records
 
 # download the records from GBIF
 recordsGBIF <- getOccurrencesGBIF("species name")
@@ -46,11 +46,14 @@ recordsObis <- getOccurrencesObis("species name")
 # open additional datasets with read.csv
 recordsExternalFile <- read.csv("Data/dataBases/gbif.csv", sep=";")
 
-colnames(recordsExternalFile)
+## -----------------------
+# 02. combine records into a unique dataset
 
 # subset objects to get coordinates only
 recordsGBIF <- recordsGBIF[,c("Lon","Lat")]
 recordsObis <- recordsObis[,c("Lon","Lat")]
+
+colnames(recordsExternalFile)
 recordsExternalFile <- recordsExternalFile[,c("decimalLongitude","decimalLatitude")]
 
 # test column names. If needed, change column names to allow rbind() function
@@ -63,9 +66,15 @@ colnames(recordsExternalFile) <- c("Lon","Lat")
 # merge datasets
 records <- rbind(recordsGBIF,recordsObis,recordsExternalFile)
 
+## -----------------------
+# 03. plot records
+
 # Plot the biodiversity records.
 plot(world, col="Gray", border="Gray", axes=TRUE, main="Distribution records" , ylab="latitude", xlab="longitude")
 points(records[,c("Lon","Lat")], pch=20, col="Black")
+
+## -----------------------
+# 04. remove NAs and duplicated records
 
 # remove NA coordinates
 records <- removeNA(records,"Lon","Lat")
@@ -73,14 +82,23 @@ records <- removeNA(records,"Lon","Lat")
 # remove duplicate coordinates
 records <- removeDuplicated(records,"Lon","Lat")
 
-# identify and remove records on land
+## -----------------------
+# 05. identify and remove records on land
+
 ## based on a polygon
 records <- removeOverLand(records,"Lon","Lat")
 
 ## based on a distance (km) to shore [alternative]
 records <- removeOverLandDist(records, "Lon", "Lat", dist = 9)
 
-# confirm that all records belong to the know distribution of the species
+## -----------------------
+# 05.1. identify and remove records on offshore regions [for intertidal species]
+
+records <- removeOverOffshore(records, "Lon", "Lat", intertidalmask = "Data/RasterLayers/CoastLine.tif")
+
+## -----------------------
+# 06. confirm that all records belong to the know distribution of the species
+
 # produce and plot a polygon defining the region of interest
 world <- ne_countries(scale = 'medium')
 
@@ -110,7 +128,10 @@ head(depthUse)
 hist(depthUse,breaks=50)
 records <- records[ which(depthUse > -80) ,]
 
-# plot records with plot funciton
+## -----------------------
+# 07. plot final records
+
+# plot records with plot function
 plot(world, col="Gray", border="Gray", axes=TRUE, main="Clean distribution records" , ylab="latitude", xlab="longitude")
 points(records[,c("Lon","Lat")], pch=20, col="Black")
 
@@ -122,6 +143,9 @@ ggplot() +
   scale_x_continuous(breaks = seq(-180,180,by=20)) +
   coord_fixed() +
   xlab("Longitude") + ylab("Latitude") + ggtitle("Clean istribution records")
+
+## -----------------------
+# 08. export final records
 
 # save data frame to external file
 write.table(records,file="",sep=";")

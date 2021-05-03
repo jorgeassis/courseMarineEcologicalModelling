@@ -125,6 +125,31 @@ removeOverLandDist <- function(spobj1,lonName,latName,dist=9) {
 
 ## -----------------------------------------------------------------------------------------------
 
+removeOverOffshore <- function(spobj1,lonName,latName,intertidalmask = "Data/RasterLayers/CoastLine.tif") {
+  
+  options(warn=-1)
+  spobj1 <- spobj1[which(!is.na(spobj1[,lonName])),] 
+  spobj1 <- spobj1[which(!is.na(spobj1[,latName])),] 
+  spobj2 <- raster(intertidalmask)
+  
+  toCorrect <- which(is.na( extract(spobj2,spobj1[,c(lonName,latName)]) ))
+
+  if( length(toCorrect) > 0) {
+    
+    spobj1 <- spobj1[-toCorrect,]
+
+  }
+  
+  options(warn=0)
+  
+  cat("Removing",length(toCorrect),"offshore records")
+  
+  return(spobj1)
+  
+}
+
+## -----------------------------------------------------------------------------------------------
+
 whichOverPolygon <- function(spobj1,spobj2) {
   
   if(class(spobj1) == "data.frame") {

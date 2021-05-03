@@ -28,18 +28,46 @@
 
 source("sourceFunctions.R")
 
-# load clean occurrence data (follow Recipe 1)
-presences <- YOUR_DATA
-  
-# load environmental layers
-environmentalConditions <- load_layers(c("BO2_tempmax_bdmean","BO2_tempmin_bdmean"))
+## -----------------------
+# 01. open final records
+
+# load clean occurrence data with two columns only for Lon and Lat (follow Recipe 1)
+presences <- read.csv("myfile", sep = ";")
+
+## -----------------------
+# 02. load and crop environmental layers
+
+# load layers
+layerCodes <- list_layers(datasets = "Bio-ORACLE")
+View(layerCodes)
+environmentalConditions <- load_layers(c("BO2_tempmin_bdmean", "BO2_tempmax_bdmean", "BO2_dissoxmean_bdmean", "BO2_ppmean_bdmean"))
 
 # crop layers to the European extent
-europeanExtent <- extent(-15, 40, 25, 50)
+europeanExtent <- extent(-20, 40, 20, 55)
 environmentalConditions <- crop(environmentalConditions,europeanExtent)
+
+# crop to intertidal region (along shore) if that is the case
+maskCoastLine <- raster("Data/RasterLayers/CoastLine.tif")
+maskCoastLine <- crop(maskCoastLine,environmentalConditions)
+environmentalConditions <- mask(environmentalConditions,maskCoastLine)
+
+# plot predictors
+plot(environmentalConditions)
+
+## -----------------------
+# 03. generate background information
 
 # generate background information
 background <- backgroundInformation(environmentalConditions,n=10000)
+
+## -----------------------
+# 04. fit a model with best hyperparameters
+
+# extract environmental values and make a data.frame with PA information
+modelData <- prepareModelData(presences,background,environmentalConditions) 
+
+# Generate cross validation folds
+folds <- get.block(presences, background)
 
 # extract environmental values and make a data.frame with PA information
 modelData <- prepareModelData(presences,background,environmentalConditions) 
@@ -57,11 +85,14 @@ h <- list(reg = seq(1,10,1) )
 exp1 <- gridSearch(model, hypers = h, metric = "auc")
 plot(exp1)
 exp1@results
-which.max(exp1@results$test_AUC)
+exp1@results[which.max(exp1@results$test_AUC),]
 
 # fit a Maxent model to the dataset with the best hyperparameter values
 model <- train("Maxnet", modelData, folds = folds , fc="t" , reg=BEST_REG_HERE )
 getAUC(model, test = TRUE)
+
+## -----------------------
+# 05. assess for variable contribution and response functions
 
 # determine relative variable contribution
 viModel <- varImp(model, permut = 5)
@@ -81,6 +112,9 @@ plotVarImp(viModel)
 # inspect response curves
 plotResponse(reducedModel, var = "BO2_tempmax_bdmean", type = "logistic", only_presence = FALSE, marginal = FALSE, rug = FALSE, color="Black")
 
+## -----------------------
+# 06. predict to produce maps
+
 # predict with Maxent to raster stack
 mapPresent <- predict(reducedModel, environmentalConditions, type=c("logistic"))
 plot(mapPresent)
@@ -88,10 +122,6 @@ plot(mapPresent)
 # determine the threshold maximizing the sum of sensitivity and specificity
 threshold <- thresholdMaxTSS(reducedModel)
 threshold
-
-# determine model performance
-getAccuracy(reducedModel,threshold = threshold)
-getAUC(reducedModel, test = TRUE)
 
 # generate a reclassification table
 thresholdConditions <- data.frame(from = c(0,threshold) , to=c(threshold,1) , reclassValue=c(0,1))
@@ -101,14 +131,34 @@ thresholdConditions
 mapPresentReclass <- reclassify(mapPresent, rcl = thresholdConditions)
 plot(mapPresentReclass)
 
+## -----------------------
+# 07. model performance
+
+# determine model performance
+getAccuracy(reducedModel,threshold = threshold)
+getAUC(reducedModel, test = TRUE)
+
+## -----------------------
+# 08. predict to the future
+
 # load layers of sea surface temperatures for the future
 environmentalConditionsRCP26 <- load_layers(c("BO2_RCP26_2100_tempmin_bdmean","BO2_RCP26_2100_tempmax_bdmean"))
 
 # change layer names for them to match
 names(environmentalConditionsRCP26) <- c("BO2_tempmin_bdmean","BO2_tempmax_bdmean")
 
+# add external layer (from file) if that is the case
+newLayer <- raster("file")
+names(newLayer) <- "match_name_to_bio_oracle"
+environmentalConditionsRCP26 <- stack(environmentalConditionsRCP26,newLayer)
+
 # crop layers to the European extent
 environmentalConditionsRCP26 <- crop(environmentalConditionsRCP26,europeanExtent)
+
+# crop to intertidal region (along shore) if that is the case
+maskCoastLine <- raster("Data/RasterLayers/CoastLine.tif")
+maskCoastLine <- crop(maskCoastLine,environmentalConditionsRCP26)
+environmentalConditionsRCP26 <- mask(environmentalConditionsRCP26,maskCoastLine)
 
 # predict with Maxent to raster stack
 mapRCP26 <- predict(reducedModel, environmentalConditionsRCP26, type=c("logistic"))
