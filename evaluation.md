@@ -15,18 +15,19 @@ To successfully conduct the individual research study, the students must perform
 
 [1] Gather biodiversity data for one or more marine species [Practical session S04];<br>
 [2] Gather environmental data to model the distribution of one or more marine species [Practical session S04];<br>
-[3] Model the distribution of one or more marine species and conduct one of the topics addressing the interactions or impacts of climate changes on marine biodiversity [Practical sessions S06 - S12];<br>
+[3] Model the distribution of one or more marine species and conduct one of the topics addressing the interactions or impacts of climate changes on marine biodiversity;<br>
 [4] Write a report with the major results and findings;<br>
 [5] Document the R script used to conduct the analyses and provide it as supplementary information of the report;<br><br>
 
-The report should be up to **7500 words with references**, and complying with the following **format**:
+The report should be made as an R Markdown file with the following **format**:
 
-[1] Abstract: What did I do in a nutshell? (max. 300 words)<br>
+[1] Abstract: What did I do in a nutshell? (max. 200 words)<br>
 [2] Introduction: What is the problem?<br>
-[3] Methods: How did I solve the problem?<br>
-[4] Results: What did I find out?<br>
-[5] Discussion: What does it mean?<br>
-[6] References: Whose work did I refer to?<br>
+[3] Methods: Brief statement on how did I solve the problem?<br>
+[4] Code and Figures
+[5] Results: Brief statement on what did I find out?<br>
+[6] Discussion: Brief statement on what does it mean?<br>
+[7] References: Whose work did I refer to?<br>
 
 To successfully write the report, the students must:
 
@@ -37,30 +38,20 @@ To successfully write the report, the students must:
 
 #### Major milestones
 
-[12 April] Brief presentation (5 minutes) + Brief discussion (5 minutes).<br>
-The student will perform a small presentation where they formulate a research ecological question and hypothesis based on literature revision and show a conceptual model to address the research question. Also, preliminary biodiversity and environmental data can be shown.
-
-[11 May] Final presentation (10 minutes) + Brief discussion (5 minutes).<br>
+[26 May] Speed talks (5 minutes) + Brief discussion (5 minutes).<br>
 The student will perform a presentation where they show the major findings of their research study addressing the interactions or impacts of global climate changes on marine biodiversity.<br><br>
 
-[15 Jun] Final report (10 minutes) (up to 8000 words with references, paper format).<br>
-
-[31 May] Final report (up to 8000 words with references, paper format).<br>
-
+[15 Jun] Final report (R markdown format).<br>
 The students must send the final report to jmassis@ualg.pt.<br><br>
-
-[15 Jun] Documented R markdown script as supplementary information of the final report.<br>
-The students must send the documented R markdown script to jmassis@ualg.pt.<br><br>
 
 #### Mid-term exam
 
-[3 May] Multiple choice exam (up to 90 minutes) with 4 essay questions (for PhD students).<br>
-The student must get, at least, 9.5 out of 20.<br>
+[26 May] Multiple choice exam (up to 90 minutes) with up to 4 essay questions.<br>
+The student must achieve, at least, 9.5 out of 20.<br>
 
 ### [Final grade]
 
-Individual research = (Brief presentation * 0.1 ) + (Final presentation * 0.2 ) + (Final report * 0.6 ) + (Markdown script * 0.1 )<br>
-Final grade = (Individual research * 0.75) + (Mid-term exam * 0.25)
+( Final presentation * 0.2 ) + (Markdown report * 0.6 ) + (Mid-term exam * 0.2)
 
 ### Oral Presentations Grading Criteria
 
