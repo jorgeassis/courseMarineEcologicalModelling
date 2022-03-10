@@ -11,11 +11,8 @@
 
 ### S1.2 : Basic programming elements
 
-1. Logic and conditions <br>
-2. Random numbers <br>
-3. Iteration [for loop] <br>
-4. Data import and export <br>
-5. Commenting the code <br>
+1. Data import and export <br>
+2. Commenting the code <br>
 
 ### S2 : R as a Geographic Information System
 
@@ -24,8 +21,7 @@
 3. Importing raster data <br>
 4. Raster data operations [crop]
 5. Algebra in raster data <br>
-6. Reclassify raster data <br>
-7. Additional functions for raster data [extract]
+6. Additional functions for raster data [extract]
 
 ### S4 : Biodiversity data in R
 
@@ -34,8 +30,6 @@
 3. Download data with R <br>
 4. Merging different sources of biodiversity data <br>
 5. Data cleaning in R
-
-[helpful script in Recipe 1]
 
 ### S5 : Environmental data in R
 
