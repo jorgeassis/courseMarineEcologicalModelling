@@ -33,7 +33,7 @@ options(warn=0)
 
 ## --------------
 
-cat("All packages are correctly installed and loaded")
+print("All packages are correctly installed and loaded")
 
 ## -----------------------------------------------------------------------------------------------
 
