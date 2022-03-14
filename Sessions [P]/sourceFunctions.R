@@ -6,7 +6,7 @@
 ## -----------------------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------------------
 
-packages.to.use <- c("terra","Rcpp","ENMeval","plotROC","dismo","sp","rgdal","rgeos","raster","ggplot2","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","robis","sdmpredictors","SDMtune", "RColorBrewer")
+packages.to.use <- c("devtools","Rcpp","ENMeval","plotROC","dismo","sp","rgdal","rgeos","raster","ggplot2","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","robis","sdmpredictors","SDMtune", "RColorBrewer")
 
 # "SDMTools"
 # "RColorBrewer","ENMeval","enmSdm"
@@ -16,6 +16,8 @@ options(warn=-1)
 
 for(package in packages.to.use) {
   
+  if( ! "devtools" %in% rownames(installed.packages()) ) { install.packages( package ) }
+
   if( ! "rnaturalearthhires" %in% rownames(installed.packages()) ) { devtools::install_github("ropensci/rnaturalearthhires")  }
   
   # if( ! "SDMTools" %in% rownames(installed.packages()) ) { devtools::install_github('dbahrdt/SDMTools@ignore_invalid')  }
