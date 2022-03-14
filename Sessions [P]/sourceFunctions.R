@@ -6,7 +6,7 @@
 ## -----------------------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------------------
 
-packages.to.use <- c("ENMeval","plotROC","dismo","sp","rgdal","rgeos","raster","ggplot2","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","robis","sdmpredictors","SDMtune", "RColorBrewer")
+packages.to.use <- c("Rcpp","ENMeval","plotROC","dismo","sp","rgdal","rgeos","raster","ggplot2","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","robis","sdmpredictors","SDMtune", "RColorBrewer")
 
 # "SDMTools"
 # "RColorBrewer","ENMeval","enmSdm"
