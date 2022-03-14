@@ -19,6 +19,8 @@ for(package in packages.to.use) {
   if( ! "rnaturalearthhires" %in% rownames(installed.packages()) ) { devtools::install_github("ropensci/rnaturalearthhires")  }
   
   # if( ! "SDMTools" %in% rownames(installed.packages()) ) { devtools::install_github('dbahrdt/SDMTools@ignore_invalid')  }
+
+  # if( ! "SDMtune" %in% rownames(installed.packages()) ) { remove.packages("dismo"); install.packages("dismo" , type = "source" ); install.packages( package , type = "source" )  }
   
   if( ! package %in% rownames(installed.packages()) ) { install.packages( package ) }
   if( ! package %in% rownames(installed.packages()) ) { install.packages( package , type = "source" ) }
