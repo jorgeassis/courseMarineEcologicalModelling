@@ -31,6 +31,10 @@ for(package in packages.to.use) {
 
 options(warn=0)
 
+## --------------
+
+cat("All packages are correctly installed and loaded")
+
 ## -----------------------------------------------------------------------------------------------
 
 getOccurrencesObis <- function(taxa) {
