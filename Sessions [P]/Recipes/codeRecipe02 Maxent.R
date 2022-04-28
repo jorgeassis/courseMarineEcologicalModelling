@@ -32,7 +32,10 @@ source("sourceFunctions.R")
 # 01. open final records
 
 # load clean occurrence data with two columns only for Lon and Lat (follow Recipe 1)
-presences <- read.csv("myfile", sep = ";")
+presences <- read.csv("Data/myFile.csv", sep = ";")
+
+## -----------------------
+# 02. load and crop environmental layers
 
 ## -----------------------
 # 02. load and crop environmental layers
@@ -40,16 +43,29 @@ presences <- read.csv("myfile", sep = ";")
 # load layers
 layerCodes <- list_layers(datasets = "Bio-ORACLE")
 View(layerCodes)
+
+# Select a set of predictors
 environmentalConditions <- load_layers(c("BO2_tempmin_bdmean", "BO2_tempmax_bdmean", "BO2_dissoxmean_bdmean", "BO2_ppmean_bdmean"))
 
 # crop layers to the European extent
-europeanExtent <- extent(-20, 40, 20, 55)
+myExtent <- c(-35,30,-10,70.5)
+europeanExtent <- extent(myExtent)
 environmentalConditions <- crop(environmentalConditions,europeanExtent)
 
-# crop to intertidal region (along shore) if that is the case
+# plot predictors
+plot(environmentalConditions)
+
+# crop predictors to intertidal region (along shore) if that is the case
 maskCoastLine <- raster("Data/RasterLayers/CoastLine.tif")
 maskCoastLine <- crop(maskCoastLine,environmentalConditions)
 environmentalConditions <- mask(environmentalConditions,maskCoastLine)
+
+# crop for maximum potential distribution
+bathymetry <- raster("Data/rasterLayers/BathymetryDepthMean.tif")
+bathymetry <- crop(bathymetry,subset(environmentalConditions,1))
+bathymetry <- mask(bathymetry,subset(environmentalConditions,1))
+bathymetry[bathymetry < -80 ] <- NA
+environmentalConditions <- mask(environmentalConditions,bathymetry)
 
 # plot predictors
 plot(environmentalConditions)
@@ -66,14 +82,11 @@ background <- backgroundInformation(environmentalConditions,n=10000)
 # extract environmental values and make a data.frame with PA information
 modelData <- prepareModelData(presences,background,environmentalConditions) 
 
-# Generate cross validation folds
-folds <- get.block(presences, background)
-
 # extract environmental values and make a data.frame with PA information
 modelData <- prepareModelData(presences,background,environmentalConditions) 
 
 # Generate cross validation folds
-folds <- get.block(presences, background)
+folds <- getBlocks(modelData)
 
 # fit a Maxent model with cross-validation
 model <- train("Maxnet", modelData, folds = folds , fc="t" )

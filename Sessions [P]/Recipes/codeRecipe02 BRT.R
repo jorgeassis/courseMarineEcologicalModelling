@@ -32,7 +32,7 @@ source("sourceFunctions.R")
 # 01. open final records
 
 # load clean occurrence data with two columns only for Lon and Lat (follow Recipe 1)
-presences <- read.csv("myfile", sep = ";")
+presences <- read.csv("Data/myFile.csv", sep = ";")
 
 ## -----------------------
 # 02. load and crop environmental layers
@@ -40,25 +40,45 @@ presences <- read.csv("myfile", sep = ";")
 # load layers
 layerCodes <- list_layers(datasets = "Bio-ORACLE")
 View(layerCodes)
+
+# Select a set of predictors
 environmentalConditions <- load_layers(c("BO2_tempmin_bdmean", "BO2_tempmax_bdmean", "BO2_dissoxmean_bdmean", "BO2_ppmean_bdmean"))
 
 # crop layers to the European extent
-europeanExtent <- extent(-20, 40, 20, 55)
+myExtent <- c(-35,30,-10,70.5)
+europeanExtent <- extent(myExtent)
 environmentalConditions <- crop(environmentalConditions,europeanExtent)
 
-# crop to intertidal region (along shore) if that is the case
+# plot predictors
+plot(environmentalConditions)
+
+# crop predictors to intertidal region (along shore) if that is the case
 maskCoastLine <- raster("Data/RasterLayers/CoastLine.tif")
 maskCoastLine <- crop(maskCoastLine,environmentalConditions)
 environmentalConditions <- mask(environmentalConditions,maskCoastLine)
+
+# crop for maximum potential distribution
+bathymetry <- raster("Data/rasterLayers/BathymetryDepthMean.tif")
+bathymetry <- crop(bathymetry,subset(environmentalConditions,1))
+bathymetry <- mask(bathymetry,subset(environmentalConditions,1))
+bathymetry[bathymetry < -80 ] <- NA
+environmentalConditions <- mask(environmentalConditions,bathymetry)
 
 # plot predictors
 plot(environmentalConditions)
 
 ## -----------------------
-# 03. generate pseudo absences
+# 03. generate pseudo-absences
 
-# generate pseudo absences
+# generate pseudo-absences
 pseudoAbs <- pseudoAbsences(environmentalConditions,presences,n=1000)
+
+# Plot pseudo-absences and presences
+myExtent <- c(-35,30,-10,70.5)
+myRegion <- crop(world,extent(myExtent))
+plot(myRegion,col="gray",border="gray")
+points(presences,col="red")
+points(pseudoAbs,col="blue")
 
 ## -----------------------
 # 04. fit a model with best hyperparameters
@@ -67,7 +87,7 @@ pseudoAbs <- pseudoAbsences(environmentalConditions,presences,n=1000)
 modelData <- prepareModelData(presences,pseudoAbs,environmentalConditions) 
 
 # Generate cross validation folds
-folds <- get.block(presences, pseudoAbs)
+folds <- getBlocks(modelData)
 
 # define monotonicity constrains (-1 for negative, +1 for positive, 0 for non-monotonicity)
 monotonicity = data.frame(BO2_tempmin_bdmean=+1,BO2_tempmax_bdmean=-1,BO2_dissoxmean_bdmean=+1,BO2_ppmean_bdmean=+1)
@@ -86,7 +106,7 @@ exp1@results
 exp1@results[which.max(exp1@results$test_AUC),]
 
 # fit a BRT model to the dataset with the best hyperparameter values
-model <- train("BRT", modelData, folds = folds , interaction.depth=BEST_HERE, shrinkage=BEST_HERE )
+model <- train("BRT", modelData, folds = folds , interaction.depth=BEST_VAL_HERE, shrinkage=BEST_VAL_HERE )
 getAUC(model, test = TRUE)
 
 ## -----------------------
@@ -108,7 +128,7 @@ viModel
 plotVarImp(viModel)
 
 # inspect response curves
-plotResponse(reducedModel, var = "BO2_tempmax_bdmean", type = "logistic", only_presence = FALSE, marginal = FALSE, rug = FALSE, color="Black")
+plotResponse(reducedModel, var = "BO2_tempmin_bdmean", type = "logistic", only_presence = FALSE, marginal = FALSE, rug = FALSE, color="Black")
 
 ## -----------------------
 # 06. predict to produce maps

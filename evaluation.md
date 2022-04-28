@@ -9,32 +9,27 @@ Each student will conduct an individual research study addressing (1) the intera
 [2] Predict present distributional ranges for one or more marine species;<br>
 [3] Project future range shifts for one or more marine species;<br>
 [4] Predict potential marine invasion processes for one or more marine species;<br>
-[0] Additional topics can be proposed (in such case, please contact the professor).<br><br>
-
+[0] Additional topics can be proposed (in such case, please contact the professor).
+<br><br>
 To successfully conduct the individual research study, the students must perform the following tasks:
-
-[1] Gather biodiversity data for one or more marine species [Practical session S04];<br>
-[2] Gather environmental data to model the distribution of one or more marine species [Practical session S04];<br>
-[3] Model the distribution of one or more marine species and conduct one of the topics addressing the interactions or impacts of climate changes on marine biodiversity;<br>
-[4] Write a report with the major results and findings;<br>
-[5] Document the R script used to conduct the analyses and provide it as supplementary information of the report;<br><br>
-
-The report should be made as an R Markdown file with the following **format**:
-
-[1] Abstract: What did I do in a nutshell? (max. 200 words)<br>
-[2] Introduction: What is the problem?<br>
-[3] Methods: Brief statement on how did I solve the problem?<br>
-[4] Code and Figures
-[5] Results: Brief statement on what did I find out?<br>
-[6] Discussion: Brief statement on what does it mean?<br>
-[7] References: Whose work did I refer to?<br>
-
+<br><br>
+[1] Gather biodiversity data for one or more marine species;<br>
+[2] Gather environmental data to model the distribution of one or more marine species;<br>
+[3] Model the distribution of one or more marine species;<br>
+[4] Write an R Markdown report with the following format:
+<br><br>
+        [4.1] Abstract: What was done in a nutshell (Max. 250 words);<br>
+        [4.2] Introduction: Brief statement on what is the problem (Max. 500 words);<br>
+        [4.3] Methods: Brief statement on how the problem was solved (Max. 250 words);<br>
+        [4.4] Code to perform modelling and the main Figures;<br>
+        [4.5] Results: Brief statement on what was found out (Max. 250 words);<br>
+        [4.6] Discussion: Brief statement on what it means (Max. 250 words);<br>
+        [4.7] References: Whose work was referred.
+<br><br>
 To successfully write the report, the students must:
-
+<br><br>
 [1] Formulate a relevant research ecological question (e.g., in the scope of climate change impacts);<br>
 [2] Formulate an hypothesis, based on the general theories presented in the lectures or from the course literature;<br>
-[3] Build a conceptual model to address the research question in their study system;<br>
-[4] Read the scientific literature in a systematic, quantitative way, to collect, assess the evidence for the different components of their model and hypotheses, and formulate conclusions and recommendations.<br><br>
 
 #### Major milestones
 

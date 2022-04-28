@@ -41,7 +41,7 @@ plot(SSTRCP, main="Maximum sea surface temperature; 2100 different conditions")
 
 # plot layers with fixed scale and a redish gradient
 
-min(getValues(SSTRCP26),na.rm=T)
+max(getValues(SSTRCP26),na.rm=T)
 max(getValues(SSTRCP85),na.rm=T)
 
 plot(SSTRCP26, main="Maximum sea surface temperature; 2100 RCP26", zlim=c(6.4,34.6) , col= rev(heat.colors(100)))
@@ -158,7 +158,7 @@ source("sourceFunctions.R")
 # Primary production (mean at mean depth)
 # Sea water salinity (mean at mean depth)
 
-records <- getOccurrencesGBIF("Paramuricea clavata")
+records <- read.csv("Data/dataBases/Paramuricea_clavata.csv", sep=";")
 
 # list present layers
 BOLayers <- list_layers(datasets = "Bio-ORACLE")

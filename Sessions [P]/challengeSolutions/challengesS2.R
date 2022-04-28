@@ -160,6 +160,14 @@ plot(minSSTEurope, main ="Minimum European Sea Surface Temperatures")
 # Challenge 2.9
 # The main objective of this challenge is to reclassify a set of environmental rasters and plot the potential ecological niche of a marine forest species in European coastlines using a mechanistic approach (i.e., process based model).
 
+setwd("~/Dropbox/Tutoring/Classes & Courses/Ecological Niche Modelling and Climate Change/Git/courseMarineEcologicalModelling/Sessions [P]")
+
+# Suitable conditions set by: 
+# Light > 5; 
+# Salinity > 10; 
+# Max Temp < 20.5; 
+# Min Temp > 5
+
 library(raster)
 
 light <- raster("Data/rasterLayers/Present Light at bottom.tif")
@@ -168,6 +176,7 @@ maxsst <- raster("Data/rasterLayers/Present Temperature LtMax.tif")
 minsst <- raster("Data/rasterLayers/Present Temperature LtMin.tif")
 
 lightConditions <- data.frame(from = c(0,5) , to=c(5,+Inf) , reclassValue=c(0,1))
+lightConditions
 lightConditions <- reclassify(light,lightConditions)
 
 salinityConditions <- data.frame(from = c(0,10) , to=c(10,+Inf) , reclassValue=c(0,1))
@@ -182,12 +191,11 @@ minsstConditions <- reclassify(minsst,minsstConditions)
 niche <- lightConditions * salinityConditions * maxsstConditions * minsstConditions
 
 # or use the function calc with a stack of Rasters
-niche <- calc(stack(lightConditions , salinityConditions , maxsstConditions , minsstConditions), prod)
+# niche <- calc(stack(lightConditions , salinityConditions , maxsstConditions , minsstConditions), prod)
 
 europeanExtent <- c(-30,40,20,75)
 niche <- crop(niche,europeanExtent)
 
-plot(niche, main = "The ecological niche of Saccorhiza polyschides",axes = TRUE)
 plot(niche, main = "The ecological niche of Saccorhiza polyschides",axes = TRUE,legend=FALSE, col=c("azure3","black"))
 
 # ----------------------------------------------------

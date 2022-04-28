@@ -6,7 +6,7 @@
 ## -----------------------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------------------
 
-packages.to.use <- c("devtools","Rcpp","ENMeval","plotROC","dismo","sp","rgdal","rgeos","raster","ggplot2","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","robis","sdmpredictors","SDMtune", "RColorBrewer")
+packages.to.use <- c("plyr","devtools","Rcpp","ENMeval","plotROC","dismo","sp","rgdal","rgeos","raster","ggplot2","rnaturalearth","rnaturalearthdata","leaflet","leaflet.extras","robis","sdmpredictors","SDMtune", "RColorBrewer")
 
 # "SDMTools"
 # "RColorBrewer","ENMeval","enmSdm"
@@ -43,8 +43,15 @@ print("All packages are correctly installed and loaded")
 
 getOccurrencesObis <- function(taxa) {
   
+  resultStruct <- data.frame(scientificName=NA,locality=NA,decimalLongitude=NA,decimalLatitude=NA,depth=NA,year=NA,month=NA,dat=NA,stringsAsFactors = FALSE)
   result <- occurrence(taxa)
-  result <- data.frame(Name=result$scientificName,Locality=result$locality,Lon=as.numeric(as.character(result$decimalLongitude)),Lat=as.numeric(as.character(result$decimalLatitude)),Depth=as.numeric(as.character(result$depth)),dateYear=as.numeric(as.character(result$year)),dateMonth=as.numeric(result$month),dateDay=as.numeric(result$day),stringsAsFactors = FALSE)
+  
+  if(nrow(result) > 0) {
+    result <- rbind.fill(resultStruct,result)
+    result <- data.frame(Name=result$scientificName,Locality=result$locality,Lon=as.numeric(as.character(result$decimalLongitude)),Lat=as.numeric(as.character(result$decimalLatitude)),Depth=as.numeric(as.character(result$depth)),dateYear=as.numeric(as.character(result$year)),dateMonth=as.numeric(result$month),dateDay=as.numeric(result$day),stringsAsFactors = FALSE)
+    result <- result[-1,]
+  }
+
   return(result)
 }
 
@@ -54,10 +61,19 @@ getOccurrencesGBIF <- function(taxa) {
   
   taxa <- unlist(strsplit(taxa, " "))
   
+  resultStruct <- data.frame(scientificName=NA,locality=NA,decimalLongitude=NA,decimalLatitude=NA,depth=NA,year=NA,month=NA,dat=NA,stringsAsFactors = FALSE)
+  
   if( length(length(taxa)) == 1) { result <- gbif(taxa[1],taxa[2]) }
   if( length(length(taxa)) == 2) { result <- gbif(taxa[1],taxa[2]) }
-  result <- data.frame(Name=result$scientificName,Locality=result$locality,Lon=as.numeric(as.character(result$lon)),Lat=as.numeric(as.character(result$lat)),Depth=as.numeric(result$depth),dateYear=as.numeric(result$year),dateMonth=as.numeric(result$month),dateDay=as.numeric(result$day),stringsAsFactors = FALSE)
+  
+  if( nrow(result) > 0) {
+    result <- rbind.fill(resultStruct,result)
+    result <- data.frame(Name=result$scientificName,Locality=result$locality,Lon=as.numeric(as.character(result$lon)),Lat=as.numeric(as.character(result$lat)),Depth=as.numeric(as.character(result$depth)),dateYear=as.numeric(as.character(result$year)),dateMonth=as.numeric(result$month),dateDay=as.numeric(result$day),stringsAsFactors = FALSE)
+    result <- result[-1,]
+  }
+  
   return(result)
+  
 }
 
 ## -----------------------------------------------------------------------------------------------
@@ -95,7 +111,7 @@ removeOverLandDist <- function(spobj1,lonName,latName,dist=9) {
   spobj2 <- sdmpredictors::load_layers("BO_bathymean")
   spobj2 <- crop(spobj2,extent(c(min(spobj1[,lonName])-1,max(spobj1[,lonName])+1,min(spobj1[,latName])-1,max(spobj1[,latName])+1)))
   
-  toCorrect <- which(is.na(extract(spobj2,spobj1[c(lonName,latName)])))
+  toCorrect <- which(is.na(raster::extract(spobj2,spobj1[c(lonName,latName)])))
   overLand <- 0
   
   if( length(toCorrect) > 0) {
@@ -140,7 +156,7 @@ removeOverOffshore <- function(spobj1,lonName,latName,intertidalmask = "Data/Ras
   spobj1 <- spobj1[which(!is.na(spobj1[,latName])),] 
   spobj2 <- raster(intertidalmask)
   
-  toCorrect <- which(is.na( extract(spobj2,spobj1[,c(lonName,latName)]) ))
+  toCorrect <- which(is.na( raster::extract(spobj2,spobj1[,c(lonName,latName)]) ))
 
   if( length(toCorrect) > 0) {
     
@@ -163,19 +179,32 @@ whichOverPolygon <- function(spobj1,spobj2) {
   if(class(spobj1) == "data.frame") {
     spobj1 <- spobj1[complete.cases(spobj1),]
     spobj1 <- SpatialPoints(spobj1)
-    
   }
   
   crs(spobj1) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   crs(spobj2) <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   
-  which( ! is.na(over(spobj1,spobj2) ))
-  
+  over <- names(which( ! is.na(over(spobj1,spobj2) )))
+  return(over)
 }
 
 ## -----------------------------------------------------------------------------------------------
 
 prepareModelData <- function(p,a,env) {
+  
+  m <- subset(env,1)
+  
+  p.i <- extract(m,p)
+  p <- p[which(!is.na(p.i)),]
+  
+  p <- xyFromCell(m,cellFromXY(m,p))
+  p <- unique(p)
+  
+  a.i <- extract(m,a)
+  a <- a[which(!is.na(a.i)),]
+  
+  a <- xyFromCell(m,cellFromXY(m,a))
+  a <- unique(a)
   
   return(prepareSWD(species = "Model species", p = p, a = a, env = env))
   
@@ -183,10 +212,19 @@ prepareModelData <- function(p,a,env) {
 
 ## -----------------------------------------------------------------------------------------------
 
+getBlocks <- function(modelData) {
+  
+  get.block(modelData@coords[modelData@pa == 1,], modelData@coords[modelData@pa == 0,])
+  
+}
+  
+## -----------------------------------------------------------------------------------------------
+
 removeNA <- function(records,lonName,latName) {
   
   cat("Removing",sum( is.na( records[,lonName] ) ),"NA records")
   records <- records[which( ! is.na(records[,lonName]) ), ]
+  records <- records[which( ! is.na(records[,latName]) ), ]
   return(records)
   
 }

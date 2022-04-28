@@ -31,17 +31,14 @@ setwd()
 # Load main functions
 source("sourceFunctions.R")
 
-# Read polygon defining global landmasses
-world <- ne_countries(scale = 'medium')
-
 ## -----------------------
 # 01. get records
 
 # download the records from GBIF
-recordsGBIF <- getOccurrencesGBIF("species name")
+recordsGBIF <- getOccurrencesGBIF("Laminaria ochroleuca")
 
 # download the records from Obis
-recordsObis <- getOccurrencesObis("species name")
+recordsObis <- getOccurrencesObis("Laminaria ochroleuca")
 
 # open additional datasets with read.csv
 recordsExternalFile <- read.csv("Data/dataBases/gbif.csv", sep=";")
@@ -49,14 +46,18 @@ recordsExternalFile <- read.csv("Data/dataBases/gbif.csv", sep=";")
 ## -----------------------
 # 02. combine records into a unique dataset
 
+# check for the names of the colnames
+colnames(recordsGBIF)
+colnames(recordsObis)
+colnames(recordsExternalFile)
+
 # subset objects to get coordinates only
 recordsGBIF <- recordsGBIF[,c("Lon","Lat")]
 recordsObis <- recordsObis[,c("Lon","Lat")]
-
-colnames(recordsExternalFile)
 recordsExternalFile <- recordsExternalFile[,c("decimalLongitude","decimalLatitude")]
 
-# test column names. If needed, change column names to allow rbind() function
+# check for the names of the colnames
+# If needed, change column names to allow rbind() function
 colnames(recordsGBIF)
 colnames(recordsObis)
 colnames(recordsExternalFile)
@@ -68,6 +69,9 @@ records <- rbind(recordsGBIF,recordsObis,recordsExternalFile)
 
 ## -----------------------
 # 03. plot records
+
+# Get the global landmasses
+world <- ne_countries(scale = 'medium')
 
 # Plot the biodiversity records.
 plot(world, col="Gray", border="Gray", axes=TRUE, main="Distribution records" , ylab="latitude", xlab="longitude")
@@ -86,7 +90,7 @@ records <- removeDuplicated(records,"Lon","Lat")
 # 05. identify and remove records on land
 
 ## based on a polygon
-records <- removeOverLand(records,"Lon","Lat")
+#records <- removeOverLand(records,"Lon","Lat")
 
 ## based on a distance (km) to shore [alternative]
 records <- removeOverLandDist(records, "Lon", "Lat", dist = 9)
@@ -102,7 +106,7 @@ records <- removeOverOffshore(records, "Lon", "Lat", intertidalmask = "Data/Rast
 # produce and plot a polygon defining the region of interest
 world <- ne_countries(scale = 'medium')
 
-myExtent <- c(-25,40,25,70.5)
+myExtent <- c(-35,30,-10,70.5)
 myRegion <- crop(world,extent(myExtent))
 plot(myRegion,col="gray",border="gray")
 points(records,col="red")
@@ -110,11 +114,11 @@ points(records,col="red")
 # choose the region where the species occur
 regionOfInterest <- drawPoly()
 
-# select the records within the drawn polygon
-pointsInRegion <- whichOverPolygon(records,regionOfInterest)
+# clip the records of occurrence
+pointsInRegion <- whichOverPolygon(records, regionOfInterest)
 
 # clip the records of occurrence
-records <- records[pointsInRegion,]
+records <- records[pointsInRegion, ]
 
 plot(myRegion,col="gray",border="gray")
 points(records,col="red")
@@ -132,7 +136,7 @@ records <- records[ which(depthUse > -80) ,]
 # 07. plot final records
 
 # plot records with plot function
-plot(world, col="Gray", border="Gray", axes=TRUE, main="Clean distribution records" , ylab="latitude", xlab="longitude")
+plot(myRegion, col="Gray", border="Gray", axes=TRUE, main="Clean distribution records" , ylab="latitude", xlab="longitude")
 points(records[,c("Lon","Lat")], pch=20, col="Black")
 
 # plot records with ggplot
@@ -142,13 +146,13 @@ ggplot() +
   scale_y_continuous(breaks = seq(-90,90, by=20)) +
   scale_x_continuous(breaks = seq(-180,180,by=20)) +
   coord_fixed() +
-  xlab("Longitude") + ylab("Latitude") + ggtitle("Clean istribution records")
+  xlab("Longitude") + ylab("Latitude") + ggtitle("Clean distribution records")
 
 ## -----------------------
 # 08. export final records
 
 # save data frame to external file
-write.table(records,file="",sep=";")
+write.table(records,file="Data/myFile.csv",sep=";")
 
 ## -----------------------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------------------
