@@ -27,7 +27,7 @@ plot(records, add=TRUE,col="red")
 library(raster)
 library(rnaturalearth)
 
-world <- ne_countries(scale = 'medium')
+world <- ne_countries(scale = 'medium') # 'large', 'large'
 
 # Crop with extent
 
@@ -60,6 +60,8 @@ plot(centroids,add=TRUE,col="red")
 # ----------------------------------------------------
 # Challenge 2.4
 # The main objective of this challenge is to determine and plot the more distant European no-Take MPA.
+
+library(geosphere)
 
 # Getting the centroid of a polygon
 longitude <- c(-15,45,45,-15)
@@ -137,8 +139,8 @@ library(raster)
 maxSST <- raster("Data/rasterLayers/Present Temperature LtMax.tif")
 minSST <- raster("Data/rasterLayers/Present Temperature LtMin.tif")
 
-rageSST <- maxSST - minSST
-plot(rageSST, main ="Range of Sea Surface Temperatures")
+rangeSST <- maxSST - minSST
+plot(rangeSST, main ="Range of Sea Surface Temperatures")
 
 # ----------------------------------------------------
 # ----------------------------------------------------
@@ -160,14 +162,6 @@ plot(minSSTEurope, main ="Minimum European Sea Surface Temperatures")
 # Challenge 2.9
 # The main objective of this challenge is to reclassify a set of environmental rasters and plot the potential ecological niche of a marine forest species in European coastlines using a mechanistic approach (i.e., process based model).
 
-setwd("~/Dropbox/Tutoring/Classes & Courses/Ecological Niche Modelling and Climate Change/Git/courseMarineEcologicalModelling/Sessions [P]")
-
-# Suitable conditions set by: 
-# Light > 5; 
-# Salinity > 10; 
-# Max Temp < 20.5; 
-# Min Temp > 5
-
 library(raster)
 
 light <- raster("Data/rasterLayers/Present Light at bottom.tif")
@@ -176,7 +170,6 @@ maxsst <- raster("Data/rasterLayers/Present Temperature LtMax.tif")
 minsst <- raster("Data/rasterLayers/Present Temperature LtMin.tif")
 
 lightConditions <- data.frame(from = c(0,5) , to=c(5,+Inf) , reclassValue=c(0,1))
-lightConditions
 lightConditions <- reclassify(light,lightConditions)
 
 salinityConditions <- data.frame(from = c(0,10) , to=c(10,+Inf) , reclassValue=c(0,1))
@@ -191,11 +184,12 @@ minsstConditions <- reclassify(minsst,minsstConditions)
 niche <- lightConditions * salinityConditions * maxsstConditions * minsstConditions
 
 # or use the function calc with a stack of Rasters
-# niche <- calc(stack(lightConditions , salinityConditions , maxsstConditions , minsstConditions), prod)
+niche <- calc(stack(lightConditions , salinityConditions , maxsstConditions , minsstConditions), prod)
 
 europeanExtent <- c(-30,40,20,75)
 niche <- crop(niche,europeanExtent)
 
+plot(niche, main = "The ecological niche of Saccorhiza polyschides",axes = TRUE)
 plot(niche, main = "The ecological niche of Saccorhiza polyschides",axes = TRUE,legend=FALSE, col=c("azure3","black"))
 
 # ----------------------------------------------------
@@ -236,4 +230,12 @@ occurrences <- read.csv(data5,sep=";")
 colnames(occurrences)
 
 environmentUsed <- extract(environment,occurrences[,c("Lon","Lat")])
+head(environmentUsed)
 summary(environmentUsed)
+
+hist(environmentUsed[,"Present_Temperature_LtMax"],breaks=100)
+hist(environmentUsed[,"Present_Temperature_LtMin"],breaks=100)
+hist(depthsUsed,breaks=100)
+
+pairs(environment, main="Collinearity between raster layers")
+

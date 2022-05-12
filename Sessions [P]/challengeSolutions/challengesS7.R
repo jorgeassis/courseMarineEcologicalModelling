@@ -73,7 +73,7 @@ model <- train("BRT", modelData)
 getAUC(model)
 
 # Cross validation with 4 blocks partitioning
-folds2 <- get.block(presences, absences)
+folds2 <- getBlocks(modelData)
 
 # fit a BRT model to the dataset
 model <- train("BRT", modelData, folds = folds2)

@@ -41,7 +41,7 @@ plot(SSTRCP, main="Maximum sea surface temperature; 2100 different conditions")
 
 # plot layers with fixed scale and a redish gradient
 
-max(getValues(SSTRCP26),na.rm=T)
+min(getValues(SSTRCP26),na.rm=T)
 max(getValues(SSTRCP85),na.rm=T)
 
 plot(SSTRCP26, main="Maximum sea surface temperature; 2100 RCP26", zlim=c(6.4,34.6) , col= rev(heat.colors(100)))
@@ -154,18 +154,15 @@ source("sourceFunctions.R")
 # Bio-ORACLE layers:
 # Dissolved oxygen concentration (mean at mean depth)
 # Sea water temperature (maximum at mean depth)
-# Sea water temperature (minimum at mean depth)
-# Primary production (mean at mean depth)
-# Sea water salinity (mean at mean depth)
 
-records <- read.csv("Data/dataBases/Paramuricea_clavata.csv", sep=";")
+records <- read.csv("Data/dataBases/Paramuricea_clavata.csv",sep=";")
 
 # list present layers
 BOLayers <- list_layers(datasets = "Bio-ORACLE")
 View(BOLayers)
 
 # load layers
-environmentLayers <- load_layers(c("BO2_dissoxmean_bdmean","BO2_tempmax_bdmean","BO2_tempmin_bdmean","BO2_ppmean_bdmean","BO2_salinitymean_bdmean"))
+environmentLayers <- load_layers(c("BO2_dissoxmean_bdmean","BO2_tempmax_bdmean"))
 
 # extract values from layers
 environmentUse <- extract(environmentLayers,records[,c("Lon","Lat")])

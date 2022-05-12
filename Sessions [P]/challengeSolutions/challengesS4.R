@@ -11,18 +11,10 @@ dataSpecies <- "Data/dataBases/observations-80347.csv"
 world <- shapefile(dataWorld)
 dataSpecies <- read.csv(dataSpecies)
 
-region <- extent(-35,45,30,60.5)
-world <- crop(world,region)
-
 colnames(dataSpecies)
 View(dataSpecies)
 plot(world , border="gray" , col="gray" )
 points( dataSpecies[ , c("longitude","latitude") ] , col="red" , pch= 19)
-
-ggplot() + geom_polygon(data = world, fill = "#B9B8B0", colour = "#707070", size = 0.2, 
-                        aes(long, lat, group = group)) + 
-           geom_point(data = dataSpecies, aes(longitude, latitude), 
-                      color = "#9A3B04") + xlab("Longitude") + ylab("Latitude") + ggtitle("Distribution records")
 
 # ----------------------------------------------------
 # ----------------------------------------------------

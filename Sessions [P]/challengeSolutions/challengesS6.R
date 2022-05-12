@@ -1,7 +1,7 @@
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 6.1
-# The main objetive of this challenge is to fit a MaxEnt model to your own occurrence and environmental data.
+# The main objective of this challenge is to fit a MaxEnt model to your own occurrence and environmental data.
 
 source("sourceFunctions.R")
 
@@ -26,6 +26,13 @@ plot(envConditions)
 # generate pseudo-absences
 background <- backgroundInformation(envConditions, n = 10000)
 
+# produce and plot a polygon defining the region of interest
+world <- ne_countries(scale = 'medium')
+myRegion <- crop(world,europeanExtent)
+plot(myRegion,col="gray",border="gray")
+points(background,col="red", pch=20, cex=0.3)
+points(presences,col="black", pch=20)
+
 # extract environmental values and make a data.frame with PA information
 modelData <- prepareModelData(presences, background, envConditions)
 
@@ -37,6 +44,7 @@ map <- predict(model, envConditions, type = "logistic")
 
 # plot prediction of suitable habitats
 plot(map, col = brewer.pal(n = 11, name = "YlOrRd"), main = "Suitable habitats for the coral P. clavata")
+points(presences,col="black", pch=20, cex=0.5)
 
 # ----------------------------------------------------
 # ----------------------------------------------------
@@ -68,10 +76,12 @@ names(envConditions)
 names(envConditionsFuture)
 
 # correct names
-names(envConditionsFuture) <- c("BO2_tempmin_bdmean","BO2_tempmax_bdmean")
+names(envConditions) <- c("TempMin","TempMax")
+names(envConditionsFuture) <- c("TempMin","TempMax")
 
 # crop layers to the European extent
 europeanExtent <- extent(-15, 40, 25, 50)
+
 envConditions <- crop(envConditions, europeanExtent)
 envConditionsFuture <- crop(envConditionsFuture, europeanExtent)
 
@@ -84,6 +94,13 @@ plot(envConditionsFuture)
 # generate pseudo-absences
 background <- backgroundInformation(envConditions, n = 10000)
 
+# produce and plot a polygon defining the region of interest
+world <- ne_countries(scale = 'medium')
+myRegion <- crop(world,europeanExtent)
+plot(myRegion,col="gray",border="gray")
+points(background,col="red", pch=20, cex=0.3)
+points(presences,col="black", pch=20)
+
 # extract environmental values and make a data.frame with PA information
 modelData <- prepareModelData(presences, background, envConditions)
 
@@ -91,19 +108,19 @@ modelData <- prepareModelData(presences, background, envConditions)
 model <- train("Maxnet", modelData)
 
 # predict with Maxent to raster stack
-map <- predict(model, envConditions, type = "logistic")
+mapPresent <- predict(model, envConditions, type = "logistic")
 
 # predict with Maxent to raster stack
 mapFuture <- predict(model, envConditionsFuture, type = "logistic")
 
 # plot prediction of suitable habitats
-plot(map, col = brewer.pal(n = 11, name = "YlOrRd"), main = "Suitable habitats for the coral P. clavata")
+plot(mapPresent, col = brewer.pal(n = 11, name = "YlOrRd"), main = "Suitable habitats for the coral P. clavata")
 
 # plot future prediction of suitable habitats
 plot(mapFuture, col = brewer.pal(n = 11, name = "YlOrRd"), main = "Suitable habitats for the coral P. clavata")
 
 # plot difference in habitat suitability
-difference <- mapFuture - map
+difference <- mapFuture - mapPresent
 plot(difference, main = "Difference in habitat suitablity (RCP26)", col = brewer.pal(n = 11, name = "RdBu"))
 
 # ----------------------------------------------------
@@ -141,6 +158,13 @@ plot(envConditionsEurope)
 # generate pseudo-absences
 background <- backgroundInformation(envConditionsNative, n = 10000)
 
+# produce and plot a polygon defining the region of interest
+world <- ne_countries(scale = 'medium')
+myRegion <- crop(world,nativeExtent)
+plot(myRegion,col="gray",border="gray")
+points(background,col="red", pch=20, cex=0.3)
+points(presences,col="black", pch=20)
+
 # extract environmental values and make a data.frame with PA information
 modelData <- prepareModelData(presences, background, envConditionsNative)
 
@@ -150,7 +174,7 @@ model <- train("Maxnet", modelData, folds = NULL)
 # predict with Maxent to the native extent
 mapNative <- predict(model, envConditionsNative, type = c("logistic"))
 
-# predict with Maxent to the inavasive extent
+# predict with Maxent to the invasive extent
 mapEurope <- predict(model, envConditionsEurope, type = c("logistic"))
 
 # plot suitable habitats for native extent
@@ -158,3 +182,4 @@ plot(mapNative, main = "Native suitable habitats of Undaria pinnatifida", col = 
 
 # plot suitable habitats for invasive extent
 plot(mapEurope, main = "Invasive suitable habitats of Undaria pinnatifida", col = brewer.pal(n = 11, name = "YlOrRd"))
+points(presences,col="black", pch=20, cex=0.5)
