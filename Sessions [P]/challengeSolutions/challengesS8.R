@@ -24,13 +24,13 @@ envConditions <- crop(envConditions, europeanExtent)
 plot(envConditions)
 
 # generate background information
-background <- backgroundInformation(envCond,n=10000)
+background <- backgroundInformation(envConditions,n=10000)
 
 # extract environmental values and make a data.frame with PA information
 modelData <- prepareModelData(presences,background,envConditions) 
 
 #train a model with threshold feature
-folds <- get.block(presences, background)
+folds <- getBlocks(modelData)
 model <- train("Maxnet", modelData, folds = folds, fc = "tp")
 
 # given a set of possible hyperparameter values (regularization)
@@ -77,7 +77,7 @@ background <- backgroundInformation(envConditions,n=10000)
 modelData <- prepareModelData(presences,background,envConditions) 
 
 #train a model with threshold feature
-folds <- get.block(presences, background)
+folds <- getBlocks(modelData)
 model <- train("Maxnet", modelData, folds = folds, fc = "tp")
 
 # determine relative variable contribution and performance as AUC
