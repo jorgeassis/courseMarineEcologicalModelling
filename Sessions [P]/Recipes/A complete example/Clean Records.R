@@ -44,7 +44,7 @@ recordsGBIF <- getOccurrencesGBIF("Paramuricea clavata")
 recordsObis <- getOccurrencesObis("Paramuricea clavata")
 
 # open additional datasets with read.csv
-recordsExternalFile <- read.csv("Paramuricea_clavata.csv", sep=";")
+recordsExternalFile <- read.csv("Data/Paramuricea_clavata.csv", sep=";")
 
 ## -----------------------
 # 02. combine records into a unique dataset
@@ -53,7 +53,7 @@ recordsExternalFile <- read.csv("Paramuricea_clavata.csv", sep=";")
 recordsGBIF <- recordsGBIF[,c("Lon","Lat")]
 recordsObis <- recordsObis[,c("Lon","Lat")]
 
-# colnames(recordsExternalFile)
+colnames(recordsExternalFile)
 recordsExternalFile <- recordsExternalFile[,c("Lon","Lat")]
 
 # test column names. If needed, change column names to allow rbind() function
@@ -71,7 +71,10 @@ records <- rbind(recordsGBIF,recordsObis,recordsExternalFile)
 # 03. plot records
 
 # Plot the biodiversity records.
-plot(world, col="Gray", border="Gray", axes=TRUE, main="Distribution records" , ylab="latitude", xlab="longitude")
+
+myExtent <- c(-20,50,20,60)
+myRegion <- crop(world,extent(myExtent))
+plot(myRegion, col="Gray", border="Gray", axes=TRUE, main="Distribution records" , ylab="latitude", xlab="longitude")
 points(records[,c("Lon","Lat")], pch=20, col="Black")
 
 ## -----------------------
@@ -97,11 +100,6 @@ records <- removeOverLandDist(records, "Lon", "Lat", dist = 9)
 ## -----------------------
 # 06. confirm that all records belong to the know distribution of the species
 
-myExtent <- c(-20,50,20,60)
-myRegion <- crop(world,extent(myExtent))
-plot(myRegion,col="gray",border="gray")
-points(records,col="red")
-
 # choose the region where the species occur
 regionOfInterest <- drawPoly()
 
@@ -112,13 +110,13 @@ pointsInRegion <- whichOverPolygon(records,regionOfInterest)
 records <- records[pointsInRegion,]
 
 plot(myRegion,col="gray",border="gray")
-points(records,col="red")
+points(records,pch=20, col="Black")
 
 # remove records outside the known vertical distribution (example at 80m depth)
 bathymetry <- raster("Data/BathymetryDepthMean.tif")
 plot(bathymetry)
 
-depthUse <- extract(bathymetry,records[,c("Lon","Lat")])
+depthUse <- extract(bathymetry,records)
 head(depthUse)
 hist(depthUse,breaks=50)
 records <- records[ which(depthUse > -150) ,]
@@ -133,7 +131,7 @@ points(records[,c("Lon","Lat")], pch=20, col="Black")
 # plot records with ggplot
 ggplot() +
   geom_polygon(data = myRegion, fill = "#B9B8B0", colour = "#707070", size = 0.2, aes(x = long, y = lat, group = group)) +
-  geom_point(data = records, aes(x = Lon, y = Lat), color = "#9A3B04") +
+  geom_point(data = records, aes(x = Lon, y = Lat), color = "#000000") +
   scale_y_continuous(breaks = seq(-90,90, by=20)) +
   scale_x_continuous(breaks = seq(-180,180,by=20)) +
   coord_fixed() +

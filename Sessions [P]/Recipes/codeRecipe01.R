@@ -26,7 +26,7 @@
 ## -----------------------
 
 # Set the working directory to where the data is located
-setwd()
+setwd("~/Dropbox/Tutoring/Classes & Courses/Ecological Niche Modelling and Climate Change/Main Contents/Sessions P")
 
 # Load main functions
 source("sourceFunctions.R")
@@ -35,13 +35,13 @@ source("sourceFunctions.R")
 # 01. get records
 
 # download the records from GBIF
-recordsGBIF <- getOccurrencesGBIF("Laminaria ochroleuca")
+recordsGBIF <- getOccurrencesGBIF("Paramuricea clavata")
 
 # download the records from Obis
-recordsObis <- getOccurrencesObis("Laminaria ochroleuca")
+recordsObis <- getOccurrencesObis("Paramuricea clavata")
 
 # open additional datasets with read.csv
-recordsExternalFile <- read.csv("Data/dataBases/gbif.csv", sep=";")
+recordsExternalFile <- read.csv("Data/dataBases/Paramuricea_clavata [red coral].csv", sep=";")
 
 ## -----------------------
 # 02. combine records into a unique dataset
@@ -106,10 +106,10 @@ records <- removeOverOffshore(records, "Lon", "Lat", intertidalmask = "Data/Rast
 # produce and plot a polygon defining the region of interest
 world <- ne_countries(scale = 'medium')
 
-myExtent <- c(-35,30,-10,70.5)
+myExtent <- c(-15,35,30,50)
 myRegion <- crop(world,extent(myExtent))
 plot(myRegion,col="gray",border="gray")
-points(records,col="red")
+points(records,col="black", pch=20)
 
 # choose the region where the species occur
 regionOfInterest <- drawPoly()
@@ -121,7 +121,7 @@ pointsInRegion <- whichOverPolygon(records, regionOfInterest)
 records <- records[pointsInRegion, ]
 
 plot(myRegion,col="gray",border="gray")
-points(records,col="red")
+points(records,col="black", pch=20)
 
 # remove records outside the known vertical distribution (example at 80m depth)
 bathymetry <- raster("Data/rasterLayers/BathymetryDepthMean.tif")
@@ -130,7 +130,7 @@ plot(bathymetry)
 depthUse <- extract(bathymetry,records[,c("Lon","Lat")])
 head(depthUse)
 hist(depthUse,breaks=50)
-records <- records[ which(depthUse > -80) ,]
+records <- records[ which(depthUse > -250) ,]
 
 ## -----------------------
 # 07. plot final records

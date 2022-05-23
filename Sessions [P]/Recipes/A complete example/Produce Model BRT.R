@@ -42,8 +42,12 @@ layerCodes <- list_layers(datasets = "Bio-ORACLE")
 View(layerCodes)
 environmentalConditions <- load_layers(c("BO2_tempmin_bdmean", "BO2_tempmax_bdmean", "BO2_dissoxmean_bdmean", "BO2_ppmean_bdmean"))
 
+# load layers from hard disk [alternative]
+list.files("Data/Present", full.names = T)
+environmentalConditions <- stack(list.files("Data/Present", full.names = T))
+
 # crop layers to the European extent
-myExtent <- c(-20,50,20,60)
+myExtent <- c(-20,47.5,10,60)
 environmentalConditions <- crop(environmentalConditions,myExtent)
 
 # crop to intertidal region (along shore) if that is the case
@@ -67,10 +71,15 @@ pseudoAbs <- pseudoAbsences(environmentalConditions,presences,n=1000)
 modelData <- prepareModelData(presences,pseudoAbs,environmentalConditions) 
 
 # Generate cross validation folds
-folds <- get.block(presences, pseudoAbs)
+folds <- getBlocks(modelData)
 
 # define monotonicity constrains (-1 for negative, +1 for positive, 0 for non-monotonicity)
-monotonicity = data.frame(BO2_tempmin_bdmean=+1,BO2_tempmax_bdmean=-1,BO2_dissoxmean_bdmean=+1,BO2_ppmean_bdmean=+1)
+names(environmentalConditions)
+monotonicity = data.frame(DissolvedMolecularOxygen_Benthic_Mean_Pred_Mean=+1,
+                          OceanTemperature_Benthic_Mean_Pred_LtMax=-1,
+                          OceanTemperature_Benthic_Mean_Pred_LtMin=+1,
+                          SeaWaterVelocity_Benthic_Mean_Pred_LtMin=+1,
+                          TotalPrimaryProductionPhyto_Benthic_Mean_Pred_Mean=+1)
 monotonicity
 
 # fit a BRT model with cross-validation and 
@@ -86,7 +95,7 @@ exp1@results
 exp1@results[which.max(exp1@results$test_AUC),]
 
 # fit a BRT model to the dataset with the best hyperparameter values
-model <- train("BRT", modelData, folds = folds , interaction.depth=5, shrinkage=0.001 )
+model <- train("BRT", modelData, folds = folds , interaction.depth=1, shrinkage=0.001 )
 getAUC(model, test = TRUE)
 
 ## -----------------------
@@ -108,9 +117,9 @@ viModel
 plotVarImp(viModel)
 
 # inspect response curves
-plotResponse(reducedModel, var = "BO2_tempmin_bdmean", type = "logistic", only_presence = FALSE, marginal = FALSE, rug = FALSE, color="Black")
-plotResponse(reducedModel, var = "BO2_ppmean_bdmean", type = "logistic", only_presence = FALSE, marginal = FALSE, rug = FALSE, color="Black")
-plotResponse(reducedModel, var = "BO2_dissoxmean_bdmean", type = "logistic", only_presence = FALSE, marginal = FALSE, rug = FALSE, color="Black")
+names(environmentalConditions)
+plotResponse(reducedModel, var = "OceanTemperature_Benthic_Mean_Pred_LtMin", type = "logistic", only_presence = FALSE, marginal = FALSE, rug = FALSE, color="Black")
+plotResponse(reducedModel, var = "TotalPrimaryProductionPhyto_Benthic_Mean_Pred_Mean", type = "logistic", only_presence = FALSE, marginal = FALSE, rug = FALSE, color="Black")
 
 ## -----------------------
 # 06. predict to produce maps
@@ -141,20 +150,8 @@ getAUC(reducedModel, test = TRUE)
 ## -----------------------
 # 08. predict to the future
 
-# load layers of sea surface temperatures for the future
-environmentalConditionsRCP26 <- load_layers(c("BO2_RCP26_2100_tempmin_bdmean","BO2_RCP26_2100_tempmax_bdmean"))
-
-# change layer names for them to match
-names(environmentalConditionsRCP26) <- c("BO2_tempmin_bdmean","BO2_tempmax_bdmean")
-
-# add external layer (from file) if that is the case
-RCP26_DissolvedMolecularOxygen <- raster("Data/RCP26_DissolvedMolecularOxygen Benthic Mean Pred Mean.tif")
-names(RCP26_DissolvedMolecularOxygen) <- "BO2_dissoxmean_bdmean"
-environmentalConditionsRCP26 <- stack(environmentalConditionsRCP26,RCP26_DissolvedMolecularOxygen)
-
-RCP26_TotalPrimaryProduction <- raster("Data/RCP26_TotalPrimaryProductionPhyto Benthic Mean Pred Mean.tif")
-names(RCP26_TotalPrimaryProduction) <- "BO2_ppmean_bdmean"
-environmentalConditionsRCP26 <- stack(environmentalConditionsRCP26,RCP26_TotalPrimaryProduction)
+# load layers of the future
+environmentalConditionsRCP26 <- stack(list.files("Data/Future RCP26", full.names = T))
 
 # crop layers to the European extent
 environmentalConditionsRCP26 <- crop(environmentalConditionsRCP26,myExtent)
@@ -175,20 +172,8 @@ plot(mapRCP26Reclass)
 ## -----------------------
 # 08. predict to the future [alternative scenario]
 
-# load layers of sea surface temperatures for the future
-environmentalConditionsRCP85 <- load_layers(c("BO2_RCP85_2100_tempmin_bdmean","BO2_RCP85_2100_tempmax_bdmean"))
-
-# change layer names for them to match
-names(environmentalConditionsRCP85) <- c("BO2_tempmin_bdmean","BO2_tempmax_bdmean")
-
-# add external layer (from file) if that is the case
-RCP85_DissolvedMolecularOxygen <- raster("Data/RCP85_DissolvedMolecularOxygen Benthic Mean Pred Mean.tif")
-names(RCP85_DissolvedMolecularOxygen) <- "BO2_dissoxmean_bdmean"
-environmentalConditionsRCP85 <- stack(environmentalConditionsRCP85,RCP85_DissolvedMolecularOxygen)
-
-RCP85_TotalPrimaryProduction <- raster("Data/RCP85_TotalPrimaryProductionPhyto Benthic Mean Pred Mean.tif")
-names(RCP85_TotalPrimaryProduction) <- "BO2_ppmean_bdmean"
-environmentalConditionsRCP85 <- stack(environmentalConditionsRCP85,RCP85_TotalPrimaryProduction)
+# load layers of the future
+environmentalConditionsRCP85 <- stack(list.files("Data/Future RCP85", full.names = T))
 
 # crop layers to the European extent
 environmentalConditionsRCP85 <- crop(environmentalConditionsRCP85,myExtent)
