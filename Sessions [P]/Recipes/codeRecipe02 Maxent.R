@@ -26,6 +26,9 @@
 # 13. inspect response curves
 # 14. predict with Maxent to raster stacks
 
+## -----------------------
+# 00. Set the working directory and read the main functions
+
 source("sourceFunctions.R")
 
 ## -----------------------

@@ -260,10 +260,6 @@ pseudoAbsences <- function(rasters,records,n) {
   nonNACells <- Which(!is.na(shape), cells=TRUE) 
   sink.points <- xyFromCell(shape, nonNACells)
   
-  absences <- sample( 1:nrow(sink.points) , min(n,nrow(sink.points)) , replace=FALSE)
-  absences <- sink.points[absences,]
-  colnames(absences) <- c("Lon","Lat")
-  
   # Removes those closer than paDist
   
   sink.points.poly <- as.data.frame(records)
@@ -273,15 +269,29 @@ pseudoAbsences <- function(rasters,records,n) {
   sink.points.poly <- gBuffer( sink.points.poly, width=50 / 111.699, byid=TRUE )
   # plot(sink.points.poly)
   
-  sink.points.pts <- as.data.frame(absences)
+  sink.points.pts <- as.data.frame(sink.points)
   colnames( sink.points.pts ) <- c( "Lon", "Lat" )
   coordinates( sink.points.pts ) <- c( "Lon", "Lat" )
   proj4string( sink.points.pts ) <- CRS( "+proj=longlat +datum=WGS84" )
   
   to.remove.id <- sp::over(sink.points.pts,sink.points.poly)
-  to.keep <- which(is.na(to.remove.id))
-  absences <- absences[to.keep,]
+  
+  if( class(to.remove.id) == "integer" ) { to.keep <- which(is.na(to.remove.id)) }
+
+  if( class(to.remove.id) == "data.frame" ) { 
+    
+    if(ncol(to.remove.id) > 1) { to.keep <- which(is.na(to.remove.id[,1])) }
+    if(ncol(to.remove.id) == 1) { to.keep <- which(is.na(to.remove.id)) }
+    
+  }
+  
+  absences <- sink.points[to.keep,]
   absences <- as.data.frame(absences)
+  
+  absences.n <- sample( 1:nrow(absences) , min(n,nrow(absences)) , replace=FALSE)
+  absences <- absences[absences.n,]
+  colnames(absences) <- c("Lon","Lat")
+  
   return(absences)
   
 }

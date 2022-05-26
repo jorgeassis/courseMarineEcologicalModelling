@@ -42,9 +42,13 @@ layerCodes <- list_layers(datasets = "Bio-ORACLE")
 View(layerCodes)
 environmentalConditions <- load_layers(c("BO2_tempmin_bdmean", "BO2_tempmax_bdmean", "BO2_dissoxmean_bdmean", "BO2_ppmean_bdmean"))
 
-# load layers from hard disk [alternative]
+## --------
+
+# 02. load layers from hard disk [alternative]
 list.files("Data/Present", full.names = T)
 environmentalConditions <- stack(list.files("Data/Present", full.names = T))
+
+## --------
 
 # crop layers to the European extent
 myExtent <- c(-20,47.5,10,60)
@@ -58,11 +62,16 @@ environmentalConditions <- crop(environmentalConditions,myExtent)
 # plot predictors
 plot(environmentalConditions)
 
+# estimate collinearity between predictors [ > 0.85 can impact models negatively] 
+pairs(environmentalConditions)
+
 ## -----------------------
 # 03. generate pseudo absences
 
 # generate pseudo absences
 pseudoAbs <- pseudoAbsences(environmentalConditions,presences,n=1000)
+plot(pseudoAbs)
+points(presences, col="red")
 
 ## -----------------------
 # 04. fit a model with best hyperparameters
@@ -91,11 +100,12 @@ h <- list(interaction.depth = c(1,2,3,4,5) , shrinkage = c(0.1,0.01,0.001) )
 # test all possible combinations of hyperparameter values
 exp1 <- gridSearch(model, hypers = h, metric = "auc")
 plot(exp1)
+which.max(exp1@results$test_AUC)
 exp1@results
 exp1@results[which.max(exp1@results$test_AUC),]
 
 # fit a BRT model to the dataset with the best hyperparameter values
-model <- train("BRT", modelData, folds = folds , interaction.depth=1, shrinkage=0.001 )
+model <- train("BRT", modelData, folds = folds , interaction.depth=1, shrinkage=0.01 )
 getAUC(model, test = TRUE)
 
 ## -----------------------
@@ -119,6 +129,7 @@ plotVarImp(viModel)
 # inspect response curves
 names(environmentalConditions)
 plotResponse(reducedModel, var = "OceanTemperature_Benthic_Mean_Pred_LtMin", type = "logistic", only_presence = FALSE, marginal = FALSE, rug = FALSE, color="Black")
+plotResponse(reducedModel, var = "OceanTemperature_Benthic_Mean_Pred_LtMax", type = "logistic", only_presence = FALSE, marginal = FALSE, rug = FALSE, color="Black")
 plotResponse(reducedModel, var = "TotalPrimaryProductionPhyto_Benthic_Mean_Pred_Mean", type = "logistic", only_presence = FALSE, marginal = FALSE, rug = FALSE, color="Black")
 
 ## -----------------------
@@ -164,6 +175,7 @@ environmentalConditionsRCP26 <- crop(environmentalConditionsRCP26,myExtent)
 # predict with BRT to raster stack
 mapRCP26 <- predict(reducedModel, environmentalConditionsRCP26, type=c("logistic"))
 plot(mapRCP26)
+plot(mapRCP26 - mapPresent)
 
 # apply threshold to reclassify the future predictive surface
 mapRCP26Reclass <- reclassify(mapRCP26, rcl = thresholdConditions)
@@ -186,6 +198,7 @@ environmentalConditionsRCP85 <- crop(environmentalConditionsRCP85,myExtent)
 # predict with BRT to raster stack
 mapRCP85 <- predict(reducedModel, environmentalConditionsRCP85, type=c("logistic"))
 plot(mapRCP85)
+plot(mapRCP85 - mapPresent)
 
 # apply threshold to reclassify the future predictive surface
 mapRCP85Reclass <- reclassify(mapRCP85, rcl = thresholdConditions)
@@ -194,9 +207,16 @@ plot(mapRCP85Reclass)
 ## ----------------------
 
 par(mfrow=c(1,3)) 
+plot(mapPresent)
+plot(mapRCP26 - mapPresent)
+plot(mapRCP85 - mapPresent)
+
+par(mfrow=c(1,3)) 
 plot(mapPresentReclass)
 plot(mapRCP26Reclass)
 plot(mapRCP85Reclass)
+
+dev.off()
 
 ## -----------------------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------------------

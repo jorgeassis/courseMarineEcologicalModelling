@@ -1,5 +1,5 @@
 ---
-title: 'The main title'
+title: 'Main title of my document'
 
 ---
 
@@ -11,17 +11,17 @@ knitr::opts_chunk$set(echo = TRUE)
 <!-- ------------------------------------------------------------------- --> 
 <!-- ------------------------------------------------------------------- --> 
 
-## The title of a section
+## Title of a main section
 
-To get to know how to generate an R Markdown file, please follow the link: https://intro2r.com/new-rm.html
+Get to know how to generate an R Markdown file: https://intro2r.com/new-rm.html
 
-To get to know the R markdown anatomy, please follow the link: https://intro2r.com/r-markdown-anatomy.html#formatted-text
+Get to know the R markdown anatomy: https://intro2r.com/r-markdown-anatomy.html#formatted-text
 
-### The title of a subsection
+### Title of a subsection
 
 R is both a *programming language* and an **interactive environment** for data exploration and statistics and also for computing. The easiest way **to get started** with R is by using the *graphic interface RStudio*. The main way of working with R is the console, where you enter commands and view results. RStudio surrounds this with various conveniences. In addition to the console panel, **RStudio provides** panels containing
 
-### The title of a subsection
+### Title of a subsection
 
 R is both a **programming language** and an **interactive environment** for data exploration and statistics and also for computing. The easiest way **to get started** with R is by using the **graphic interface RStudio**. The main way of working with R is the console, where you enter commands and view results. RStudio surrounds this with various conveniences. In addition to the console panel, **RStudio provides** panels containing
 
@@ -29,11 +29,11 @@ R is both a **programming language** and an **interactive environment** for data
 <!-- ------------------------------------------------------------------- --> 
 <!-- ------------------------------------------------------------------- --> 
 
-### The title of a subsection
+### Title of a subsection
 
 R is both a **programming language** and an **interactive environment** for data exploration and statistics and also for computing. The easiest way **to get started** with R is by using the **graphic interface RStudio**. The main way of working with R is the console, where you enter commands and view results. RStudio surrounds this with various conveniences. In addition to the console panel, **RStudio provides** panels containing: 
 
-### The title of a subsection
+### Title of a subsection
 
 1. **Console panel** for sending R commands;
 2. **Text editor panel** where R commands can be recorded for future reference;
@@ -46,7 +46,7 @@ R is both a **programming language** and an **interactive environment** for data
 <!-- ------------------------------------------------------------------- --> 
 <!-- ------------------------------------------------------------------- --> 
 
-### The title of a subsection
+### Title of a subsection
 
 R is always pointed at a **specific directory on your computer**, the working directory. The command for setting a working directory is **setwd()**. Check out the **help panel**.
 
@@ -60,7 +60,7 @@ library(raster)
 <!-- ------------------------------------------------------------------- --> 
 <!-- ------------------------------------------------------------------- --> 
 
-### The title of a subsection
+### Title of a subsection
 
 R is always pointed at a **specific directory on your computer**, the working directory. The command for setting a working directory is **setwd()**. Check out the **help panel**.
 
@@ -72,7 +72,6 @@ data <- data.frame(x=seq(1,100,by=1),y=seq(1,100,by=1)^2)
 
 # my comment to the code
 plot(data, main="Main plot")
-
 ```
 
 <br>

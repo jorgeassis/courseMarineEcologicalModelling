@@ -101,6 +101,8 @@ records <- removeOverLandDist(records, "Lon", "Lat", dist = 9)
 # 06. confirm that all records belong to the know distribution of the species
 
 # choose the region where the species occur
+plot(myRegion, col="Gray", border="Gray", axes=TRUE, main="Distribution records" , ylab="latitude", xlab="longitude")
+points(records[,c("Lon","Lat")], pch=20, col="Black")
 regionOfInterest <- drawPoly()
 
 # select the records within the drawn polygon
@@ -119,7 +121,10 @@ plot(bathymetry)
 depthUse <- extract(bathymetry,records)
 head(depthUse)
 hist(depthUse,breaks=50)
-records <- records[ which(depthUse > -150) ,]
+
+records <- records[ which(depthUse > -250) ,]
+depthUse <- extract(bathymetry,records)
+hist(depthUse,breaks=50)
 
 ## -----------------------
 # 07. plot final records

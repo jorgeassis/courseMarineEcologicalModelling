@@ -26,6 +26,10 @@
 # 13. inspect response curves
 # 14. predict with BRT to raster stacks
 
+## -----------------------
+# 00. Set the working directory and read the main functions
+
+setwd("...")
 source("sourceFunctions.R")
 
 ## -----------------------
