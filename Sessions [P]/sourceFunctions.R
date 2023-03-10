@@ -41,6 +41,106 @@ print("All packages are correctly installed and loaded")
 
 ## -----------------------------------------------------------------------------------------------
 
+produceModel <- function(myRasterLayers,myRecords) {
+  
+  options(warn=-1)
+  spobj1 <- records
+  spobj1 <- spobj1[which(!is.na(spobj1[,1])),] 
+  spobj1 <- spobj1[which(!is.na(spobj1[,2])),] 
+  spobj2 <- subset(myRasterLayers,1)
+  spobj2 <- crop(spobj2,extent(c(min(spobj1[,1])-1,max(spobj1[,1])+1,min(spobj1[,2])-1,max(spobj1[,2])+1)))
+  
+  toCorrect <- which(is.na(raster::extract(spobj2,spobj1[c(1,2)])))
+  overLand <- 0
+  dist <- 25
+  
+  if( length(toCorrect) > 0) {
+    
+    spobj2Cells <- Which(!is.na(spobj2),cells=T)
+    corrected <- xyFromCell(spobj2,spobj2Cells)
+    
+    for(i in 1:length(toCorrect)) {
+      
+      dists <- spDistsN1(as.matrix(corrected),as.matrix(spobj1[,c(1,2)])[toCorrect[i],],longlat = TRUE)
+      
+      if( min(dists) <= dist){ 
+        closest <- which.min(spDistsN1(as.matrix(corrected),as.matrix(spobj1[,c(1,2)])[toCorrect[i],],longlat = TRUE))
+        spobj1[toCorrect[i],1] <- corrected[closest,1]
+        spobj1[toCorrect[i],2] <- corrected[closest,2]
+      }
+      
+      if(min(dists) > dist){ 
+        spobj1[toCorrect[i],1] <- NA
+        spobj1[toCorrect[i],2] <- NA
+        overLand <- overLand + 1
+      }
+    }
+    
+  }
+  
+  records <- spobj1[which(!is.na(spobj1[,1])),] 
+  
+  # generate pseudo absences
+  pseudoAbs <- pseudoAbsences(myRasterLayers,records,n=1000)
+  plot(pseudoAbs)
+  points(records, col="red")
+  
+  ## -----------------------
+  # 04. fit a model with best hyperparameters
+  
+  # extract environmental values and make a data.frame with PA information
+  
+  p <- records
+  a <- pseudoAbs
+  m <- subset(myRasterLayers,1)
+  
+  p.i <- raster::extract(m,p)
+  p <- p[which(!is.na(p.i)),]
+  
+  p <- xyFromCell(m,cellFromXY(m,p))
+  p <- unique(p)
+  
+  a.i <- raster::extract(m,a)
+  a <- a[which(!is.na(a.i)),]
+  
+  a <- xyFromCell(m,cellFromXY(m,a))
+  a <- unique(a)
+  
+  modelData <- prepareSWD(species = "Model species", p = p, a = a, env = myRasterLayers)
+  
+  # Generate cross validation folds
+  folds <- getBlocks(modelData)
+  
+  # fit a BRT model with cross-validation and 
+  model <- train("BRT", modelData, folds = folds)
+  
+  # given a set of possible hyperparameter values for BRT
+  h <- list(interaction.depth = c(1,2,3,4) , shrinkage = c(0.01,0.001) )
+  
+  # test all possible combinations of hyperparameter values
+  exp1 <- gridSearch(model, hypers = h, metric = "auc")
+  
+  # fit a BRT model to the dataset with the best hyperparameter values
+  model <- train("BRT", modelData, folds = folds , interaction.depth=exp1@results[which.max(exp1@results$test_AUC),"interaction.depth"], shrinkage=exp1@results[which.max(exp1@results$test_AUC),"shrinkage"] )
+  
+  options(warn=0)
+  
+  return(model)
+}
+
+stackDirectory <- function(directory) {
+  
+  library(raster)
+  files <- list.files(directory, pattern="tif", full.names = TRUE )
+  files <- files[!grepl("xml",files)]
+  if(length(files) == 0) { cat("Found 0 files in directory\n")}
+  if(length(files) != 0) { cat("Found",length(files),"files in directory\n")}
+  return(stack(files))
+  
+}
+
+## -----------------------------------------------------------------------------------------------
+
 getOccurrencesObis <- function(taxa) {
   
   resultStruct <- data.frame(scientificName=NA,locality=NA,decimalLongitude=NA,decimalLatitude=NA,depth=NA,year=NA,month=NA,dat=NA,stringsAsFactors = FALSE)

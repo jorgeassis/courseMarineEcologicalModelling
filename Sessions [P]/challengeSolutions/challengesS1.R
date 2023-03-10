@@ -1,57 +1,41 @@
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 1.1
-# The main objective of this challenge is to develop a function to determine the mean of a numeric vector.
+# The main objective of this challenge is to **install** a set of key R packages.
 
-myMean <- function(arg){
+# install packages
+install.packages("devtools", dependencies=TRUE)
+install.packages("raster", dependencies=TRUE)
+install.packages("sp", dependencies=TRUE)
+install.packages("ggplot2", dependencies=TRUE)
+install.packages("rgeos", dependencies=TRUE)
+install.packages("rnaturalearth", dependencies=TRUE)
+install.packages("rnaturalearthdata", dependencies=TRUE)
+install.packages("rnaturalearthhires", dependencies=TRUE)
+install.packages("rgdal", dependencies=TRUE)
 
-  result <- sum(arg) / length(arg)
-
-
-  return( result )
-}
-myFunction(arg)
-
-vector <- c(2,3,1,65,3,2)
-myMean(vector)
 
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 1.2
-# The main objective of this challenge is to develop a function using conditional statments to check if a given number is positive or negative. The result should be a text displaying “is positive” or “is negative”
+# The main objective of this challenge is to **import** a data table in R.
 
-positive <- function(i){
+# set the working directory
+setwd("/Volumes/Jellyfish/Dropbox/Tutoring/Classes & Courses/Modelling the distribution of biodiversity and climate change/Git/courseMarAfrica/")
 
-  if(i > 0) { print( paste0("The element ",i," is positive")) }
-  if(i < 0) { print( paste0("The element ",i," is negative")) }
-
-}
-positive(2)
+# source a set of functions
+source("sourceFunctions.R")
 
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 1.3
-# The main objective of this challenge is to develop a function using more than one argument with conditional statments to check if two given numeric elements are both positive. The result should be “both elements are positive” or “one of the elements is negative”
+# The main objective of this challenge is to **import** a data table in R.
 
-positiveElements <- function(i,j){
+# set the working directory
+setwd("/Volumes/Jellyfish/Dropbox/Tutoring/Classes & Courses/Modelling the distribution of biodiversity and climate change/Git/courseMarAfrica/")
 
-  if(i > 0 & j > 0) { print( "both elements are positive") } else { "one of the elements is negative" }
+# reading data frame from semicolon delimited files
+myDF <- read.table("Data/dataBases/Paramuricea_clavata.csv", sep =";", header=T)
 
-}
-positiveElements(2,1)
-
-# ----------------------------------------------------
-# ----------------------------------------------------
-# Challenge 1.4
-# The main objective of this challenge is to populate a vector with the number of trials a computer needs to guess a random number (element) given by the user (between 1 and 10000).
-
-guessingNumber <- function(userNumber){
-
-  trials <- 0
-  repeat {
-    myTrial <- sample(1:1000,1)
-    if( myTrial == userNumber ) { print(paste0("Found the number in ", trials , " trials")); break } else { trials <- trials + 1 }
-  }
-}
-userNumber <- 23
-guessingNumber(userNumber)
+# view the data.frame in RStudio
+View(myDF)
