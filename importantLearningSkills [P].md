@@ -7,7 +7,6 @@
 2. Load and install packages <br>
 3. Variables and objects <br>
 4. Data types and structures [vectors, matrices and data.frames] <br>
-5. Indexing [vectors, matrices and data.frames] <br>
 
 ### S1.2 : Basic programming elements
 
@@ -17,24 +16,21 @@
 ### S2 : R as a Geographic Information System
 
 1. Importing and exporting vector data <br>
-2. Vector data operations [crop, area, overlap] <br>
+2. Vector data operations [crop] <br>
 3. Importing raster data <br>
 4. Raster data operations [crop]
 5. Algebra in raster data <br>
-6. Additional functions for raster data [extract]
 
 ### S4 : Biodiversity data in R
 
 1. Biodiversity data <br>
 2. Plot occurrence data with R <br>
-3. Download data with R <br>
-4. Merging different sources of biodiversity data <br>
-5. Data cleaning in R
+3. Merging different sources of biodiversity data <br>
+4. Data cleaning in R
 
 ### S5 : Environmental data in R
 
 1. Environmental data [Bio-ORACLE] <br>
-2. Collinearity (high correlation) between variables
 
 ### S6 : Developing Ecological Niche Models
 
@@ -50,11 +46,3 @@
 ### S8 : Data-driven hyperparameter and variable selection
 
 1. Data-driven model selection
-
-### S09 : Comparing predictive performances of modelling algorithms
-
-1. Comparing the performances of distinct models
-
-### S10 : Ensembling ecological model responses
-
-**not mandatory**

@@ -33,20 +33,15 @@ To successfully write the report, the students must:
 
 #### Major milestones
 
-[26 May] Speed talks (5 minutes) + Brief discussion (5 minutes).<br>
+[31 Mar] Speed talks (5 minutes) + Brief discussion (5 minutes).<br>
 The student will perform a presentation where they show the major findings of their research study addressing the interactions or impacts of global climate changes on marine biodiversity.<br><br>
 
-[15 Jun] Final report (R markdown format).<br>
-The students must send the final report to jmassis@ualg.pt.<br><br>
-
-#### Mid-term exam
-
-[26 May] Multiple choice exam (up to 90 minutes) with up to 4 essay questions.<br>
-The student must achieve, at least, 9.5 out of 20.<br>
+[19 May] Final report (with R code file).<br>
+The students must send the final report to jmassis@ualg.pt<br><br>
 
 ### [Final grade]
 
-( Final presentation * 0.2 ) + (Markdown report * 0.6 ) + (Mid-term exam * 0.2)
+( Final presentation * 0.2 ) + (Report * 0.8 )
 
 ### Oral Presentations Grading Criteria
 
