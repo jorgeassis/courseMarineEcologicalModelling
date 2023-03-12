@@ -41,6 +41,23 @@ print("All packages are correctly installed and loaded")
 
 ## -----------------------------------------------------------------------------------------------
 
+getOccurrencesObis <- function(taxa) {
+  
+  resultStruct <- data.frame(scientificName=NA,locality=NA,decimalLongitude=NA,decimalLatitude=NA,depth=NA,year=NA,month=NA,dat=NA,stringsAsFactors = FALSE)
+  result <- occurrence(taxa)
+  
+  if(nrow(result) > 0) {
+    result <- rbind.fill(resultStruct,result)
+    result <- data.frame(Name=result$scientificName,Locality=result$locality,Lon=as.numeric(as.character(result$decimalLongitude)),Lat=as.numeric(as.character(result$decimalLatitude)),Depth=as.numeric(as.character(result$depth)),dateYear=as.numeric(as.character(result$year)),dateMonth=as.numeric(result$month),dateDay=as.numeric(result$day),stringsAsFactors = FALSE)
+    result <- result[-1,]
+  }
+
+  return(result)
+}
+
+## -----------------------------------------------------------------------------------------------
+
+
 produceModel <- function(myRasterLayers,myRecords) {
   
   options(warn=-1)
@@ -128,8 +145,9 @@ produceModel <- function(myRasterLayers,myRecords) {
   return(model)
 }
 
+
 stackDirectory <- function(directory) {
-  
+
   library(raster)
   files <- list.files(directory, pattern="tif", full.names = TRUE )
   files <- files[!grepl("xml",files)]
@@ -140,23 +158,7 @@ stackDirectory <- function(directory) {
 }
 
 ## -----------------------------------------------------------------------------------------------
-
-getOccurrencesObis <- function(taxa) {
   
-  resultStruct <- data.frame(scientificName=NA,locality=NA,decimalLongitude=NA,decimalLatitude=NA,depth=NA,year=NA,month=NA,dat=NA,stringsAsFactors = FALSE)
-  result <- occurrence(taxa)
-  
-  if(nrow(result) > 0) {
-    result <- rbind.fill(resultStruct,result)
-    result <- data.frame(Name=result$scientificName,Locality=result$locality,Lon=as.numeric(as.character(result$decimalLongitude)),Lat=as.numeric(as.character(result$decimalLatitude)),Depth=as.numeric(as.character(result$depth)),dateYear=as.numeric(as.character(result$year)),dateMonth=as.numeric(result$month),dateDay=as.numeric(result$day),stringsAsFactors = FALSE)
-    result <- result[-1,]
-  }
-
-  return(result)
-}
-
-## -----------------------------------------------------------------------------------------------
-
 getOccurrencesGBIF <- function(taxa) {
   
   taxa <- unlist(strsplit(taxa, " "))

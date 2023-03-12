@@ -21,7 +21,7 @@ install.packages("rgdal", dependencies=TRUE)
 # The main objective of this challenge is to **import** a data table in R.
 
 # set the working directory
-setwd("/Volumes/Jellyfish/Dropbox/Tutoring/Classes & Courses/Modelling the distribution of biodiversity and climate change/Git/courseMarAfrica/")
+setwd("~/Dropbox/Tutoring/Classes & Courses/Ecological Niche Modelling and Climate Change/Main Contents/Sessions P")
 
 # source a set of functions
 source("sourceFunctions.R")
@@ -32,10 +32,19 @@ source("sourceFunctions.R")
 # The main objective of this challenge is to **import** a data table in R.
 
 # set the working directory
-setwd("/Volumes/Jellyfish/Dropbox/Tutoring/Classes & Courses/Modelling the distribution of biodiversity and climate change/Git/courseMarAfrica/")
+setwd("~/Dropbox/Tutoring/Classes & Courses/Ecological Niche Modelling and Climate Change/Main Contents/Sessions P")
 
 # reading data frame from semicolon delimited files
 myDF <- read.table("Data/dataBases/Paramuricea_clavata.csv", sep =";", header=T)
 
 # view the data.frame in RStudio
 View(myDF)
+
+# load package
+library(gdata)
+
+# reading data frame from semicolon delimited files
+myDF2 <- read.xls("Data/dataBases/Paramuricea_clavata.xlsx")
+
+# view the data.frame in RStudio
+View(myDF2)
