@@ -205,12 +205,12 @@ removeOverLand <- function(spobj1,lonName,latName) {
 
 ## -----------------------------------------------------------------------------------------------
 
-removeOverLandDist <- function(spobj1,lonName,latName,dist=9) {
+removeOverLandDist <- function(spobj1,lonName,latName,landmassRaster,dist=9) {
   
   options(warn=-1)
   spobj1 <- spobj1[which(!is.na(spobj1[,lonName])),] 
   spobj1 <- spobj1[which(!is.na(spobj1[,latName])),] 
-  spobj2 <- sdmpredictors::load_layers("BO_bathymean")
+  spobj2 <- raster(landmassRaster)
   spobj2 <- crop(spobj2,extent(c(min(spobj1[,lonName])-1,max(spobj1[,lonName])+1,min(spobj1[,latName])-1,max(spobj1[,latName])+1)))
   
   toCorrect <- which(is.na(raster::extract(spobj2,spobj1[c(lonName,latName)])))

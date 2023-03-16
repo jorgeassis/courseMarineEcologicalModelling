@@ -1,7 +1,7 @@
 # ----------------------------------------------------
 # ----------------------------------------------------
 # Challenge 3.1
-# The main objective of this challenge is to collect and plot biodiversity records from GBIF and OBis for a given region.
+# The main objective of this challenge is to plot biodiversity records from a file, for a given region.
 
 setwd("~/Dropbox/Tutoring/Classes & Courses/Ecological Niche Modelling and Climate Change/Main Contents/Sessions P")
 
@@ -39,6 +39,8 @@ records <- records[pointsInRegion,]
 
 plot(landmassEur, main="Clean distribution of Paramuricea clavata", col="gray", border="gray", axes=TRUE )
 points( records, col="Black" , pch= 19, cex=0.5)
+
+write.csv(records, file="myCleanRecords.csv")
 
 ## -----------------------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------------------
