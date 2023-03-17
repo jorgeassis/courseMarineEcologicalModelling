@@ -13,7 +13,7 @@ records <- read.table('Data/dataBases/MergedCoordinates.csv',sep=';',header=TRUE
 europeanExtent <- extent(-15, 45, 30, 47.5)
 europeanCoastlines <- crop(world,europeanExtent)
 plot(europeanCoastlines, main="Distribution of Paramuricea clavata", col="gray", border="gray", axes=TRUE )
-points( records, col="Black" , pch= 19, cex=0.5)
+points( records[,c("Lon","Lat")], col="Black" , pch= 19, cex=0.5)
 
 # ----------------------------------------------------
 # ----------------------------------------------------
@@ -40,7 +40,7 @@ records <- records[pointsInRegion,]
 plot(landmassEur, main="Clean distribution of Paramuricea clavata", col="gray", border="gray", axes=TRUE )
 points( records, col="Black" , pch= 19, cex=0.5)
 
-write.csv(records, file="myCleanRecords.csv")
+write.csv(records, file="myCleanRecords.csv", row.names = FALSE)
 
 ## -----------------------------------------------------------------------------------------------
 ## -----------------------------------------------------------------------------------------------

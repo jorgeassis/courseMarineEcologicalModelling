@@ -31,7 +31,7 @@ source("sourceFunctions.R")
 # 01. get records
 
 records <- read.table('Data/dataBases/MergedCoordinates.csv',sep=';',header=TRUE)
-
+View(records)
 # plot records
 
 # Get the global landmasses
@@ -39,7 +39,10 @@ world <- shapefile("Data/vectorShapefiles/globalLandmass/world.shp")
 
 # Plot the biodiversity records.
 plot(world, col="Gray", border="Gray", axes=TRUE, main="Distribution records" , ylab="latitude", xlab="longitude")
-points(records[,c("Lon","Lat")], pch=20, col="Black")
+
+points( records$Lon, records$Lat , pch=20, col="Black")
+
+points( records[ , c("Lon","Lat") ] , pch=20, col="Black")
 
 ## -----------------------
 # 02. remove NAs and duplicated records
