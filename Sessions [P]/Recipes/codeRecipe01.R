@@ -70,20 +70,22 @@ world <- shapefile("Data/vectorShapefiles/globalLandmass/world.shp")
 
 myExtent <- c(-15,35,30,50)
 myRegion <- crop(world,extent(myExtent))
+
+dev.new()
 plot(myRegion,col="gray",border="gray")
 points(records,col="black", pch=20)
 
 # choose the region where the species occur
 regionOfInterest <- drawPoly()
 
-# clip the records of occurrence
-pointsInRegion <- whichOverPolygon(records, regionOfInterest)
+# clip the records of occurrence, give the proper Lon and Lat names
+pointsInRegion <- whichOverPolygon(records,regionOfInterest,"Lon","Lat")
 
 # clip the records of occurrence
 records <- records[pointsInRegion, ]
 
 plot(myRegion,col="gray",border="gray")
-points(records,col="black", pch=20)
+points(records[,c("Lon","Lat")],col="black", pch=20)
 
 ## -----------------------
 # 05. plot final records

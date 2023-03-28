@@ -276,10 +276,10 @@ removeOverOffshore <- function(spobj1,lonName,latName,intertidalmask = "Data/Ras
 
 ## -----------------------------------------------------------------------------------------------
 
-whichOverPolygon <- function(spobj1,spobj2) {
+whichOverPolygon <- function(spobj1,spobj2,Lon,Lat) {
   
   if(class(spobj1) == "data.frame") {
-    spobj1 <- spobj1[complete.cases(spobj1),]
+    spobj1 <- spobj1[complete.cases(spobj1),c(Lon,Lat)]
     spobj1 <- SpatialPoints(spobj1)
   }
   

@@ -30,11 +30,12 @@ records <- read.table('Data/dataBases/MergedCoordinates.csv',sep=';',header=TRUE
 mediterraneanExtent <- extent(-15, 37.5, 30, 50)
 landmassEur <- crop(world, mediterraneanExtent)
 
+dev.new()
 plot(landmassEur, col="gray", border="gray" )
 points( records, col="Black" , pch= 19)
 
 regionOfInterest <- drawPoly()
-pointsInRegion <- whichOverPolygon(records,regionOfInterest)
+pointsInRegion <- whichOverPolygon(records,regionOfInterest,"Lon","Lat")
 records <- records[pointsInRegion,]
 
 plot(landmassEur, main="Clean distribution of Paramuricea clavata", col="gray", border="gray", axes=TRUE )
